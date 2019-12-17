@@ -3,7 +3,7 @@ package lesson10.Homework;
 import java.util.Date;
 
 public class FurnitureOrder extends Order {
-    String furnitureCode;
+    private String furnitureCode;
 
     public FurnitureOrder(String itemName, Date dateCreated, String shipFromCity, String shipToCity, int basePrice, Customer customerOwned, String furnitureCode) {
         super(itemName, dateCreated, shipFromCity, shipToCity, basePrice, customerOwned);
