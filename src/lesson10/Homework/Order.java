@@ -26,7 +26,7 @@ abstract public class Order {
 
     public abstract void calculatePrice();
 
-    void confirmShipping() {
+    public void confirmShipping() {
         dateShipped = new Date();
     }
 
