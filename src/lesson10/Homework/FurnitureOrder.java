@@ -14,14 +14,10 @@ public class FurnitureOrder extends Order {
     void validateOrder() {
         String[] orderFromCities = {"Киев", "Львов"};
 
-        if (getBasePrice() < 500) {
-            //logic
+        for (String sOFC : orderFromCities) {
+            if (getShipFromCity() == sOFC && getBasePrice() >= 500 && getCustomerOwned().getName() != "Тест")
+                setDateConfirmed(new Date());
         }
-
-        if (getCustomerOwned().getName() == "Тест") {
-            //logic
-        }
-
     }
 
     @Override

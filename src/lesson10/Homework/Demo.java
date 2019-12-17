@@ -4,11 +4,11 @@ import java.util.Date;
 
 public class Demo {
     public static void main(String[] args) {
-        Customer customer1 = new Customer("Ivan", "Одесса", "Женский");
+        Customer customer1 = new Customer("Ira", "Одесса", "Женский");
         Customer customer2 = new Customer("Oleg", "Львов", "Мужской");
 
         ElectronicsOrder electronicsOrder1 = new ElectronicsOrder(
-                "Кактус", new Date(), "Киев",
+                "Електрокактус", new Date(), "Киев",
                 "Днепр", 90, customer1, 2);
         ElectronicsOrder electronicsOrder2 = new ElectronicsOrder(
                 "Чайник", new Date(), "Одесса",

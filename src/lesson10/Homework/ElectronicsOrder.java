@@ -16,34 +16,17 @@ public class ElectronicsOrder extends Order {
         String[] orderToCities = {"Киев", "Одесса", "Днепр", "Харьков"};
 
         for (String sOFC : orderFromCities) {
-            if (getShipFromCity() != sOFC) {
-                //logic
-            } else {
-                //logic
+            if (getShipFromCity() == sOFC) {
+                for (String sOTC : orderToCities) {
+                    if (getShipToCity() == sOTC && getBasePrice() >= 100 && getCustomerOwned().getGender() == "Женский")
+                        setDateConfirmed(new Date());
+                }
             }
-        }
-
-        for (String sOTC : orderToCities) {
-            if (getShipToCity() != sOTC) {
-                //logic
-            } else {
-                //logic
-            }
-        }
-
-        if (getBasePrice() < 100) {
-            //logic
-        }
-        if (getCustomerOwned().getGender() == "Женский") {
-            //logic
         }
     }
 
     @Override
     void calculatePrice() {
-        int priceOfTheProduct;
-        int shippingCost;
-        int discount;
         if ((getShipToCity() == "Киев") || getShipToCity() == "Одесса")
             setTotalPrice(getBasePrice() + getBasePrice() * 0.1);
         else
@@ -51,6 +34,5 @@ public class ElectronicsOrder extends Order {
 
         if (getBasePrice() > 1000)
             setTotalPrice(getTotalPrice() * 0.95);
-
     }
 }
