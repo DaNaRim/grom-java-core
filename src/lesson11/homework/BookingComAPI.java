@@ -24,21 +24,21 @@ public class BookingComAPI implements API {
             }
         }
 
-        Room[] rooms = new Room[numberOfRooms];
+        Room[] result = new Room[numberOfRooms];
         int i = 0;
 
         for (Room room : rooms) {
             if (room != null) {
                 if (room.getPersons() == persons && room.getCityName() == city && room.getHotelName() == hotel) {
                     if (room.getPrice() >= (price - 100 > 0 ? price - 100 : 0) && room.getPrice() <= price + 100) {
-                        rooms[i] = room;
+                        result[i] = room;
                         i++;
                     }
                 }
             }
 
         }
-        return rooms;
+        return result;
     }
 
     @Override

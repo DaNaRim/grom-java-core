@@ -23,20 +23,20 @@ public class TripAdvisorAPI implements API {
             }
         }
 
-        Room[] rooms = new Room[numberOfRooms];
+        Room[] result = new Room[numberOfRooms];
         int i = 0;
 
         for (Room room : rooms) {
             if (room != null) {
                 if (room.getPrice() == price && room.getCityName() == city && room.getHotelName() == hotel) {
                     if (room.getPersons() >= (persons - 1 > 0 ? persons : 0) && room.getPersons() <= persons + 1) {
-                        rooms[i] = room;
+                        result[i] = room;
                         i++;
                     }
                 }
             }
         }
-        return rooms;
+        return result;
     }
 
     @Override
