@@ -1,6 +1,7 @@
 package lesson10.abstractfirstexample;
 
 public abstract class DbProvider {
+
     private String dbHost;
 
     //public DbProvider(String dbHost) {
