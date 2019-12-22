@@ -17,7 +17,6 @@ public class Controller {
                 continue;
 
             for (Room room : api.findRooms(price, persons, city, hotel)) {
-                if (room.getPrice() == price && room.getPersons() == persons && room.getCityName() == city && room.getHotelName() == hotel)
                     numberOfRooms++;
             }
         }
@@ -30,10 +29,8 @@ public class Controller {
                 continue;
 
             for (Room room : api.findRooms(price, persons, city, hotel)) {
-                if (room.getPrice() == price && room.getPersons() == persons && room.getCityName() == city && room.getHotelName() == hotel) {
                     result[i] = room;
                     i++;
-                }
             }
         }
         return result;
