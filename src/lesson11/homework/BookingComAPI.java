@@ -16,18 +16,27 @@ public class BookingComAPI implements API {
 
         int numberOfRooms = 0;
         for (Room room : rooms) {
-            if (RoomCheck(room, price, persons, city, hotel))
-                numberOfRooms++;
+            if (room != null) {
+                if (room.getPersons() == persons && room.getCityName() == city && room.getHotelName() == hotel) {
+                    if (room.getPrice() >= (price - 100 > 0 ? price - 100 : 0) && room.getPrice() <= price + 100)
+                        numberOfRooms++;
+                }
+            }
         }
 
         Room[] rooms = new Room[numberOfRooms];
         int i = 0;
 
         for (Room room : rooms) {
-            if (RoomCheck(room, price, persons, city, hotel)) {
-                rooms[i] = room;
-                i++;
+            if (room != null) {
+                if (room.getPersons() == persons && room.getCityName() == city && room.getHotelName() == hotel) {
+                    if (room.getPrice() >= (price - 100 > 0 ? price - 100 : 0) && room.getPrice() <= price + 100) {
+                        rooms[i] = room;
+                        i++;
+                    }
+                }
             }
+
         }
         return rooms;
     }
@@ -35,18 +44,5 @@ public class BookingComAPI implements API {
     @Override
     public Room[] getAll() {
         return rooms;
-    }
-
-    private boolean RoomCheck(Room room, int price, int persons, String city, String hotel) {
-
-        boolean result = false;
-
-        if (room != null) {
-            if (room.getPersons() == persons && room.getCityName() == city && room.getHotelName() == hotel) {
-                if (room.getPrice() >= (price - 100 > 0 ? price - 100 : 0) && room.getPrice() <= price + 100)
-                    result = true;
-            }
-        }
-        return result;
     }
 }

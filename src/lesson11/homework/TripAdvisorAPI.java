@@ -15,17 +15,25 @@ public class TripAdvisorAPI implements API {
     public Room[] findRooms(int price, int persons, String city, String hotel) {
         int numberOfRooms = 0;
         for (Room room : rooms) {
-            if (RoomCheck(room, price, persons, city, hotel))
-                numberOfRooms++;
+            if (room != null) {
+                if (room.getPrice() == price && room.getCityName() == city && room.getHotelName() == hotel) {
+                    if (room.getPersons() >= (persons - 1 > 0 ? persons : 0) && room.getPersons() <= persons + 1)
+                        numberOfRooms++;
+                }
+            }
         }
 
         Room[] rooms = new Room[numberOfRooms];
         int i = 0;
 
         for (Room room : rooms) {
-            if (RoomCheck(room, price, persons, city, hotel)) {
-                rooms[i] = room;
-                i++;
+            if (room != null) {
+                if (room.getPrice() == price && room.getCityName() == city && room.getHotelName() == hotel) {
+                    if (room.getPersons() >= (persons - 1 > 0 ? persons : 0) && room.getPersons() <= persons + 1) {
+                        rooms[i] = room;
+                        i++;
+                    }
+                }
             }
         }
         return rooms;
@@ -34,18 +42,5 @@ public class TripAdvisorAPI implements API {
     @Override
     public Room[] getAll() {
         return rooms;
-    }
-
-    private boolean RoomCheck(Room room, int price, int persons, String city, String hotel) {
-
-        boolean result = false;
-
-        if (room != null) {
-            if (room.getPrice() == price && room.getCityName() == city && room.getHotelName() == hotel) {
-                if (room.getPersons() >= (persons - 1 > 0 ? persons : 0) && room.getPersons() <= persons + 1)
-                    result = true;
-            }
-        }
-        return result;
     }
 }

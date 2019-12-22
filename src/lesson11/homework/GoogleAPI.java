@@ -13,17 +13,21 @@ public class GoogleAPI implements API {
     public Room[] findRooms(int price, int persons, String city, String hotel) {
         int numberOfRooms = 0;
         for (Room room : rooms) {
-            if (RoomCheck(room, price, persons, city, hotel))
-                numberOfRooms++;
+            if (room != null) {
+                if (room.getPrice() == price && room.getPersons() == persons && room.getCityName() == city && room.getHotelName() == hotel)
+                    numberOfRooms++;
+            }
         }
 
         Room[] rooms = new Room[numberOfRooms];
         int i = 0;
 
         for (Room room : rooms) {
-            if (RoomCheck(room, price, persons, city, hotel)) {
-                rooms[i] = room;
-                i++;
+            if (room != null) {
+                if (room.getPrice() == price && room.getPersons() == persons && room.getCityName() == city && room.getHotelName() == hotel) {
+                    rooms[i] = room;
+                    i++;
+                }
             }
         }
         return rooms;
@@ -32,16 +36,5 @@ public class GoogleAPI implements API {
     @Override
     public Room[] getAll() {
         return rooms;
-    }
-
-    private boolean RoomCheck(Room room, int price, int persons, String city, String hotel) {
-
-        boolean result = false;
-
-        if (room != null) {
-            if (room.getPrice() == price && room.getPersons() == persons && room.getCityName() == city && room.getHotelName() == hotel)
-                result = true;
-        }
-        return result;
     }
 }
