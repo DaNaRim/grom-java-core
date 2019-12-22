@@ -22,7 +22,7 @@ public class Controller {
             }
         }
 
-        Room[] rooms = new Room[numberOfRooms];
+        Room[] result = new Room[numberOfRooms];
         int i = 0;
 
         for (API api : apis) {
@@ -31,12 +31,12 @@ public class Controller {
 
             for (Room room : api.findRooms(price, persons, city, hotel)) {
                 if (room.getPrice() == price && room.getPersons() == persons && room.getCityName() == city && room.getHotelName() == hotel) {
-                    rooms[i] = room;
+                    result[i] = room;
                     i++;
                 }
             }
         }
-        return rooms;
+        return result;
     }
 
     public Room[] check(API api1, API api2) {
@@ -60,7 +60,7 @@ public class Controller {
             }
         }
 
-        Room[] rooms = new Room[numberOfRooms];
+        Room[] result = new Room[numberOfRooms];
         int i = 0;
 
         for (Room room1 : api1.getAll()) {
@@ -70,12 +70,12 @@ public class Controller {
                 if (room2 == null)
                     continue;
                 if (room1.getPrice() == room2.getPrice() && room1.getPersons() == room2.getPersons() && room1.getHotelName() == room2.getHotelName() && room1.getCityName() == room2.getCityName()) {
-                    rooms[i] = room1;
+                    result[i] = room1;
                     i++;
                 }
             }
         }
-        return rooms;
+        return result;
     }
 
     public Room cheapestRoom() {
