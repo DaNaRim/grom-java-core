@@ -4,56 +4,58 @@ public class UkrainianBankSystem implements BankSystem {
 
     @Override
     public void withdraw(User user, int amount) {
-        //проверить можно ли снять -
-        //проверить лимит,
-        //проверить достаточно ли денег
-        //снять деньги
-
-        if (!checkWithdraw(user, amount))
+        if (!checkOperation(user, amount, "withdraw"))
             return;
         user.setBalance(user.getBalance() - amount - amount * user.getBank().getCommission(amount));
     }
 
-
-
     @Override
     public void fund(User user, int amount) {
-        //TODO homework
+        if (!checkOperation(user, amount, "fund"))
+            return;
+        user.setBalance(user.getBalance() + amount - amount * user.getBank().getCommission(amount));
     }
 
     @Override
     public void transferMoney(User fromUser, User toUser, int amount) {
-        //снимаем деньги с FromUser
-        //пополняем toUser
-
-        if (!checkWithdraw(fromUser, amount))
+        if (!checkOperation(fromUser, amount, "withdraw") || !checkOperation(fromUser, amount, "fund"))
             return;
 
-        //TODO check fund rules
-
         fromUser.setBalance(fromUser.getBalance() - amount - amount * fromUser.getBank().getCommission(amount));
-        //TODO fund
+        toUser.setBalance(toUser.getBalance() + amount);
     }
 
     @Override
     public void paySalary(User user) {
-        //TODO homework
+        user.getBank().setTotalCapital((long) (user.getBank().getTotalCapital() - user.getBank().getAvrSalaryOfEmployee()));
+        user.setBalance(user.getBalance() + user.getBank().getAvrSalaryOfEmployee());
     }
 
-    private boolean checkWithdraw(User user, int amount) {
-        return checkWithdrawLimits(user, amount, user.getBank().getLimitOfWithdrawal()) &&
-                checkWithdrawLimits(user, amount, user.getBalance());
+    private boolean checkOperation(User user, int amount, String operation) {
+        if (operation == "withdraw") {
+            return checkOperationLimits(user, amount, user.getBank().getLimitOfWithdrawal(), "withdraw") &&
+                    checkOperationLimits(user, amount, user.getBalance(), "withdraw");
+        } else //if (operation == "fund")
+            return checkOperationLimits(user, amount, user.getBank().getLimitOfFunding(), "fund");
     }
 
-    private boolean checkWithdrawLimits(User user, int amount, double limit) {
+    private boolean checkOperationLimits(User user, int amount, double limit, String operation) {
         if (amount + user.getBank().getCommission(amount) > limit) {
-            printWithdrawalErrorMsq(amount, user);
-            return false;
+            if (operation == "withdraw") {
+                printErrorMsq(amount, user, "withdraw");
+                return false;
+            } else if (operation == "fund") {
+                printErrorMsq(amount, user, "fund");
+                return false;
+            }
         }
         return true;
     }
 
-    private void printWithdrawalErrorMsq(int amount, User user) {
-        System.err.println("Can't withdraw money " + amount + " from user " + user.toString());
+    private void printErrorMsq(int amount, User user, String problem) {
+        if (problem == "withdraw")
+            System.err.println("Can't withdraw money " + amount + " from user " + user.toString());
+        else if (problem == "fund")
+            System.err.println("Can't fund money " + amount + " to user " + user.toString());
     }
 }
