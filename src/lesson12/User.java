@@ -23,8 +23,8 @@ public class User {
         this.balance = balance;
     }
 
-    public void setMonthOfEmployment(int monthOfEmployment) {
-        this.monthsOfEmployment = monthOfEmployment;
+    public void setMonthsOfEmployment(int monthsOfEmployment) {
+        this.monthsOfEmployment = monthsOfEmployment;
     }
 
     public void setCompanyName(String companyName) {
