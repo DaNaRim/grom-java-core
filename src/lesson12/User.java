@@ -4,7 +4,7 @@ public class User {
     private long id;
     private String name;
     private double balance;
-    private int monthOfEmployee;
+    private int monthsOfEmployment;
     private String companyName;
     private int salary;
     private Bank bank;
@@ -13,7 +13,7 @@ public class User {
         this.id = id;
         this.name = name;
         this.balance = balance;
-        this.monthOfEmployee = monthOfEmployee;
+        this.monthsOfEmployment = monthOfEmployee;
         this.companyName = companyName;
         this.salary = salary;
         this.bank = bank;
@@ -24,7 +24,7 @@ public class User {
     }
 
     public void setMonthOfEmployee(int monthOfEmployee) {
-        this.monthOfEmployee = monthOfEmployee;
+        this.monthsOfEmployment = monthOfEmployee;
     }
 
     public void setCompanyName(String companyName) {
@@ -52,7 +52,7 @@ public class User {
     }
 
     public int getMonthOfEmployee() {
-        return monthOfEmployee;
+        return monthsOfEmployment;
     }
 
     public String getCompanyName() {
@@ -73,7 +73,7 @@ public class User {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", balance=" + balance +
-                ", monthOfEmployee=" + monthOfEmployee +
+                ", monthOfEmployee=" + monthsOfEmployment +
                 ", companyName='" + companyName + '\'' +
                 ", salary=" + salary +
                 ", bank=" + bank +

@@ -20,15 +20,15 @@ public class UkrainianBankSystem implements BankSystem {
     public void transferMoney(User fromUser, User toUser, int amount) {
         if (!checkOperation(fromUser, amount, "withdraw") || !checkOperation(fromUser, amount, "fund"))
             return;
-
         fromUser.setBalance(fromUser.getBalance() - amount - amount * fromUser.getBank().getCommission(amount));
         toUser.setBalance(toUser.getBalance() + amount);
     }
 
     @Override
     public void paySalary(User user) {
-        user.getBank().setTotalCapital((long) (user.getBank().getTotalCapital() - user.getBank().getAvrSalaryOfEmployee()));
-        user.setBalance(user.getBalance() + user.getBank().getAvrSalaryOfEmployee());
+        if (user.getSalary() > user.getBank().getLimitOfFunding())
+            return;
+        user.setBalance(user.getBalance() + user.getSalary());
     }
 
     private boolean checkOperation(User user, int amount, String operation) {
@@ -40,14 +40,12 @@ public class UkrainianBankSystem implements BankSystem {
     }
 
     private boolean checkOperationLimits(User user, int amount, double limit, String operation) {
-        if (amount + user.getBank().getCommission(amount) > limit) {
-            if (operation == "withdraw") {
-                printErrorMsq(amount, user, "withdraw");
-                return false;
-            } else if (operation == "fund") {
-                printErrorMsq(amount, user, "fund");
-                return false;
-            }
+        if (operation == "withdraw" && amount + user.getBank().getCommission(amount) > limit) {
+            printErrorMsq(amount, user, "withdraw");
+            return false;
+        } else if (operation == "fund" && amount > limit) {
+            printErrorMsq(amount, user, "fund");
+            return false;
         }
         return true;
     }
