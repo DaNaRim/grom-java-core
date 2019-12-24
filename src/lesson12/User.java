@@ -51,7 +51,7 @@ public class User {
         return balance;
     }
 
-    public int getMonthOfEmployee() {
+    public int getMonthsOfEmployment() {
         return monthsOfEmployment;
     }
 
