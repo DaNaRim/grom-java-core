@@ -47,11 +47,11 @@ public class Controller {
 
         int numberOfRooms = 0;
         for (Room room1 : api1.getAll()) {
-            if (room1 == null)
-                continue;
+            if (room1 == null || api1 == null || api2 == null) continue;
+
             for (Room room2 : api2.getAll()) {
-                if (room2 == null)
-                    continue;
+                if (room2 == null) continue;
+
                 if (room1.getPrice() == room2.getPrice() && room1.getPersons() == room2.getPersons() && room1.getHotelName() == room2.getHotelName() && room1.getCityName() == room2.getCityName())
                     numberOfRooms++;
             }
@@ -61,11 +61,11 @@ public class Controller {
         int i = 0;
 
         for (Room room1 : api1.getAll()) {
-            if (room1 == null)
-                continue;
+            if (room1 == null || api1 == null || api2 == null) continue;
+
             for (Room room2 : api2.getAll()) {
-                if (room2 == null)
-                    continue;
+                if (room2 == null) continue;
+
                 if (room1.getPrice() == room2.getPrice() && room1.getPersons() == room2.getPersons() && room1.getHotelName() == room2.getHotelName() && room1.getCityName() == room2.getCityName()) {
                     result[i] = room1;
                     i++;
@@ -81,6 +81,8 @@ public class Controller {
         API cheapAPI = apis[0];
         Room cheapRoom = cheapAPI.getAll()[0];
         for (API api : apis) {
+            if(api == null) continue;
+
             for (Room room : api.getAll()) {
                 if (room == null)
                     continue;

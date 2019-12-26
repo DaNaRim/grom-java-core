@@ -11,19 +11,12 @@ public class UserRepository {
         return users;
     }
 
-    private int countUsers() {
-        int countUsers = 0;
-        for (User user : users) {
-            if (user != null)
-                countUsers++;
-        }
-        return countUsers;
-    }
-
     public String[] getUserNames() {
-        String[] namesArray = new String[countUsers()];
-        int userIndex = 0;
+        if (users == null) return null;
 
+        String[] namesArray = new String[countUsers()];
+
+        int userIndex = 0;
         for (User specificUser : users) {
             if (specificUser != null) {
                 namesArray[userIndex] = specificUser.getName();
@@ -34,6 +27,8 @@ public class UserRepository {
     }
 
     public long[] getUserIds() {
+        if (users == null) return null;
+
         long[] idsArray = new long[countUsers()];
         int userIndex = 0;
 
@@ -47,89 +42,94 @@ public class UserRepository {
     }
 
     public String getUserNameById(long id) {
+        if (users == null) return null;
+
         String name = null;
 
-        for (User specificUser : users) {
-            if (specificUser != null && id == specificUser.getId()) {
-                name = specificUser.getName();
-            }
-        }
+        for (User specificUser : users)
+            if (specificUser != null && id == specificUser.getId()) name = specificUser.getName();
         return name;
     }
 
     public User getUserByName(String name) {
-        for (User specificUser : users) {
-            if (specificUser != null && name == specificUser.getName())
-                return specificUser;
-        }
+        if (users == null) return null;
+
+        for (User specificUser : users)
+            if (specificUser != null && name == specificUser.getName()) return specificUser;
         return null;
     }
 
     public User findById(long id) {
-        for (User specificUser : users) {
-            if (specificUser != null && id == specificUser.getId())
-                return specificUser;
-        }
+        if (users == null) return null;
+
+        for (User user : users)
+            if (user != null && id == user.getId()) return user;
         return null;
     }
 
     public User getUserBySessionId(String sessionId) {
-        for (User specificUser : users) {
-            if (specificUser != null && sessionId == specificUser.getSessionId())
-                return specificUser;
-        }
+        if (users == null) return null;
+
+        for (User specificUser : users)
+            if (specificUser != null && sessionId == specificUser.getSessionId()) return specificUser;
         return null;
     }
 
     public User save(User user) {
-        if (user == null || findById(user.getId()) != null ||
-                countUsers() == users.length) {
+        if (users == null || user == null || findById(user.getId()) != null) {
             return null;
         }
+
+        if (countUsers() == users.length) return null;
+
         int index = 0;
-        for (User specificUser : users) {
-            if (specificUser == null) {
+        for (User us : users) {
+            if (us == null) {
                 users[index] = user;
-                return user;
+                break;
             }
             index++;
         }
-        return null;
+        return user;
     }
-    /*  for (User specificUser : users) {
-            if (specificUser == null) {
-                specificUser = user;
-                return user;
-            }
-        }
-    */
 
 
     public User update(User user) {
-        if (findById(user.getId()) == null)
-            return null;
+        if (users == null || user == null || findById(user.getId()) == null) return null;
+
         int index = 0;
-        for (User specificUser : users) {
-            if (specificUser.getId() == user.getId()) {
+        for (User us : users) {
+            if (us != null && us.getId() == findById(user.getId()).getId()) {
                 users[index] = user;
-                return users[index];
+                break;
             }
             index++;
         }
-        return null;
+        return user;
     }
 
     public void delete(long id) {
-        if (findById(id) != null) {
+        if (users != null) {
             int index = 0;
-            for (User specificUser : users) {
-                if (specificUser != null && specificUser == findById(id))
+            for (User us : users) {
+                if (us != null && us == findById(id)) {
                     users[index] = null;
+                    break;
+                }
                 index++;
             }
         }
     }
 
+    private int countUsers() {
+        if (users == null) return 0;
+
+        int countUsers = 0;
+        for (User user : users) {
+            if (user != null) countUsers++;
+        }
+        return countUsers;
+    }
 }
 
 

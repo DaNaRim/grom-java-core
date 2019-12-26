@@ -14,17 +14,27 @@ public class FurnitureOrder extends Order {
     public void validateOrder() {
         String[] orderFromCities = {"Киев", "Львов"};
 
+        boolean checkOperation = true;
         for (String sOFC : orderFromCities) {
-            if (getShipFromCity() == sOFC && getBasePrice() >= 500 && getCustomerOwned().getName() != "Тест")
+
+            if (getShipFromCity() == sOFC && getBasePrice() >= 500 && getCustomerOwned().getName() != "Тест") {
                 setDateConfirmed(new Date());
+                checkOperation = false;
+                System.out.println("ValidateOrder id done");
+            }
         }
+        if (checkOperation) System.out.println("ValidateOrder is wrong");
     }
 
     @Override
     public void calculatePrice() {
-        if (getBasePrice() < 5000)
+        if (getBasePrice() < 5000) {
             setTotalPrice(getBasePrice() + getBasePrice() * 0.05);
-        else
+            System.out.println("calculatePrice id done with shipping cost 5%");
+        }
+        else {
             setTotalPrice(getBasePrice() + getBasePrice() * 0.02);
+            System.out.println("calculatePrice id done with shipping cost 2%");
+        }
     }
 }
