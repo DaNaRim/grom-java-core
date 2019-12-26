@@ -2,7 +2,7 @@ package lesson9;
 
 import lesson9.utils.Checker;
 
-public class Demo {
+public class Demo9 {
     public static void main(String[] args) {
       /*  Company company = new Company();
         System.out.println(company.getCountryFounded());

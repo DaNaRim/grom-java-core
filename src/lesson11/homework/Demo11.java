@@ -3,7 +3,7 @@ package lesson11.homework;
 import java.util.Arrays;
 import java.util.Date;
 
-public class Demo {
+public class Demo11 {
     public static void main(String[] args) {
 
         Room[] notNullRooms = new Room[8];
