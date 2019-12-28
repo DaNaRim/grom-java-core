@@ -1,6 +1,6 @@
 package lesson15.cast;
 
-public class Demo_l15_c {
+public class Demo {
     public static void main(String[] args) {
 
         InternetProvider provider = (InternetProvider) test();
