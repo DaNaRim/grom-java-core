@@ -28,7 +28,7 @@ public class Demo {
         //когда нет места в массиве +
         //когда сохраняем null +
         //когда users null +
-
+/*
         System.out.println(userRepository.save(user5));
         System.out.println(Arrays.deepToString(userRepository.getUsers()));
         System.out.println();
@@ -48,7 +48,7 @@ public class Demo {
         System.out.println(nullUserRepository.save(user5));
         System.out.println(Arrays.deepToString(nullUserRepository.getUsers()));
         System.out.println();
-
+*/
         //test "update"
 
         //обновление юзера +
@@ -56,7 +56,7 @@ public class Demo {
         //когда обновляем null +
         //когда user null
         //когда users null +
-
+/*
         user1 = new User(1001, "AAA", "eretertert");
         System.out.println(notNullUserRepository.update(user1));
         System.out.println(Arrays.deepToString(notNullUserRepository.getUsers()));
@@ -71,6 +71,7 @@ public class Demo {
         System.out.println(Arrays.deepToString(notNullUserRepository.getUsers()));
         System.out.println();
 
+        user1 = new User(1001, "AAA", "ddd");
         System.out.println(userRepository.update(user1));
         System.out.println(Arrays.deepToString(userRepository.getUsers()));
         System.out.println();
@@ -78,7 +79,7 @@ public class Demo {
         System.out.println(nullUserRepository.update(user1));
         System.out.println(Arrays.deepToString(nullUserRepository.getUsers()));
         System.out.println();
-
+*/
         //test "delete"
 
         //удаление юзера +
@@ -94,7 +95,7 @@ public class Demo {
         System.out.println(Arrays.deepToString(notNullUserRepository.getUsers()));
         System.out.println();
 
-        userRepository.delete(1001);
+        userRepository.delete(1003);
         System.out.println(Arrays.deepToString(userRepository.getUsers()));
         System.out.println();
 
@@ -122,7 +123,7 @@ public class Demo {
         //получение имен юзеров
         //когда user null
         //когда users null
-
+/*
         System.out.println(Arrays.toString(notNullUserRepository.getUserNames()));
         System.out.println();
 
@@ -131,13 +132,13 @@ public class Demo {
 
         System.out.println(Arrays.toString(nullUserRepository.getUserNames()));
         System.out.println();
-
+*/
         //test "getUserIds"
 
         //получение id юзеров
         //когда user null
         //когда users null
-
+/*
         System.out.println(Arrays.toString(notNullUserRepository.getUserIds()));
         System.out.println();
 
@@ -146,14 +147,14 @@ public class Demo {
 
         System.out.println(Arrays.toString(nullUserRepository.getUserIds()));
         System.out.println();
-
+*/
         //test "getUserNameById"
 
         //получение юзера по id
         //если нет юзера с таким id
         //когда user null
         //когда users null
-
+/*
         System.out.println(notNullUserRepository.getUserNameById(1001));
         System.out.println();
 
@@ -165,7 +166,7 @@ public class Demo {
 
         System.out.println(nullUserRepository.getUserNameById(34));
         System.out.println();
-
+*/
         //test "getUserByName"
 
         //нахождение юзера по имени
@@ -173,7 +174,7 @@ public class Demo {
         //когда ищем null
         //когда user null
         //когда users null
-
+/*
         System.out.println(notNullUserRepository.getUserByName("AAA"));
         System.out.println();
 
@@ -188,14 +189,14 @@ public class Demo {
 
         System.out.println(nullUserRepository.getUserByName("ad"));
         System.out.println();
-
+*/
         //test "findById"
 
         //нахождение юзера по id
         //когда нет юзера с таким id
         //когда user null
         //когда users null
-
+/*
         System.out.println(notNullUserRepository.findById(1001));
         System.out.println();
 
@@ -207,7 +208,7 @@ public class Demo {
 
         System.out.println(nullUserRepository.findById(2352));
         System.out.println();
-
+*/
         //test "getUserBySessionId"
 
         //нахождение юзера по SessionId
@@ -215,7 +216,7 @@ public class Demo {
         //когда ищем null
         //когда user null
         //когда users null
-
+/*
         System.out.println(notNullUserRepository.getUserBySessionId("1w21212"));
         System.out.println();
 
@@ -230,5 +231,6 @@ public class Demo {
 
         System.out.println(nullUserRepository.getUserBySessionId("1w21212"));
         System.out.println();
+ */
     }
 }
