@@ -1,4 +1,4 @@
-package lesson15.homework;
+package lesson15.homework1;
 
 public class UserRepository {
     private User[] users;
@@ -48,7 +48,7 @@ public class UserRepository {
         if (users != null) {
             int index = 0;
             for (User us : users) {
-                if (us != null && us.equals(findById(id)) ) {
+                if (us != null && us.equals(findById(id))) {
                     users[index] = null;
                     break;
                 }
@@ -57,11 +57,19 @@ public class UserRepository {
         }
     }
 
+    public User findUser(User user) {
+        if (users == null || user == null) return null;
+
+        for (User user1 : users)
+            if (user1 != null && user1.equals(user)) return user;
+        return null;
+    }
+
     private User findById(long id) {
         if (users == null) return null;
 
         for (User user : users)
-            if (user != null &&  user.getId() == id) return user;
+            if (user != null && user.getId() == id) return user;
         return null;
     }
 

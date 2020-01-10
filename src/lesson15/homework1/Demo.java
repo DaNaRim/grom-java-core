@@ -1,6 +1,4 @@
-package lesson15.homework;
-
-import java.util.Arrays;
+package lesson15.homework1;
 
 public class Demo {
     public static void main(String[] args) {
@@ -105,5 +103,27 @@ public class Demo {
         System.out.println();
 */
 
+//test findUser
+
+        //нахождение юзера
+        //нет подходящего юзера
+        //когда user в масиве null
+        //когда user null
+        //когда users null +
+
+        System.out.println(notNullUserRepository.findUser(user2).getId());
+        System.out.println();
+
+        System.out.println(notNullUserRepository.findUser(user5));
+        System.out.println();
+
+        System.out.println(userRepository.findUser(user3).getId());
+        System.out.println();
+
+        System.out.println(userRepository.findUser(null));
+        System.out.println();
+
+        System.out.println(nullUserRepository.findUser(user2));
+        System.out.println();
     }
 }
