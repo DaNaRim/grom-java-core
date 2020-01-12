@@ -45,7 +45,7 @@ public class UserRepository {
     }
 
     public void delete(long id) {
-        if (users == null) return;
+        if (users == null || findById(id) == null) return;
 
         int index = 0;
         for (User us : users) {
