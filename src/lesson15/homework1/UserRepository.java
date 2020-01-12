@@ -35,7 +35,7 @@ public class UserRepository {
 
         int index = 0;
         for (User us : users) {
-            if (us != null && us.equals(user)) {
+            if (us != null && us.getId() == user.getId() && !us.equals(user)) {
                 users[index] = user;
                 break;
             }
@@ -45,23 +45,23 @@ public class UserRepository {
     }
 
     public void delete(long id) {
-        if (users != null) {
-            int index = 0;
-            for (User us : users) {
-                if (us != null && us.equals(findById(id))) {
-                    users[index] = null;
-                    break;
-                }
-                index++;
+        if (users == null) return;
+
+        int index = 0;
+        for (User us : users) {
+            if (us != null && us.equals(findById(id))) {
+                users[index] = null;
+                break;
             }
+            index++;
         }
     }
 
     public User findUser(User user) {
         if (users == null || user == null) return null;
 
-        for (User user1 : users)
-            if (user1 != null && user1.equals(user)) return user;
+        for (User us : users)
+            if (us != null && us.equals(user)) return user;
         return null;
     }
 
