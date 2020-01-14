@@ -12,7 +12,7 @@ public class UserRepository {
     }
 
     public User save(User user) {
-        if (users == null || user == null || findById(user.getId()) != null) {
+        if (users == null || user == null || findUser(user) != null) {
             return null;
         }
 
