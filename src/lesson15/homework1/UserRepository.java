@@ -49,7 +49,7 @@ public class UserRepository {
 
         int index = 0;
         for (User us : users) {
-            if (us != null && us.equals(findById(id))) {
+            if (us != null && us.getId() == id) {
                 users[index] = null;
                 break;
             }
