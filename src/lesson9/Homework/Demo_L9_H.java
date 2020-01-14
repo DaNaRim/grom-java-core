@@ -2,7 +2,7 @@ package lesson9.Homework;
 
 import java.util.Arrays;
 
-public class Demo {
+public class Demo_L9_H {
     public static void main(String[] args) {
 
         User user1 = new User(1001, "AAA", "1w21212");

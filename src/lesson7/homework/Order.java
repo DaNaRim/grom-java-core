@@ -38,4 +38,6 @@ public class Order {
     boolean isValidType() {
         return type == "Buy" || type == "Sale" ? true : false;
     }
+
+
 }

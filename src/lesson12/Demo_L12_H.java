@@ -2,7 +2,7 @@ package lesson12;
 
 import java.util.Arrays;
 
-public class Test {
+public class Demo_L12_H {
     public static void main(String[] args) {
         System.out.println(Currency.USD);
 

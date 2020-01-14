@@ -2,7 +2,7 @@ package lesson10.Homework;
 
 import java.util.Date;
 
-public class Demo10 {
+public class Demo_L10_H {
     public static void main(String[] args) {
         Customer customer1 = new Customer("Ira", "Одесса", "Женский");
         Customer customer2 = new Customer("Тест", "Львов", "Мужской");

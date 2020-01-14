@@ -16,10 +16,10 @@ public class Main {
         User user3 = new User(1011, "Ivan", 222, 2, "ASUS", 1400, usBank1);
         User user4 = new User(1012, "Dasha", 500, 87, "Philips", 1200, usBank2);
         User user5 = new User(1021, "Anna", 5000, 56, "FFF", 1500, chinaBank1);
-        User user6 = new User(1022, "Oleg", 200000, 120, "PolComp", 3000, chinaBank2);
+        User user6 = new User(1022, "Oleg", 200000, 120, "PolComp", 300000, chinaBank2);
 
         BankSystem bankSystem = new UkrainianBankSystem();
-
+/*
         bankSystem.withdraw(user1, 150);
         bankSystem.withdraw(user2, 250);
         bankSystem.withdraw(user3, 750);
@@ -54,5 +54,213 @@ public class Main {
         System.out.println(user4);
         System.out.println(user5);
         System.out.println(user6);
+*/
+        //test getLimitOfWithdrawal ChinaBank class
+
+        //Якщо Currency = EUR
+        //Якщо Currency = USD
+
+        System.out.println(chinaBank1.getLimitOfWithdrawal() == 150 ? "Correct" : "Wrong");
+        System.out.println(chinaBank2.getLimitOfWithdrawal() == 100 ? "Correct" : "Wrong");
+        System.out.println();
+
+        //test getLimitOfFunding ChinaBank class
+
+        //Якщо Currency = EUR
+        //Якщо Currency = USD
+
+        System.out.println(chinaBank1.getLimitOfFunding() == 5000 ? "Correct" : "Wrong");
+        System.out.println(chinaBank2.getLimitOfFunding() == 10000 ? "Correct" : "Wrong");
+        System.out.println();
+
+        //test getMonthlyRate ChinaBank class
+
+        //Якщо Currency = EUR
+        //Якщо Currency = USD
+
+        System.out.println(chinaBank1.getMonthlyRate() == 0 ? "Correct" : "Wrong");
+        System.out.println(chinaBank2.getMonthlyRate() == 0.01 ? "Correct" : "Wrong");
+        System.out.println();
+
+        //test getCommission ChinaBank class
+
+        //Якщо Currency = EUR, amount <= 1000
+        //Якщо Currency = EUR, amount > 1000
+        //Якщо Currency = USD, amount <= 1000
+        //Якщо Currency = USD, amount > 1000
+
+        System.out.println(chinaBank1.getCommission(200) == 0.1 ? "Correct" : "Wrong");
+        System.out.println(chinaBank1.getCommission(44444) == 0.11 ? "Correct" : "Wrong");
+        System.out.println(chinaBank2.getCommission(120) == 0.03 ? "Correct" : "Wrong");
+        System.out.println(chinaBank2.getCommission(4444) == 0.1 ? "Correct" : "Wrong");
+        System.out.println();
+
+        //test getLimitOfWithdrawal EUBank class
+
+        //Якщо Currency = EUR
+        //Якщо Currency = USD
+
+        System.out.println(euBank1.getLimitOfWithdrawal() == 2200 ? "Correct" : "Wrong");
+        System.out.println(euBank2.getLimitOfWithdrawal() == 2000 ? "Correct" : "Wrong");
+        System.out.println();
+
+        //test getLimitOfFunding EUBank class
+
+        //Якщо Currency = EUR
+        //Якщо Currency = USD
+
+        System.out.println(euBank1.getLimitOfFunding() == 20000 ? "Correct" : "Wrong");
+        System.out.println(euBank2.getLimitOfFunding() == 10000 ? "Correct" : "Wrong");
+        System.out.println();
+
+        //test getMonthlyRate EUBank class
+
+        //Якщо Currency = EUR
+        //Якщо Currency = USD
+
+        System.out.println(euBank1.getMonthlyRate() == 0.01 ? "Correct" : "Wrong");
+        System.out.println(euBank2.getMonthlyRate() == 0 ? "Correct" : "Wrong");
+        System.out.println();
+
+        //test getCommission EUBank class
+
+        //Якщо Currency = EUR, amount <= 1000
+        //Якщо Currency = EUR, amount > 1000
+        //Якщо Currency = USD, amount <= 1000
+        //Якщо Currency = USD, amount > 1000
+
+        System.out.println(euBank1.getCommission(200) == 0.02 ? "Correct" : "Wrong");
+        System.out.println(euBank1.getCommission(44444) == 0.04 ? "Correct" : "Wrong");
+        System.out.println(euBank2.getCommission(120) == 0.05 ? "Correct" : "Wrong");
+        System.out.println(euBank2.getCommission(4444) == 0.07 ? "Correct" : "Wrong");
+        System.out.println();
+
+        //test getLimitOfWithdrawal USBank class
+
+        //Якщо Currency = EUR
+        //Якщо Currency = USD
+
+        System.out.println(usBank1.getLimitOfWithdrawal() == 1200 ? "Correct" : "Wrong");
+        System.out.println(usBank2.getLimitOfWithdrawal() == 1000 ? "Correct" : "Wrong");
+        System.out.println();
+
+        //test getLimitOfFunding USBank class
+
+        //Якщо Currency = EUR
+        //Якщо Currency = USD
+
+        System.out.println(usBank1.getLimitOfFunding() == 10000 ? "Correct" : "Wrong");
+        System.out.println(usBank2.getLimitOfFunding() == Integer.MAX_VALUE ? "Correct" : "Wrong");
+        System.out.println();
+
+        //test getMonthlyRate USBank class
+
+        //Якщо Currency = EUR
+        //Якщо Currency = USD
+
+        System.out.println(usBank1.getMonthlyRate() == 0.02 ? "Correct" : "Wrong");
+        System.out.println(usBank2.getMonthlyRate() == 0.01 ? "Correct" : "Wrong");
+        System.out.println();
+
+        //test getCommission USBank class
+
+        //Якщо Currency = EUR, amount <= 1000
+        //Якщо Currency = EUR, amount > 1000
+        //Якщо Currency = USD, amount <= 1000
+        //Якщо Currency = USD, amount > 1000
+
+        System.out.println(usBank1.getCommission(200) == 0.06 ? "Correct" : "Wrong");
+        System.out.println(usBank1.getCommission(44444) == 0.08 ? "Correct" : "Wrong");
+        System.out.println(usBank2.getCommission(120) == 0.05 ? "Correct" : "Wrong");
+        System.out.println(usBank2.getCommission(4444) == 0.07 ? "Correct" : "Wrong");
+        System.out.println();
+
+        //test withdraw UkrainianBankSystem class
+
+        //Зняття
+        //Коли перевищена сума
+        //Коли нема на балансі
+        //Якщо user = null
+
+        bankSystem.withdraw(user1, 1500);
+        System.out.println(user1.getBalance());
+
+        bankSystem.withdraw(user2, 2500);
+        System.out.println(user2.getBalance());
+
+        bankSystem.withdraw(user3, 300);
+        System.out.println(user3.getBalance());
+
+        bankSystem.withdraw(null, 1500);
+        System.out.println();
+
+        //test fund UkrainianBankSystem class
+
+        //Поповнення
+        //Коли перевищена сума
+        //Якщо user = null
+
+        bankSystem.fund(user1, 8000);
+        System.out.println(user1.getBalance());
+
+        bankSystem.fund(user2, 25000);
+        System.out.println(user2.getBalance());
+
+        bankSystem.fund(null, 1500);
+        System.out.println();
+
+        //test transferMoney UkrainianBankSystem class
+
+        //Переведення
+        //Коли перевищена сума зняття
+        //Коли перевищена сума поповнення
+        //Коли різні валюти
+        //Якщо fromUser = null
+        //Якщо toUser = null
+
+        bankSystem.transferMoney(user1, user3, 800);
+        System.out.println(user1.getBalance());
+        System.out.println(user3.getBalance());
+        System.out.println("---");
+
+        bankSystem.transferMoney(user2, user6, 3000);
+        System.out.println(user2.getBalance());
+        System.out.println(user6.getBalance());
+        System.out.println("---");
+
+        bankSystem.transferMoney(user1, user5, 80000);
+        System.out.println(user1.getBalance());
+        System.out.println(user5.getBalance());
+        System.out.println("---");
+
+        bankSystem.transferMoney(user1, user2, 80);
+        System.out.println(user1.getBalance());
+        System.out.println(user2.getBalance());
+        System.out.println("---");
+
+        bankSystem.transferMoney(null, user2, 80);
+        System.out.println(user2.getBalance());
+        System.out.println("---");
+
+        bankSystem.transferMoney(user1, null, 80);
+        System.out.println(user1.getBalance());
+        System.out.println();
+
+        //test paySalary UkrainianBankSystem class
+
+        //поповнення
+        //зарплата быльша ніж можнаXD
+        //Якщо user = null
+
+        System.out.println(user1.getBalance());
+        bankSystem.paySalary(user1);
+        System.out.println(user1.getBalance());
+
+        System.out.println("---");
+        System.out.println(user6.getBalance());
+        bankSystem.paySalary(user6);
+        System.out.println(user6.getBalance());
+
+        bankSystem.paySalary(null);
     }
 }

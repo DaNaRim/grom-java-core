@@ -2,7 +2,9 @@ package lesson8.Homework;
 
 public class Arithmetic {
 
-    boolean check(int[] array) {
+    static boolean check(int[] array) {
+        if (array == null) return false;
+
         sortAscending(array);
         int a = array[0];
         sortDescending(array);
@@ -12,10 +14,14 @@ public class Arithmetic {
     }
 
     static int[] sortAscending(int[] array) {
+        if (array == null) return null;
+
         int per;
         int a = 1;
+
         while (a > 0) {
             a = 0;
+
             for (int i = 1; i < array.length; i++) {
                 if (array[i] < array[i - 1]) {
                     per = array[i];
@@ -29,10 +35,14 @@ public class Arithmetic {
     }
 
     static int[] sortDescending(int[] array) {
+        if (array == null) return null;
+
         int per;
         int a = 1;
+
         while (a > 0) {
             a = 0;
+
             for (int i = 1; i < array.length; i++) {
                 if (array[i] > array[i - 1]) {
                     per = array[i];

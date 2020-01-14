@@ -28,19 +28,17 @@ public class Demo {
         }
 
         System.out.println(Arrays.deepToString(userRepository.getUsers()));
-
         userRepository.save(null);
 
         //test update
 
-        user = new User(1001, "Ann", "eretertert");
-        userRepository.update(user);
-
-        System.out.println(Arrays.deepToString(userRepository.getUsers()));
-
         //обновление юзера +
         //когда нет юзера на обновление +
         //когда обновляем null +
+
+        user = new User(1001, "Ann", "eretertert");
+        userRepository.update(user);
+        System.out.println(Arrays.deepToString(userRepository.getUsers()));
 
         user = new User(9999, "Ann", "eretertert");
         userRepository.update(user);
@@ -49,7 +47,5 @@ public class Demo {
 
         System.out.println(userRepository.update(null));
         System.out.println(Arrays.deepToString(userRepository.getUsers()));
-
-
     }
 }

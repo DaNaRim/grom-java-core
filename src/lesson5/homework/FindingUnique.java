@@ -7,32 +7,19 @@ public class FindingUnique {
     }
 
     public static int uniqueCount(int[] array) {
-        /*int count = 1;
+        if (array == null) return 0;
+
+        ArraySort.sortAscending(array);
+
+        int count = 1;
         int prev = array[0];
+
         for (int element : array) {
             if (element != prev) {
                 prev = element;
                 count++;
             }
         }
-        return count;*/
-
-        int res = 0;
-        int a = 0;
-        for (int i = 0; i < array.length; i++) {
-            for (int j = 0; j < i; j++) {
-                if (array[i] == array[j]){
-                    res = a == 1 ? res : res - 1;
-                    a = 1;
-                }
-            }
-            a = 0;
-            res++;
-        }
-        return res;
+        return count;
     }
 }
-        /*for (int i = 0; i < firstArray.length; i++) {
-            int element = firstArray[i];
-            System.out.println(element);
-        }*/
