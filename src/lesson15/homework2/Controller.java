@@ -45,14 +45,14 @@ public class Controller {
         //Зробити масив кімнат api2
         //Проганти другий масив у прогині першого й знайти спільні кімнати
 
+        if (api1 == null || api2 == null) return null;
+
         int numberOfRooms = 0;
         for (Room room1 : api1.getAll()) {
-            if (room1 == null || api1 == null || api2 == null) continue;
+            if (room1 == null) continue;
 
             for (Room room2 : api2.getAll()) {
-                if (room2 == null) continue;
-
-                if (room1.getPrice() == room2.getPrice() && room1.getPersons() == room2.getPersons() && room1.getHotelName() == room2.getHotelName() && room1.getCityName() == room2.getCityName())
+                if (room2 != null && room2.equals(room1))
                     numberOfRooms++;
             }
         }
@@ -61,12 +61,10 @@ public class Controller {
         int i = 0;
 
         for (Room room1 : api1.getAll()) {
-            if (room1 == null || api1 == null || api2 == null) continue;
+            if (room1 == null) continue;
 
             for (Room room2 : api2.getAll()) {
-                if (room2 == null) continue;
-
-                if (room1.getPrice() == room2.getPrice() && room1.getPersons() == room2.getPersons() && room1.getHotelName() == room2.getHotelName() && room1.getCityName() == room2.getCityName()) {
+                if (room2 != null && room2.equals(room1)) {
                     result[i] = room1;
                     i++;
                 }
@@ -84,9 +82,7 @@ public class Controller {
             if(api == null) continue;
 
             for (Room room : api.getAll()) {
-                if (room == null)
-                    continue;
-                if (cheapRoom.getPrice() < room.getPrice())
+                if (room != null && cheapRoom.getPrice() < room.getPrice())
                     cheapRoom = room;
             }
         }
