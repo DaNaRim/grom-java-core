@@ -1,4 +1,4 @@
-package lesson16;
+package lesson17;
 
 import java.util.Arrays;
 
@@ -58,6 +58,7 @@ public class Exercises {
                     res[i]++;
             }
         }
+
         return res;
     }
 
