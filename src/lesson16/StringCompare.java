@@ -1,7 +1,5 @@
 package lesson16;
 
-import lesson15.equals.User;
-
 import java.util.Arrays;
 
 public class StringCompare {
