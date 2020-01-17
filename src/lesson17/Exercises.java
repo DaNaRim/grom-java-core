@@ -12,6 +12,7 @@ public class Exercises {
 
         String str = "Today is good day... Hello dpsd";
         //da -> PPPPPPPPP
+        //[]
 
         System.out.println(replace(str, "is", "that"));
         System.out.println(replace(str, "o", " "));
