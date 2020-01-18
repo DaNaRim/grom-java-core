@@ -27,7 +27,7 @@ public class Solution {
                 if (resultWord.length() < str.length()) resultWord = str;
             }
         }
-        return resultWord;
+        return resultWord.equals("") ? null : resultWord;
     }
 
     public static String minWord(String input) {
@@ -40,7 +40,7 @@ public class Solution {
                 if (resultWord.length() > str.length()) resultWord = str;
             }
         }
-        return resultWord;
+        return resultWord.equals("") ? null : resultWord;
     }
 
     public static String mostCountedWord(String input) {
