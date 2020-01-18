@@ -37,7 +37,7 @@ public class Solution {
 
         for (String str : input.trim().split(" ")) {
             if (!str.equals("") && checkWord(str)) {
-                if (resultWord.length() > str.toCharArray().length) resultWord = str;
+                if (resultWord.length() > str.length()) resultWord = str;
             }
         }
         return resultWord.isEmpty() ? null : resultWord;
