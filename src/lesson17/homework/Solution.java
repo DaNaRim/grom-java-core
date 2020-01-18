@@ -46,16 +46,16 @@ public class Solution {
     public static String mostCountedWord(String input) {
         if (input == null) return null;
 
-        String resultWord = "";
-        int maxNumOfRepWord = 0;
+        String resultWord = null;
+        int maxNumOfRepWord = 1;
 
         for (String str : input.trim().split(" ")) {
-            if (countDuplicates(input, str) > maxNumOfRepWord) {
+            if (!str.equals("") && countDuplicates(input, str) > maxNumOfRepWord) {
                 resultWord = str;
                 maxNumOfRepWord = countDuplicates(input, str);
             }
         }
-        return resultWord.equals("") ? null : resultWord;
+        return resultWord;
     }
 
   /*  public static String validate(String address) {
