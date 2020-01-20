@@ -9,7 +9,7 @@ public class Solution {
         int maxNumOfRepWord = 1;
 
         for (String str : input.trim().split(" ")) {
-            if (!str.equals("") && countDuplicates(input, str) > maxNumOfRepWord) {
+            if (!str.equals("") && checkWord(str) && countDuplicates(input, str) > maxNumOfRepWord) {
                 resultWord = str;
                 maxNumOfRepWord = countDuplicates(input, str);
             }
@@ -25,5 +25,12 @@ public class Solution {
             if (string.equals(word)) res++;
         }
         return res;
+    }
+
+    private static boolean checkWord(String word) {
+        for (char checkChar : word.toCharArray()) {
+            if (!Character.isLetter(checkChar)) return false;
+        }
+        return true;
     }
 }

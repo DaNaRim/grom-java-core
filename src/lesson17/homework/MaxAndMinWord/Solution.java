@@ -18,14 +18,18 @@ public class Solution {
     public static String minWord(String input) {
         if (input == null) return null;
 
-        String resultWord = input.trim().split(" ")[0];
+        String resultWord = null;
+        int minLength = Integer.MAX_VALUE;
 
         for (String str : input.trim().split(" ")) {
             if (!str.equals("") && checkWord(str)) {
-                if (resultWord.length() > str.length()) resultWord = str;
+                if (minLength > str.length()){
+                    resultWord = str;
+                    minLength = str.length();
+                }
             }
         }
-        return resultWord.isEmpty() ? null : resultWord;
+        return resultWord;
     }
 
     private static boolean checkWord(String word) {
