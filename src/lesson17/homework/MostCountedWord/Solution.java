@@ -6,7 +6,7 @@ public class Solution {
         if (input == null) return null;
 
         String resultWord = null;
-        int maxNumOfRepWord = 1;
+        int maxNumOfRepWord = 0;
 
         for (String str : input.trim().split(" ")) {
             if (!str.equals("") && checkWord(str) && countDuplicates(input, str) > maxNumOfRepWord) {
