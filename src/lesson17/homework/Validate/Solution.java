@@ -17,6 +17,9 @@ public class Solution {
 
         address = address.substring(0, address.length() - 3);
 
+        if (address.startsWith("www."))
+            address = address.replaceFirst("www.", "");
+
         for (char ch : address.toCharArray()) {
             if (!Character.isLetter(ch) && !Character.isDigit(ch))
                 return false;
