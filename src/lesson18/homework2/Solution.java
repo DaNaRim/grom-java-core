@@ -1,4 +1,4 @@
-package lesson18.homework;
+package lesson18.homework2;
 
 public class Solution {
 
@@ -7,11 +7,10 @@ public class Solution {
 
         int i = 0;
         for (String string : text.split(" ")) {
-            try {
+            if (checkNumber(string))
                 res[i] = Integer.parseInt(string);
-            } catch (Exception e) {
+            else
                 System.out.println("not a number");
-            }
             i++;
         }
         return res;
