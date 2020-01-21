@@ -10,12 +10,18 @@ public class Solution {
         if (!address.endsWith(".com") && !address.endsWith(".org") && !address.endsWith(".net"))
             return false;
 
-        address = address.substring(0, address.length() - 3);
+        if (!checker(address.substring(6, address.length() - 3)) && !checker(address.substring(7, address.length() - 3)))
+            return false;
 
-        for (char ch : address.toCharArray()) {
+        return true;
+    }
+
+    public static boolean checker(String str) {
+        for (char ch : str.toCharArray()) {
             if (!Character.isLetter(ch) && !Character.isDigit(ch))
                 return false;
         }
         return true;
     }
+
 }
