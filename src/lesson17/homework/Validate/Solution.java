@@ -15,7 +15,7 @@ public class Solution {
         else if (address.startsWith("https://"))
             address = address.replaceFirst("https://", "");
 
-        address = address.substring(0, address.length() - 3);
+        address = address.substring(0, address.length() - 4);
 
         if (address.startsWith("www."))
             address = address.replaceFirst("www.", "");
