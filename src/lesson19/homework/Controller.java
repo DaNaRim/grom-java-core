@@ -6,7 +6,6 @@ public class Controller {
         if (!checkFormat(storage, file)) callPutFileFormatException(storage, file);
         if (!checkSize(storage, file)) callPutFileSizeException(storage, file);
         if (!checkFile(storage, file)) callPutFileFileException(storage, file);
-        if (!checkNameSize(file)) callPutFileNameSizeException(storage, file);
 
         putFile(storage, file);
     }
@@ -93,10 +92,6 @@ public class Controller {
         return true;
     }
 
-    private static boolean checkNameSize(File file) {
-        return file.getName().length() <= 10;
-    }
-
     private static File findById(Storage storage, long id) {
         for (File file : storage.getFiles()) {
             if (file != null && file.getId() == id)
@@ -150,10 +145,6 @@ public class Controller {
 
     private static void callPutFileFileException(Storage storage, File file) throws Exception {
         throw new Exception("Cannot put file " + file.getId() + " in storage " + storage.getId() + ": This file already exists");
-    }
-
-    private static void callPutFileNameSizeException(Storage storage, File file) throws Exception {
-        throw new Exception("Cannot put file " + file.getId() + " in storage " + storage.getId() + ": File name too large");
     }
 
     private static void callDeleteFileException(Storage storage, File file) throws Exception {
