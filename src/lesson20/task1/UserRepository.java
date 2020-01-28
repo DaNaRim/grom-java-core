@@ -1,5 +1,8 @@
 package lesson20.task1;
 
+import lesson20.task1.exception.BadRequestException;
+import lesson20.task1.exception.UserNotFoundException;
+
 public class UserRepository {
     private User[] users;
 
@@ -11,9 +14,21 @@ public class UserRepository {
         return users;
     }
 
-    public User save(User user) {
-        if (users == null || user == null || findUser(user) != null) {
-            return null;
+    public User save(User user) throws Exception{
+//        if (users == null ) return null;
+
+        if (user == null)
+            throw new BadRequestException("Can`t save null user");
+
+        try {
+            findById(user.getId());
+            throw new BadRequestException("User with id: " + user.getId() + " already exist");
+        } catch (UserNotFoundException e) {
+            System.out.println("User with id: " + user.getId() + " not found. Will be saved");
+        }
+
+        if (findUser(user) != null){
+            throw new BadRequestException("User with id: " + user.getId() + " already exist");
         }
 
         if (countUsers() == users.length) return null;
@@ -65,12 +80,13 @@ public class UserRepository {
         return null;
     }
 
-    private User findById(long id) {
-        if (users == null) return null;
+    public User findById(long id) throws UserNotFoundException {
+//        if (users == null) return null;
 
         for (User user : users)
             if (user != null && user.getId() == id) return user;
-        return null;
+
+        throw new UserNotFoundException("User with id: " + id + " not found");
     }
 
     private int countUsers() {
