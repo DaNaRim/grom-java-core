@@ -1,27 +1,21 @@
 package lesson20.task2;
 
-import lesson20.task2.exception.LimitExceeded;
-
 public class Controller {
     private TransactionDAO transactionsDAO = new TransactionDAO();
 
-    public Transaction save(Transaction transaction) throws LimitExceeded {
+    public Transaction save(Transaction transaction) throws Exception {
         return transactionsDAO.save(transaction);
     }
 
-    Transaction[] transactionList() {
-
-        return null;
+    public Transaction[] transactionList() {
+        return transactionsDAO.transactionList();
     }
 
-    Transaction[] transaction(String city) {
-
-        return null;
+    public Transaction[] transactionList(String city) {
+        return transactionsDAO.transactionList(city);
     }
 
-    Transaction[] transactionList(int amount) {
-
-        return null;
+    public Transaction[] transactionList(int amount) {
+        return transactionsDAO.transactionList(amount);
     }
-
 }
