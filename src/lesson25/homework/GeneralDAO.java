@@ -1,6 +1,7 @@
 package lesson25.homework;
 
 public class GeneralDAO<T> {
+    @SuppressWarnings("unchecked")
     private T[] database = (T[]) new Object[10];
 
     public T save(T t) throws Exception {
