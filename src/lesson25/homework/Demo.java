@@ -2,36 +2,36 @@ package lesson25.homework;
 
 import java.util.Arrays;
 
+class Test1 {
+    private int testInt;
+
+    public Test1(int testInt) {
+        this.testInt = testInt;
+    }
+}
+
+class Test2 {
+    private final String testString = "test";
+    private int testInt = 0;
+
+    public Test2(int testInt) {
+        this.testInt = testInt;
+    }
+}
+
+class Test3 {
+    private long testLong;
+    private short testShort;
+    private String testString;
+
+    public Test3(long testLong, short testShort, String testString) {
+        this.testLong = testLong;
+        this.testShort = testShort;
+        this.testString = testString;
+    }
+}
+
 public class Demo {
-
-    private static class Test1 {
-        private int testInt;
-
-        public Test1(int testInt) {
-            this.testInt = testInt;
-        }
-    }
-
-    private static class Test2 {
-        private final String testString = "test";
-        private int testInt = 0;
-
-        public Test2(int testInt) {
-            this.testInt = testInt;
-        }
-    }
-
-    private static class Test3 {
-        private long testLong;
-        private short testShort;
-        private String testString;
-
-        public Test3(long testLong, short testShort, String testString) {
-            this.testLong = testLong;
-            this.testShort = testShort;
-            this.testString = testString;
-        }
-    }
 
     public static void main(String[] args) {
         Test1 test1 = new Test1(0);
