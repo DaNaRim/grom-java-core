@@ -32,35 +32,5 @@ public class Demo {
             System.out.println(e.getMessage());
         }
         System.out.println(Arrays.toString(gTest3.getAll()));
-
-    }
-}
-
-class Test1 {
-    private int testInt;
-
-    public Test1(int testInt) {
-        this.testInt = testInt;
-    }
-}
-
-class Test2 {
-    private final String testString = "test";
-    private int testInt = 0;
-
-    public Test2(int testInt) {
-        this.testInt = testInt;
-    }
-}
-
-class Test3 {
-    private long testLong;
-    private short testShort;
-    private String testString;
-
-    public Test3(long testLong, short testShort, String testString) {
-        this.testLong = testLong;
-        this.testShort = testShort;
-        this.testString = testString;
     }
 }
