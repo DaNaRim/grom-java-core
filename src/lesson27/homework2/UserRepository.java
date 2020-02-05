@@ -6,24 +6,20 @@ import lesson27.homework2.exception.UserNotFoundException;
 import java.util.ArrayList;
 
 public class UserRepository {
-    private ArrayList<User> users;
+    private static ArrayList<User> users;
 
-    public UserRepository(ArrayList<User> users) {
-        this.users = users;
-    }
-
-    public ArrayList<User> getUsers() {
+    public static ArrayList<User> getUsers() {
         return users;
     }
 
-    public User findUser(User user) throws Exception {
+    public static User findUser(User user) throws Exception {
         if (user == null)
             throw new BadRequestException("Can`t found null user");
 
         return findById(user.getId());
     }
 
-    public User save(User user) throws Exception {
+    public static User save(User user) throws Exception {
         if (user == null)
             throw new BadRequestException("Can`t save null user");
 
@@ -39,7 +35,7 @@ public class UserRepository {
     }
 
 
-    public User update(User user) throws Exception {
+    public static User update(User user) throws Exception {
         if (user == null)
             throw new BadRequestException("Can`t update null user");
 
@@ -50,18 +46,18 @@ public class UserRepository {
         return users.get(index);
     }
 
-    public void delete(long id) throws Exception {
+    public static void delete(long id) throws Exception {
         users.remove(findById(id));
     }
 
-    public User findById(long id) throws UserNotFoundException {
+    public static User findById(long id) throws UserNotFoundException {
         for (User user : users)
             if (user != null && user.getId() == id) return user;
 
         throw new UserNotFoundException("User with id: " + id + " not found");
     }
 
-    private int getUserIndex(User user) throws Exception {
+    private static int getUserIndex(User user) throws Exception {
         int index = 0;
         for (User us : users) {
             if (us.getId() == user.getId() && !us.equals(user))
