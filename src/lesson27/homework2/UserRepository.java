@@ -16,6 +16,13 @@ public class UserRepository {
         return users;
     }
 
+    public User findUser(User user) throws Exception {
+        if (user == null)
+            throw new BadRequestException("Can`t found null user");
+
+        return findById(user.getId());
+    }
+
     public User save(User user) throws Exception {
         if (user == null)
             throw new BadRequestException("Can`t save null user");
@@ -54,7 +61,7 @@ public class UserRepository {
         throw new UserNotFoundException("User with id: " + id + " not found");
     }
 
-    private int getUserIndex(User user) throws Exception{
+    private int getUserIndex(User user) throws Exception {
         int index = 0;
         for (User us : users) {
             if (us.getId() == user.getId() && !us.equals(user))
