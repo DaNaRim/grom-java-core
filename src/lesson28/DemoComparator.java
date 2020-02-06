@@ -1,4 +1,7 @@
-package lesson28.task2;
+package lesson28;
+
+import lesson28.task2.Capability;
+import lesson28.task2.IsActiveComparator;
 
 import java.util.ArrayList;
 import java.util.Comparator;
