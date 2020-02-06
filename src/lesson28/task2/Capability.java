@@ -41,7 +41,6 @@ public class Capability implements Comparable<Capability> {
 
     @Override
     public int compareTo(Capability capability) {
-        System.out.println("compareTo is used");
         return (int) (this.id - capability.getId());
 
         //before: 1001, 1005, 900
