@@ -42,8 +42,13 @@ public class Controller {
         return employees;
     }
 
-    public employeesByTeamLead(Employee lead) {
+    public HashSet<Employee> employeesByTeamLead(Employee lead) {
+        HashSet<Employee> employees = null;
 
+        for (Project project : lead.getProjects().getProjects()) {
+            employees.addAll(employeesByProject(project.getName()));
+        }
+        return employees;
     }
 
     public teamLeadsByEmployee(Employee employee) {
