@@ -16,8 +16,8 @@ public class Controller {
         return employees;
     }
 
-    public projectsByEmployee(Employee employee) {
-
+    public HashSet<Project> projectsByEmployee(Employee employee) {
+        return employee.getProjects().getProjects();
     }
 
     public employeesByDepartmentWithoutProject(DepartmentType departmentType) {
