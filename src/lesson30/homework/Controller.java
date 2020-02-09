@@ -4,7 +4,7 @@ import java.util.HashSet;
 
 public class Controller {
 
-    public HashSet<Employee> employeesByProject(String projectName) {
+    public static HashSet<Employee> employeesByProject(String projectName) {
         HashSet<Employee> employees = null;
 
         for (Employee employee : EmployeeDAO.getEmployees()) {
@@ -16,11 +16,11 @@ public class Controller {
         return employees;
     }
 
-    public HashSet<Project> projectsByEmployee(Employee employee) {
+    public static HashSet<Project> projectsByEmployee(Employee employee) {
         return employee.getProjects().getProjects();
     }
 
-    public HashSet<Employee> employeesByDepartmentWithoutProject(DepartmentType departmentType) {
+    public static HashSet<Employee> employeesByDepartmentWithoutProject(DepartmentType departmentType) {
         HashSet<Employee> employees = null;
 
         for (Employee employee : EmployeeDAO.getEmployees()) {
@@ -32,7 +32,7 @@ public class Controller {
         return employees;
     }
 
-    public HashSet<Employee> employeesWithoutProject() {
+    public static HashSet<Employee> employeesWithoutProject() {
         HashSet<Employee> employees = null;
 
         for (Employee employee : EmployeeDAO.getEmployees()) {
@@ -42,7 +42,7 @@ public class Controller {
         return employees;
     }
 
-    public HashSet<Employee> employeesByTeamLead(Employee lead) {
+    public static HashSet<Employee> employeesByTeamLead(Employee lead) {
         HashSet<Employee> employees = null;
 
         for (Project project : lead.getProjects().getProjects()) {
@@ -51,7 +51,7 @@ public class Controller {
         return employees;
     }
 
-    public HashSet<Employee> teamLeadsByEmployee(Employee employee) {
+    public static HashSet<Employee> teamLeadsByEmployee(Employee employee) {
         HashSet<Employee> employees = null;
 
         for (Project project : employee.getProjects().getProjects()) {
@@ -63,7 +63,7 @@ public class Controller {
         return employees;
     }
 
-    public HashSet<Employee> employeesByProjectEmployee(Employee employee) {
+    public static HashSet<Employee> employeesByProjectEmployee(Employee employee) {
         HashSet<Employee> employees = null;
 
         for (Project project : employee.getProjects().getProjects()) {
@@ -72,7 +72,7 @@ public class Controller {
         return employees;
     }
 
-    public HashSet<Project> projectsByCustomer(Customer customer) {
+    public static HashSet<Project> projectsByCustomer(Customer customer) {
         HashSet<Project> projects = null;
 
         for (Project project : ProjectDAO.getProjects()) {
@@ -82,7 +82,7 @@ public class Controller {
         return projects;
     }
 
-    public HashSet<Employee> employeesByCustomerProjects(Customer customer) {
+    public static HashSet<Employee> employeesByCustomerProjects(Customer customer) {
         HashSet<Employee> employees = null;
 
         for (Project project : projectsByCustomer(customer)) {
