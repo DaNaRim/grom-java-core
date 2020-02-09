@@ -72,8 +72,14 @@ public class Controller {
         return employees;
     }
 
-    public projectsByCustomer(Customer customer) {
+    public HashSet<Project> projectsByCustomer(Customer customer) {
+        HashSet<Project> projects = null;
 
+        for (Project project : ProjectDAO.getProjects()) {
+            if (project.getCustomer().equals(customer))
+                projects.add(project);
+        }
+        return projects;
     }
 
     public employeesByCustomerProjects(Customer customer) {
