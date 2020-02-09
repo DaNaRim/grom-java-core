@@ -1,10 +1,27 @@
 package lesson30.homework;
 
-import java.util.Collection;
 import java.util.Date;
 
 public class Firm {
     private Date dateFounded;
-    private Collection departments;
-    private Collection customers;
+    private DepartmentDAO departments;
+    private CustomerDAO customers;
+
+    public Firm(Date dateFounded, DepartmentDAO departments, CustomerDAO customers) {
+        this.dateFounded = dateFounded;
+        this.departments = departments;
+        this.customers = customers;
+    }
+
+    public Date getDateFounded() {
+        return dateFounded;
+    }
+
+    public DepartmentDAO getDepartments() {
+        return departments;
+    }
+
+    public CustomerDAO getCustomers() {
+        return customers;
+    }
 }

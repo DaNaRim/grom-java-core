@@ -1,4 +1,9 @@
 package lesson30.homework;
 
-public class DepartmentType {
+public enum  DepartmentType {
+    DEVELOPMENT,
+    FINANCE,
+    ANALYTICS,
+    MANAGEMENT,
+    DESIGN,
 }
