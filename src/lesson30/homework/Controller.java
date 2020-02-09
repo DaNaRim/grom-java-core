@@ -32,8 +32,14 @@ public class Controller {
         return employees;
     }
 
-    public employeesWithoutProject() {
+    public HashSet<Employee> employeesWithoutProject() {
+        HashSet<Employee> employees = null;
 
+        for (Employee employee : EmployeeDAO.getEmployees()) {
+            if (employee.getProjects() == null)
+                employees.add(employee);
+        }
+        return employees;
     }
 
     public employeesByTeamLead(Employee lead) {
