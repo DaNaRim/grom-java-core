@@ -3,9 +3,9 @@ package lesson30.homework;
 import java.util.HashSet;
 
 public class EmployeeDAO {
-    private HashSet<Employee> employees;
+    private static HashSet<Employee> employees;
 
-    public HashSet<Employee> getEmployees() {
+    public static HashSet<Employee> getEmployees() {
         return employees;
     }
 }

@@ -1,9 +1,19 @@
 package lesson30.homework;
 
+import java.util.HashSet;
+
 public class Controller {
 
-    public employeesByProject(String projectName) {
+    public HashSet<Employee> employeesByProject(String projectName) {
+        HashSet<Employee> employees = null;
 
+        for (Employee employee : EmployeeDAO.getEmployees()) {
+            for (Project project : employee.getProjects().getProjects()) {
+                if (projectName.equals(project.getName()))
+                    employees.add(employee);
+            }
+        }
+        return employees;
     }
 
     public projectsByEmployee(Employee employee) {
