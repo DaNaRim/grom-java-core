@@ -51,8 +51,16 @@ public class Controller {
         return employees;
     }
 
-    public teamLeadsByEmployee(Employee employee) {
+    public HashSet<Employee> teamLeadsByEmployee(Employee employee) {
+        HashSet<Employee> employees = null;
 
+        for (Project project : employee.getProjects().getProjects()) {
+            for (Employee empl : employeesByProject(project.getName())) {
+                if (empl.getPosition().equals(Position.TEAM_LEAD))
+                    employees.add(empl);
+            }
+        }
+        return employees;
     }
 
     public employeesByProjectEmployee(Employee employee) {
