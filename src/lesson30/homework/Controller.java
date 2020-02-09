@@ -20,8 +20,16 @@ public class Controller {
         return employee.getProjects().getProjects();
     }
 
-    public employeesByDepartmentWithoutProject(DepartmentType departmentType) {
+    public HashSet<Employee> employeesByDepartmentWithoutProject(DepartmentType departmentType) {
+        HashSet<Employee> employees = null;
 
+        for (Employee employee : EmployeeDAO.getEmployees()) {
+            if (employee.getDepartment().getType().equals(departmentType)) {
+                if (employee.getProjects() == null)
+                    employees.add(employee);
+            }
+        }
+        return employees;
     }
 
     public employeesWithoutProject() {
