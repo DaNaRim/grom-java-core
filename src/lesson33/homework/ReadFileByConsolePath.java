@@ -5,7 +5,7 @@ import org.apache.commons.io.IOUtils;
 import java.io.*;
 
 public class ReadFileByConsolePath {
-    public void readFileByConsolePath() {
+    public static void readFileByConsolePath() {
         InputStreamReader streamReader = new InputStreamReader(System.in);
         BufferedReader br = new BufferedReader(streamReader);
 
