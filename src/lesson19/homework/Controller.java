@@ -3,23 +3,27 @@ package lesson19.homework;
 public class Controller {
 
     public static void put(Storage storage, File file) throws Exception {
-        if (!checkFormat(storage, file)) callPutFileFormatException(storage, file);
-        if (!checkSize(storage, file)) callPutFileSizeException(storage, file);
-        if (!checkFile(storage, file)) callPutFileFileException(storage, file);
+        if (!checkFormat(storage, file))
+            throw new Exception("Cannot put file " + file.getId() + " in storage " + storage.getId() + ": Unsuitable format");
+        if (!checkSize(storage, file))
+            throw new Exception("Cannot put file " + file.getId() + " in storage " + storage.getId() + ": No storage space");
+        if (!checkFile(storage, file))
+            throw new Exception("Cannot put file " + file.getId() + " in storage " + storage.getId() + ": This file already exists");
 
         putFile(storage, file);
     }
 
     public static void delete(Storage storage, File file) throws Exception {
-        if (checkFile(storage, file)) callDeleteFileException(storage, file);
+        if (checkFile(storage, file))
+            throw new Exception("Cannot delete file " + file.getId() + " from storage " + storage.getId() + ": No such file exists");
 
         deleteFile(storage, file);
     }
 
     public static void transferAll(Storage storageFrom, Storage storageTo) throws Exception {
-        if (!checkFilesFormat(storageFrom, storageTo)) callTransferAllFilesFormatException(storageFrom, storageTo);
-        if (!checkSize(storageFrom, storageTo)) callTransferAllSizeException(storageFrom, storageTo);
-        if (!checkFile(storageFrom, storageTo)) callTransferAllFileException(storageFrom, storageTo);
+        checkFilesFormat(storageFrom, storageTo);
+        checkSize(storageFrom, storageTo);
+        checkFile(storageFrom, storageTo);
 
         transferAllFiles(storageFrom, storageTo);
     }
@@ -27,10 +31,14 @@ public class Controller {
     public static void transferFile(Storage storageFrom, Storage storageTo, long id) throws Exception {
         File file = findById(storageFrom, id);
 
-        if (file == null) callTransferFileNullException(storageFrom, storageTo, id);
-        if (!checkFormat(storageTo, file)) callTransferFileFormatException(storageFrom, storageTo, file);
-        if (!checkSize(storageTo, file)) callTransferFileSizeException(storageFrom, storageTo, file);
-        if (!checkFile(storageTo, file)) callTransferFileFileException(storageFrom, storageTo, file);
+        if (file == null)
+            throw new Exception("Cannot transfer files with id " + id + " from storage " + storageFrom.getId() + " to storage " + storageTo.getId() + ": The file with this id is missing from the repository");
+        if (!checkFormat(storageTo, file))
+            throw new Exception("Cannot transfer file " + file.getId() + " from storage " + storageFrom.getId() + " to storage " + storageTo.getId() + ": Unsuitable format");
+        if (!checkSize(storageTo, file))
+            throw new Exception("Cannot transfer file " + file.getId() + " from storage " + storageFrom.getId() + " to storage " + storageTo.getId() + ": No storage space");
+        if (!checkFile(storageTo, file))
+            throw new Exception("Cannot transfer file " + file.getId() + " from storage " + storageFrom.getId() + " to storage " + storageTo.getId() + ": This file already exists");
 
         putFile(storageTo, file);
         deleteFile(storageFrom, file);
@@ -43,13 +51,11 @@ public class Controller {
         return false;
     }
 
-    private static boolean checkFilesFormat(Storage storageFrom, Storage storageTo) {
-        File[] files = storageFrom.getFiles();
-
-        for (File file : files) {
-            if (file != null && !checkFormat(storageTo, file)) return false;
+    private static void checkFilesFormat(Storage storageFrom, Storage storageTo) throws Exception{
+        for (File file : storageFrom.getFiles()) {
+            if (file != null && !checkFormat(storageTo, file))
+                throw new Exception("Cannot transfer files from storage " + storageFrom.getId() + " to storage " + storageTo.getId() + ": Unsuitable format");
         }
-        return true;
     }
 
     private static boolean checkSize(Storage storage, File file) {
@@ -61,20 +67,19 @@ public class Controller {
         return storage.getStorageSize() > overallSize + file.getSize();
     }
 
-    private static boolean checkSize(Storage storageFrom, Storage storageTo) {
+    private static void checkSize(Storage storageFrom, Storage storageTo) throws Exception{
         int overallSize1 = 0;
         for (File fl : storageFrom.getFiles()) {
-            if (fl != null)
-                overallSize1 += fl.getSize();
+            if (fl != null) overallSize1 += fl.getSize();
         }
 
         int overallSize2 = 0;
         for (File fl : storageTo.getFiles()) {
-            if (fl != null)
-                overallSize2 += fl.getSize();
+            if (fl != null) overallSize2 += fl.getSize();
         }
 
-        return storageTo.getStorageSize() > overallSize1 + overallSize2;
+        if (!(storageTo.getStorageSize() > overallSize1 + overallSize2))
+            throw new Exception("Cannot transfer files from storage " + storageFrom.getId() + " to storage " + storageTo.getId() + ": No storage space");
     }
 
     private static boolean checkFile(Storage storage, File file) {
@@ -85,17 +90,16 @@ public class Controller {
         return true;
     }
 
-    private static boolean checkFile(Storage storageFrom, Storage storageTo) {
+    private static void checkFile(Storage storageFrom, Storage storageTo) throws Exception {
         for (File file : storageFrom.getFiles()) {
-            if (!checkFile(storageTo, file)) return false;
+            if (!checkFile(storageTo, file))
+                throw new Exception("Cannot transfer files from storage " + storageFrom.getId() + " to storage " + storageTo.getId() + "toStorage already has file from fromStorage");
         }
-        return true;
     }
 
     private static File findById(Storage storage, long id) {
         for (File file : storage.getFiles()) {
-            if (file != null && file.getId() == id)
-                return file;
+            if (file != null && file.getId() == id) return file;
         }
         return null;
     }
@@ -133,49 +137,5 @@ public class Controller {
             putFile(storageTo, file);
             deleteFile(storageFrom, file);
         }
-    }
-
-    private static void callPutFileFormatException(Storage storage, File file) throws Exception {
-        throw new Exception("Cannot put file " + file.getId() + " in storage " + storage.getId() + ": Unsuitable format");
-    }
-
-    private static void callPutFileSizeException(Storage storage, File file) throws Exception {
-        throw new Exception("Cannot put file " + file.getId() + " in storage " + storage.getId() + ": No storage space");
-    }
-
-    private static void callPutFileFileException(Storage storage, File file) throws Exception {
-        throw new Exception("Cannot put file " + file.getId() + " in storage " + storage.getId() + ": This file already exists");
-    }
-
-    private static void callDeleteFileException(Storage storage, File file) throws Exception {
-        throw new Exception("Cannot delete file " + file.getId() + " from storage " + storage.getId() + ": No such file exists");
-    }
-
-    private static void callTransferAllFilesFormatException(Storage FromStorage, Storage ToStorage) throws Exception {
-        throw new Exception("Cannot transfer files from storage " + FromStorage.getId() + " to storage " + ToStorage.getId() + ": Unsuitable format");
-    }
-
-    private static void callTransferAllSizeException(Storage FromStorage, Storage ToStorage) throws Exception {
-        throw new Exception("Cannot transfer files from storage " + FromStorage.getId() + " to storage " + ToStorage.getId() + ": No storage space");
-    }
-
-    private static void callTransferAllFileException(Storage FromStorage, Storage ToStorage) throws Exception {
-        throw new Exception("Cannot transfer files from storage " + FromStorage.getId() + " to storage " + ToStorage.getId() + "toStorage already has file from fromStorage");
-    }
-
-    private static void callTransferFileNullException(Storage FromStorage, Storage ToStorage, long id) throws Exception {
-        throw new Exception("Cannot transfer files with id " + id + " from storage " + FromStorage.getId() + " to storage " + ToStorage.getId() + ": The file with this id is missing from the repository");
-    }
-
-    private static void callTransferFileFormatException(Storage FromStorage, Storage ToStorage, File file) throws Exception {
-        throw new Exception("Cannot transfer file " + file.getId() + " from storage " + FromStorage.getId() + " to storage " + ToStorage.getId() + ": Unsuitable format");
-    }
-
-    private static void callTransferFileSizeException(Storage FromStorage, Storage ToStorage, File file) throws Exception {
-        throw new Exception("Cannot transfer file " + file.getId() + " from storage " + FromStorage.getId() + " to storage " + ToStorage.getId() + ": No storage space");
-    }
-
-    private static void callTransferFileFileException(Storage FromStorage, Storage ToStorage, File file) throws Exception {
-        throw new Exception("Cannot transfer file " + file.getId() + " from storage " + FromStorage.getId() + " to storage " + ToStorage.getId() + ": This file already exists");
     }
 }
