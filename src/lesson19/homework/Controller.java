@@ -16,9 +16,9 @@ public class Controller {
 
     public static void delete(Storage storage, File file) throws Exception {
         try {
-            checkFile(storage, file);
+            findById(storage, file.getId());
         } catch (Exception e) {
-            throw new Exception("Cannot delete file " + file.getId() + " from storage " + storage.getId() + ": No such file exists");
+            throw new Exception("Cannot delete file " + file.getId() + " from storage " + storage.getId() + ": " + e.getMessage());
         }
 
         deleteFile(storage, file);
@@ -107,7 +107,7 @@ public class Controller {
         for (File file : storage.getFiles()) {
             if (file != null && file.getId() == id) return file;
         }
-        throw new Exception("The file with this id is missing from the repository");
+        throw new Exception("The file is missing from the repository");
     }
 
     private static void putFile(Storage storage, File file) {
@@ -131,7 +131,6 @@ public class Controller {
         for (File fl : files) {
             if (fl != null && fl.equals(file)) {
                 files[index] = null;
-                storage.setFiles(files);
                 return;
             }
             index++;
