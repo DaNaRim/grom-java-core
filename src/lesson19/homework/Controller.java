@@ -54,7 +54,7 @@ public class Controller {
 
     private static void checkFileFormat(Storage storage, File file) throws Exception {
         for (String str : storage.getFormatsSupported()) {
-            if (file != null && file.getFormat().equals(str)) return;
+            if (file.getFormat().equals(str)) return;
         }
         throw new Exception("Unsuitable format");
     }
@@ -67,32 +67,32 @@ public class Controller {
     }
 
     private static void checkSize(Storage storage, File file) throws Exception {
-        int overallSize = 0;
+        int storageFilesSize = 0;
         for (File fl : storage.getFiles()) {
-            if (fl != null) overallSize += fl.getSize();
+            if (fl != null) storageFilesSize += fl.getSize();
         }
-        if (storage.getStorageSize() > overallSize + file.getSize())
+        if (storage.getStorageSize() < storageFilesSize + file.getSize())
             throw new Exception("No storage space");
     }
 
     private static void checkSize(Storage storageFrom, Storage storageTo) throws Exception {
-        int overallSize1 = 0;
+        int storageFromFilesSize = 0;
         for (File fl : storageFrom.getFiles()) {
-            if (fl != null) overallSize1 += fl.getSize();
+            if (fl != null) storageFromFilesSize += fl.getSize();
         }
 
-        int overallSize2 = 0;
+        int storageToFilesSize = 0;
         for (File fl : storageTo.getFiles()) {
-            if (fl != null) overallSize2 += fl.getSize();
+            if (fl != null) storageToFilesSize += fl.getSize();
         }
 
-        if (!(storageTo.getStorageSize() > overallSize1 + overallSize2))
+        if (storageTo.getStorageSize() < storageFromFilesSize + storageToFilesSize)
             throw new Exception("No storage space");
     }
 
     private static void checkFile(Storage storage, File file) throws Exception {
         for (File file1 : storage.getFiles()) {
-            if (file != null && file1 != null && (file.equals(file1) || file.getId() == file1.getId()))
+            if (file1 != null && file.getId() == file1.getId())
                 throw new Exception("File already exists");
         }
     }
@@ -118,7 +118,7 @@ public class Controller {
             if (fl == null) {
                 files[index] = file;
                 storage.setFiles(files);
-                break;
+                return;
             }
             index++;
         }
@@ -132,7 +132,7 @@ public class Controller {
             if (fl != null && fl.equals(file)) {
                 files[index] = null;
                 storage.setFiles(files);
-                break;
+                return;
             }
             index++;
         }
