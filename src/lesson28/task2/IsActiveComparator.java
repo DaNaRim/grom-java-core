@@ -13,4 +13,3 @@ public class IsActiveComparator implements Comparator<Capability> {
         return 1;
     }
 }
-

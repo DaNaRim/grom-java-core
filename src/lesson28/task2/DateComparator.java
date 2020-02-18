@@ -11,4 +11,3 @@ public class DateComparator implements Comparator<Capability> {
         return 0;
     }
 }
-

@@ -16,7 +16,5 @@ public class DemoComparable {
         set.add(capability1);
         set.add(capability2);
         set.add(capability3);
-
-
     }
 }
