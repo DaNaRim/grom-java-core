@@ -1,33 +1,26 @@
-package lesson34.homework;
+package lesson34.homewok2;
 
 import java.io.*;
 
 public class Solution {
 
-    public void transferFileContent(String fileFromPath, String fileToPath) throws Exception{
+    public static void transferSentences(String fileFromPath, String fileToPath, String word) throws Exception {
         validate(fileFromPath, fileToPath);
-        deleteFileContent(fileFromPath);
-        writeFile(fileToPath, readFromFile(fileFromPath));
-    }
 
-    private static void deleteFileContent(String path) {
-        StringBuffer res = new StringBuffer();
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            res.replace(0, res.length(), "");
-        } catch (FileNotFoundException e) {
-            System.err.println("File does not exist");
-        } catch (IOException e) {
-            System.err.println("Delete from file " + path + "failed");
-        }
+        StringBuffer sb = readFromFile(fileFromPath);
+        deleteFileContent(fileFromPath);
+
+        writeFile(fileFromPath, newFileFromContent(sb, word));
+        writeFile(fileToPath, newFileToContent(sb, word));
     }
 
     private static StringBuffer readFromFile(String path) {
         StringBuffer res = new StringBuffer();
+
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             String line;
             while ((line = br.readLine()) != null) {
                 res.append(line);
-                res.append("\n");
             }
             res.replace(res.length() - 1, res.length(), "");
         } catch (FileNotFoundException e) {
@@ -48,7 +41,40 @@ public class Solution {
         }
     }
 
-    private static void validate(String fileFromPath, String fileToPath) throws Exception{
+    private static StringBuffer newFileToContent(StringBuffer firstReader, String word) {
+        StringBuffer res = new StringBuffer();
+        for (String str : firstReader.toString().split(".")) {
+            if (str.contains(word)) {
+                res.append(str);
+                res.append(".");
+            }
+        }
+        return res;
+    }
+
+    private static StringBuffer newFileFromContent(StringBuffer firstReader, String word) {
+        StringBuffer res = new StringBuffer();
+        for (String str : firstReader.toString().split(".")) {
+            if (!str.contains(word)) {
+                res.append(str);
+                res.append(" ");
+            }
+        }
+        return res;
+    }
+
+    private static void deleteFileContent(String path) {
+        StringBuffer res = new StringBuffer();
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            res.replace(0, res.length(), "");
+        } catch (FileNotFoundException e) {
+            System.err.println("File does not exist");
+        } catch (IOException e) {
+            System.err.println("Delete from file " + path + "failed");
+        }
+    }
+
+    private static void validate(String fileFromPath, String fileToPath) throws Exception {
         File fileFrom = new File(fileFromPath);
         File fileTo = new File(fileToPath);
 
