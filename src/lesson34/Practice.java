@@ -16,7 +16,7 @@ public class Practice {
 
         validate(fileFromPath, fileToPath);
 
-        writeFile(fileToPath, readFromFile(fileFromPath));
+        writeToFile(fileToPath, readFromFile(fileFromPath));
     }
 
     private static StringBuffer readFromFile(String path) {
@@ -36,7 +36,7 @@ public class Practice {
         return res;
     }
 
-    private static void writeFile(String path, StringBuffer contentToWriter) {
+    private static void writeToFile(String path, StringBuffer contentToWriter) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path, true))) {
             bufferedWriter.append(contentToWriter);
         } catch (IOException e) {

@@ -1,17 +1,23 @@
-package lesson34.homewok2;
+package lesson34.homework3;
+
+import org.apache.commons.io.IOUtils;
 
 import java.io.*;
 
 public class Solution {
 
-    public static void transferSentences(String fileFromPath, String fileToPath, String word) throws Exception {
+    public static void copyFileContent(String fileFromPath, String fileToPath) throws Exception {
         validate(fileFromPath, fileToPath);
-
-        StringBuffer sb = readFromFile(fileFromPath);
+        writeToFile(fileToPath, readFromFile(fileFromPath));
         deleteFileContent(fileFromPath);
+    }
 
-        writeFile(fileFromPath, newFileFromContent(sb, word));
-        writeFile(fileToPath, newFileToContent(sb, word));
+    public static void copyFileContentApachelIO(String fileFromPath, String fileToPath) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileFromPath)); BufferedWriter bw = new BufferedWriter(new FileWriter(fileFromPath))) {
+            IOUtils.copy(br, bw);
+        } catch (IOException e) {
+            System.err.println("Writing to file " + fileToPath + " failed");
+        }
     }
 
     private static StringBuffer readFromFile(String path) {
@@ -21,6 +27,7 @@ public class Solution {
             String line;
             while ((line = br.readLine()) != null) {
                 res.append(line);
+                res.append("\n");
             }
             res.replace(res.length() - 1, res.length(), "");
         } catch (FileNotFoundException e) {
@@ -31,36 +38,14 @@ public class Solution {
         return res;
     }
 
-    private static void writeFile(String path, StringBuffer contentToWriter) {
+    private static void writeToFile(String path, StringBuffer contentToWriter) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path, true))) {
             if (readFromFile(path).toString().equals("")) bufferedWriter.append("\n");
 
             bufferedWriter.append(contentToWriter);
         } catch (IOException e) {
-            System.err.println("Can`t write to file");
+            System.err.println("Writing to file " + path + " failed");
         }
-    }
-
-    private static StringBuffer newFileToContent(StringBuffer firstReader, String word) {
-        StringBuffer res = new StringBuffer();
-        for (String str : firstReader.toString().split(".")) {
-            if (str.contains(word)) {
-                res.append(str);
-                res.append(".");
-            }
-        }
-        return res;
-    }
-
-    private static StringBuffer newFileFromContent(StringBuffer firstReader, String word) {
-        StringBuffer res = new StringBuffer();
-        for (String str : firstReader.toString().split(".")) {
-            if (!str.contains(word)) {
-                res.append(str);
-                res.append(" ");
-            }
-        }
-        return res;
     }
 
     private static void deleteFileContent(String path) {

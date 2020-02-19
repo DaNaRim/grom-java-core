@@ -1,4 +1,4 @@
-package lesson34.homewok2;
+package lesson34.homework2;
 
 public class Demo {
     public static void main(String[] args) throws Exception{
