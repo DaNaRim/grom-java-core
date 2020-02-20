@@ -15,7 +15,6 @@ public class Practice {
         //записать контент в файл to
 
         validate(fileFromPath, fileToPath);
-
         writeToFile(fileToPath, readFromFile(fileFromPath));
     }
 
@@ -48,20 +47,16 @@ public class Practice {
         File fileFrom = new File(fileFromPath);
         File fileTo = new File(fileToPath);
 
-        if (!fileFrom.exists()) {
+        if (!fileFrom.exists())
             throw new FileNotFoundException("File " + fileFrom + " does not exist");
-        }
 
-        if (!fileTo.exists()) {
+        if (!fileTo.exists())
             throw new FileNotFoundException("File " + fileTo + " does not exist");
-        }
 
-        if (!fileFrom.canRead()) {
+        if (!fileFrom.canRead())
             throw new Exception("File " + fileFrom + " does not have permissions to read");
-        }
 
-        if (!fileFrom.canWrite()) {
+        if (!fileFrom.canWrite())
             throw new Exception("File " + fileFrom + " does not have permissions to written");
-        }
     }
 }

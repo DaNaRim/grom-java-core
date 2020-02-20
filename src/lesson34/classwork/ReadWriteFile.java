@@ -3,9 +3,8 @@ package lesson34.classwork;
 import java.io.*;
 
 public class ReadWriteFile {
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         readFile("");
-
         writeFile("");
     }
 
@@ -22,7 +21,7 @@ public class ReadWriteFile {
         }
     }
 
-    private static void writeFile(String path) throws InterruptedException {
+    private static void writeFile(String path) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path, true))) {
             bufferedWriter.append("\n");
             bufferedWriter.append("TTTTT");
