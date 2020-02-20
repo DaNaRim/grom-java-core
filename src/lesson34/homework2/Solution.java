@@ -43,7 +43,7 @@ public class Solution {
     private static StringBuffer newFileToContent(StringBuffer firstReader, String word) {
         StringBuffer res = new StringBuffer();
         for (String str : firstReader.toString().split(".")) {
-            if (str.contains(word)) {
+            if (str.length() > 10 && str.contains(word)) {
                 res.append(str);
                 res.append(".");
             }
@@ -54,7 +54,7 @@ public class Solution {
     private static StringBuffer newFileFromContent(StringBuffer firstReader, String word) {
         StringBuffer res = new StringBuffer();
         for (String str : firstReader.toString().split(".")) {
-            if (!str.contains(word)) {
+            if (str.length() > 10 && !str.contains(word)) {
                 res.append(str);
                 res.append(".");
             }
