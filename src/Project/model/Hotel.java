@@ -15,5 +15,14 @@ public class Hotel {
         this.street = street;
     }
 
+    @Override
+    public String toString() {
+        return id + ", " +
+                name + ", " +
+                country + ", " +
+                city + ", " +
+                street;
+    }
+
     //TODO simplify
 }

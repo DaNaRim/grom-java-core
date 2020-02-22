@@ -21,5 +21,16 @@ public class Room {
         this.hotel = hotel;
     }
 
+    @Override
+    public String toString() {
+        return id + ", " +
+                numberOfGuests + ", " +
+                price + ", " +
+                breakfastIncluded + ", " +
+                petsAllowed + ", " +
+                dateAvailableFrom + ", " +
+                hotel;
+    }
+
     //TODO simplify
 }

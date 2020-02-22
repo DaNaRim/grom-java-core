@@ -19,5 +19,15 @@ public class Order {
         this.moneyPaid = moneyPaid;
     }
 
+    @Override
+    public String toString() {
+        return id + ", " +
+                user + ", " +
+                room + ", " +
+                dateFrom + ", " +
+                dateTo + ", " +
+                moneyPaid;
+    }
+
     //TODO simplify
 }

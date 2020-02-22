@@ -15,5 +15,10 @@ public class User {
         this.userType = userType;
     }
 
+    @Override
+    public String toString() {
+        return id + ", " + userName + ", " + password + ", " + country + ", " + userType;
+    }
+
     //TODO simplify
 }

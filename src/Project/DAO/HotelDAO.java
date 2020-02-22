@@ -2,7 +2,10 @@ package Project.DAO;
 
 import Project.model.Hotel;
 
-public class HotelDAO {
+import java.util.LinkedList;
+
+public class HotelDAO extends MainDAO<Hotel> {
+    private String path = "testPath";
 
     public Hotel findHotelByName(String name) {
         //TODO findHotelByName
@@ -16,11 +19,33 @@ public class HotelDAO {
         return null;
     }
 
-    //TODO считывание данных
+    public static Hotel findHotelById(long id) {
+        //TODO findHotelById
 
-    //TODO маппинг данных
+        return null;
+    }
 
-    //TODO антимапинг данных
+    @Override
+    LinkedList<Hotel> getFromFile() {
+        return super.getFromFile();
+    }
 
-    //TODO записывание данных
+    @Override
+    void addToFile(Hotel hotel) {
+        super.addToFile(hotel);
+    }
+
+    @Override
+    Hotel map(String line) throws Exception {
+        try {
+            String[] fields = line.split(",");
+
+            for (int i = 0; i < fields.length; i++) {
+                fields[i] = fields[i].trim();
+            }
+            return new Hotel(Long.parseLong(fields[1]), fields[2], fields[3], fields[4], fields[5]);
+        } catch (Exception e) {
+            throw new Exception("broken line");
+        }
+    }
 }
