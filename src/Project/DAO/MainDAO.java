@@ -1,5 +1,6 @@
 package Project.DAO;
 
+import Project.exception.BrokenFileException;
 import Project.model.MainModel;
 
 import java.io.*;
@@ -8,9 +9,10 @@ import java.util.LinkedList;
 public abstract class MainDAO<T extends MainModel> {
     private String path;
 
-    LinkedList<T> getFromFile() { //TODO Exception
-        LinkedList<T> t = new LinkedList<>();
+    public LinkedList<T> getFromFile() throws BrokenFileException, IOException{
+        validate(path);
 
+        LinkedList<T> t = new LinkedList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
             int lineIndex = 1;
             String line;
@@ -18,31 +20,29 @@ public abstract class MainDAO<T extends MainModel> {
                 try {
                     t.add(map(line));
                 } catch (Exception e) {
-                    System.err.println("broken line: " + lineIndex);
+                    throw new BrokenFileException("broken line: " + lineIndex);
                 }
                 lineIndex++;
             }
-        } catch (FileNotFoundException e) {
-            System.err.println("File not found");
         } catch (IOException e) {
-            System.err.println("Reading from file failed");
+            throw new IOException("Reading from file failed");
         }
         return t;
     }
 
-    T addToFile(T t) { //TODO Exception
+    public T addToFile(T t) throws IOException, BrokenFileException{
+        validate(path);
+
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             if (getFromFile() != null) bw.append("\n");
             bw.append(t.toString());
-        } catch (FileNotFoundException e) {
-            System.err.println("File not found");
         } catch (IOException e) {
-            System.err.println("Writing to file failed");
+            throw new IOException("Writing to file failed");
         }
         return t;
     }
 
-    void deleteFromFile(Long id) {
+    public void deleteFromFile(Long id) throws IOException, BrokenFileException {
         LinkedList<T> newToWrite = new LinkedList<>();
 
         for (T t1 : getFromFile()) {
@@ -55,15 +55,20 @@ public abstract class MainDAO<T extends MainModel> {
         }
     }
 
-    abstract T map(String line) throws Exception; //TODO Exception
+    public abstract T map(String line) throws Exception;
 
-    private void deleteFileContent() { //TODO Exception
+    private void validate(String path) throws FileNotFoundException {
+        if (!new File(path).exists())
+            throw new FileNotFoundException("File does not exist");
+    }
+
+    private void deleteFileContent() throws IOException {
+        validate(path);
+
         try (BufferedWriter br = new BufferedWriter(new FileWriter(path))) {
             br.write("");
         } catch (IOException e) {
-            System.err.println("Delete from file failed");
+            throw new IOException("Delete from file failed");
         }
     }
-
-    //TODO access modifiers
 }

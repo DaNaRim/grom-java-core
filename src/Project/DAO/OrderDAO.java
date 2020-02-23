@@ -1,7 +1,11 @@
 package Project.DAO;
 
+import Project.exception.BadRequestException;
+import Project.exception.BrokenFileException;
+import Project.exception.InternalServerException;
 import Project.model.Order;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
@@ -12,7 +16,12 @@ public class OrderDAO extends MainDAO<Order> {
     private UserDAO userDAO = new UserDAO();
     private RoomDAO roomDAO = new RoomDAO();
 
-    public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) throws Exception { //TODO Exception
+    public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) throws Exception {
+        for (Order order : getFromFile()) {
+            if (order.getRoom().getId() == roomId && order.getUser().getId() == userId)
+                throw new BadRequestException("You already booked this room");
+        }
+
         addToFile(new Order(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
                 userDAO.findUserById(userId),
                 roomDAO.findRoomById(roomId),
@@ -21,34 +30,38 @@ public class OrderDAO extends MainDAO<Order> {
                 roomDAO.findRoomById(roomId).getPrice()));
     }
 
-    public void cancelReservation(long roomId, long userId) throws Exception {
+    public void cancelReservation(long roomId, long userId)
+            throws InternalServerException, IOException {
+
         deleteFromFile(findOrderByRoomAndUser(roomId, userId).getId());
     }
 
-    Order findOrderByRoomAndUser(long roomId, long userId) throws Exception { //TODO Exception
+    public Order findOrderByRoomAndUser(long roomId, long userId)
+            throws InternalServerException, IOException {
+
         for (Order order : getFromFile()) {
             if (order.getRoom().getId() == roomId && order.getUser().getId() == userId) return order;
         }
-        throw new Exception("Missing order with room: " + roomId + " and user: " + userId);
+        throw new InternalServerException("Missing order with room: " + roomId + " and user: " + userId);
     }
 
     @Override
-    LinkedList<Order> getFromFile() {
+    public LinkedList<Order> getFromFile() throws BrokenFileException, IOException {
         return super.getFromFile();
     }
 
     @Override
-    Order addToFile(Order order) {
+    public Order addToFile(Order order) throws IOException, BrokenFileException {
         return super.addToFile(order);
     }
 
     @Override
-    void deleteFromFile(Long id) {
+    public void deleteFromFile(Long id) throws IOException, BrokenFileException {
         super.deleteFromFile(id);
     }
 
     @Override
-    Order map(String line) throws Exception { //TODO Exception
+    public Order map(String line) throws Exception {
         String[] fields = line.split(",");
 
         for (int i = 0; i < fields.length; i++) {

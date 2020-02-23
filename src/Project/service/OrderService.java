@@ -1,21 +1,33 @@
 package Project.service;
 
 import Project.DAO.OrderDAO;
+import Project.DAO.RoomDAO;
+import Project.exception.BadRequestException;
+import Project.exception.NotRegisteredException;
 
 import java.util.Date;
 
 public class OrderService {
-    OrderDAO orderDAO = new OrderDAO();
+    private OrderDAO orderDAO = new OrderDAO();
+    private RoomDAO roomDAO = new RoomDAO();
 
-    public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) {
-        //TODO check business logic
+    public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) throws Exception {
+        if (UserService.getLoginUser() == null)
+            throw new NotRegisteredException("You are not log in");
 
-        //orderDAO.bookRoom(roomId, userId, dateFrom, dateTo);
+        if (roomDAO.findRoomById(roomId).getDateAvailableFrom().after(dateFrom))
+            throw new BadRequestException("The room is busy at this time");
+
+        orderDAO.bookRoom(roomId, userId, dateFrom, dateTo);
     }
 
-    public void cancelReservation(long roomId, long userId) {
-        //TODO check business logic
+    public void cancelReservation(long roomId, long userId) throws Exception{
+        if (UserService.getLoginUser() == null)
+            throw new NotRegisteredException("You are not log in");
 
-        //orderDAO.cancelReservation(roomId, userId);
+        if (roomDAO.findRoomById(roomId).getDateAvailableFrom().before(new Date()))
+            throw new BadRequestException("Possible cancellation has expired");
+
+        orderDAO.cancelReservation(roomId, userId);
     }
 }

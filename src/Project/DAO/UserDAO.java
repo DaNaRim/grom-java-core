@@ -1,15 +1,18 @@
 package Project.DAO;
 
+import Project.exception.BrokenFileException;
+import Project.exception.InternalServerException;
 import Project.model.User;
 import Project.model.UserType;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.UUID;
 
 public class UserDAO extends MainDAO<User> {
     private String path = "testPath";
 
-    public User registerUser(User user) {
+    public User registerUser(User user) throws IOException, BrokenFileException {
         return addToFile(new User(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
                 user.getUserName(),
                 user.getPassword(),
@@ -17,38 +20,30 @@ public class UserDAO extends MainDAO<User> {
                 user.getUserType()));
     }
 
-    public void login(String userName, String password) {
-        //TODO login user
-    }
-
-    public void logout() {
-        //TODO logout user
-    }
-
-    public User findUserById(long id) throws Exception { //TODO Exception
+    public User findUserById(long id) throws InternalServerException, IOException {
         for (User user : getFromFile()) {
             if (user.getId() == id) return user;
         }
-        throw new Exception("Missing user with id: " + id);
+        throw new InternalServerException("Missing user with id: " + id);
     }
 
     @Override
-    LinkedList<User> getFromFile() {
+    public LinkedList<User> getFromFile() throws IOException, BrokenFileException {
         return super.getFromFile();
     }
 
     @Override
-    User addToFile(User user) {
+    public User addToFile(User user) throws IOException, BrokenFileException {
         return super.addToFile(user);
     }
 
     @Override
-    void deleteFromFile(Long id) {
+    public void deleteFromFile(Long id) throws IOException, BrokenFileException {
         super.deleteFromFile(id);
     }
 
     @Override
-    User map(String line) throws Exception { //TODO Exception
+    public User map(String line) throws Exception {
         String[] fields = line.split(",");
 
         for (int i = 0; i < fields.length; i++) {

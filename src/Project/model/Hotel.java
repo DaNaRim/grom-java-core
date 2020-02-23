@@ -1,5 +1,7 @@
 package Project.model;
 
+import java.util.Objects;
+
 public class Hotel extends MainModel {
     private Long id;
     private String name;
@@ -41,6 +43,22 @@ public class Hotel extends MainModel {
 
     public String getStreet() {
         return street;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Hotel hotel = (Hotel) o;
+        return name.equals(hotel.name) &&
+                country.equals(hotel.country) &&
+                city.equals(hotel.city) &&
+                street.equals(hotel.street);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, country, city, street);
     }
 
     @Override

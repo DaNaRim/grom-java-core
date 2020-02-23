@@ -1,8 +1,11 @@
 package Project.DAO;
 
+import Project.exception.BrokenFileException;
+import Project.exception.InternalServerException;
 import Project.model.Filter;
 import Project.model.Room;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +21,7 @@ public class RoomDAO extends MainDAO<Room> {
         return null;
     }
 
-    public Room addRoom(Room room) {
+    public Room addRoom(Room room) throws IOException, BrokenFileException {
         return addToFile(new Room(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
                 room.getNumberOfGuests(),
                 room.getPrice(),
@@ -28,34 +31,34 @@ public class RoomDAO extends MainDAO<Room> {
                 room.getHotel()));
     }
 
-    public void deleteRoom(long roomId) {
+    public void deleteRoom(long roomId) throws IOException, BrokenFileException {
         deleteFromFile(roomId);
     }
 
-    public Room findRoomById(long id) throws Exception { //TODO Exception
+    public Room findRoomById(long id) throws InternalServerException, IOException {
         for (Room room : getFromFile()) {
             if (room.getId() == id) return room;
         }
-        throw new Exception("Missing room with id: " + id);
+        throw new InternalServerException("Missing room with id: " + id);
     }
 
     @Override
-    LinkedList<Room> getFromFile() {
+    public LinkedList<Room> getFromFile() throws IOException, BrokenFileException {
         return super.getFromFile();
     }
 
     @Override
-    Room addToFile(Room room) {
+    public Room addToFile(Room room) throws IOException, BrokenFileException {
         return super.addToFile(room);
     }
 
     @Override
-    void deleteFromFile(Long id) {
+    public void deleteFromFile(Long id) throws IOException, BrokenFileException {
         super.deleteFromFile(id);
     }
 
     @Override
-    Room map(String line) throws Exception { //TODO Exception
+    public Room map(String line) throws Exception {
         String[] fields = line.split(",");
 
         for (int i = 0; i < fields.length; i++) {

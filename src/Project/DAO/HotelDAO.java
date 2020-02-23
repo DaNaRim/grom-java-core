@@ -1,35 +1,44 @@
 package Project.DAO;
 
+import Project.exception.BadRequestException;
+import Project.exception.BrokenFileException;
+import Project.exception.InternalServerException;
 import Project.model.Hotel;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.UUID;
 
 public class HotelDAO extends MainDAO<Hotel> {
     private String path = "testPath";
 
-    public Hotel findHotelByName(String name) throws Exception { //TODO Exception
+    public Hotel findHotelByName(String name) throws BadRequestException, IOException, BrokenFileException {
         for (Hotel hotel : getFromFile()) {
             if (hotel.getName().equals(name)) return hotel;
         }
-        throw new Exception("There is no hotel with the name: " + name);
+        throw new BadRequestException("There is no hotel with the name: " + name);
     }
 
-    public Hotel findHotelByCity(String city) throws Exception { //TODO Exception
+    public Hotel findHotelByCity(String city) throws BadRequestException, IOException, BrokenFileException {
         for (Hotel hotel : getFromFile()) {
             if (hotel.getCity().equals(city)) return hotel;
         }
-        throw new Exception("Missing hotel in city: " + city);
+        throw new BadRequestException("Missing hotel in city: " + city);
     }
 
-    public Hotel findHotelById(long id) throws Exception { //TODO Exception
+    public Hotel findHotelById(long id) throws InternalServerException, IOException {
         for (Hotel hotel : getFromFile()) {
             if (hotel.getId() == id) return hotel;
         }
-        throw new Exception("Missing hotel with id: " + id);
+        throw new InternalServerException("Missing hotel with id: " + id);
     }
 
-    public Hotel addHotel(Hotel hotel) {
+    public Hotel addHotel(Hotel hotel) throws IOException, BrokenFileException, BadRequestException {
+        for (Hotel hotel1 : getFromFile()) {
+            if (hotel1.equals(hotel))
+                throw new BadRequestException("The hotel is already exist");
+        }
+
         return addToFile(new Hotel(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
                 hotel.getName(),
                 hotel.getCountry(),
@@ -37,27 +46,30 @@ public class HotelDAO extends MainDAO<Hotel> {
                 hotel.getStreet()));
     }
 
-    public void deleteHotel(long hotelId) {
-        deleteFromFile(hotelId);
+    public void deleteHotel(long hotelId) throws IOException, BrokenFileException, BadRequestException {
+        for (Hotel hotel : getFromFile()) {
+            if (hotel.getId().equals(hotelId)) deleteFromFile(hotel.getId());
+        }
+        throw new BadRequestException("There is no hotel with this id");
     }
 
     @Override
-    LinkedList<Hotel> getFromFile() {
+    public LinkedList<Hotel> getFromFile() throws BrokenFileException, IOException {
         return super.getFromFile();
     }
 
     @Override
-    Hotel addToFile(Hotel hotel) {
+    public Hotel addToFile(Hotel hotel) throws IOException, BrokenFileException {
         return super.addToFile(hotel);
     }
 
     @Override
-    void deleteFromFile(Long id) {
+    public void deleteFromFile(Long id) throws IOException, BrokenFileException {
         super.deleteFromFile(id);
     }
 
     @Override
-    Hotel map(String line) throws Exception { //TODO Exception
+    public Hotel map(String line) throws Exception {
         String[] fields = line.split(",");
 
         for (int i = 0; i < fields.length; i++) {
