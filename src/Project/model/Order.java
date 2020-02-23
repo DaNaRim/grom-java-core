@@ -35,10 +35,10 @@ public class Order extends MainModel {
     @Override
     public String toString() {
         return id + ", " +
-                user + ", " +
-                room + ", " +
-                dateFrom + ", " +
-                dateTo + ", " +
+                user.getId() + ", " +
+                room.getId() + ", " +
+                dateFrom.toString() + ", " +
+                dateTo.toString() + ", " +
                 moneyPaid;
     }
 }

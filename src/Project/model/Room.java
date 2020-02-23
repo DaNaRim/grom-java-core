@@ -70,7 +70,7 @@ public class Room extends MainModel {
                 price + ", " +
                 breakfastIncluded + ", " +
                 petsAllowed + ", " +
-                dateAvailableFrom + ", " +
-                hotel;
+                dateAvailableFrom.toString() + ", " +
+                hotel.getId();
     }
 }
