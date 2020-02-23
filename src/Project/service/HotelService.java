@@ -25,10 +25,10 @@ public class HotelService {
             throws NotRegisteredException, NoAccessException, BadRequestException, BrokenFileException, IOException {
 
         if (UserService.getLoginUser() == null)
-            throw new NotRegisteredException("You are not log in");
+            throw new NotRegisteredException("User are not log in");
 
         if (UserService.getLoginUser().getUserType() != UserType.ADMIN)
-            throw new NoAccessException("You don`t have enough rights");
+            throw new NoAccessException("User don`t have enough rights");
 
         return hotelDAO.addHotel(hotel);
     }
@@ -36,10 +36,10 @@ public class HotelService {
     public void deleteHotel(long hotelId)
             throws NotRegisteredException, NoAccessException, BadRequestException, BrokenFileException, IOException {
         if (UserService.getLoginUser() == null)
-            throw new NotRegisteredException("You are not log in");
+            throw new NotRegisteredException("User are not log in");
 
         if (UserService.getLoginUser().getUserType() != UserType.ADMIN)
-            throw new NoAccessException("You don`t have enough rights");
+            throw new NoAccessException("User don`t have enough rights");
 
         hotelDAO.deleteHotel(hotelId);
     }

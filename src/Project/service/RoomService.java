@@ -24,10 +24,10 @@ public class RoomService {
 
     public Room addRoom(Room room) throws NotRegisteredException, NoAccessException, IOException, BrokenFileException {
         if (UserService.getLoginUser() == null)
-            throw new NotRegisteredException("You are not log in");
+            throw new NotRegisteredException("User are not log in");
 
         if (UserService.getLoginUser().getUserType() != UserType.ADMIN)
-            throw new NoAccessException("You don`t have enough rights");
+            throw new NoAccessException("User don`t have enough rights");
 
         return roomDAO.addRoom(room);
     }
@@ -36,10 +36,10 @@ public class RoomService {
             throws NotRegisteredException, NoAccessException, IOException, BrokenFileException {
 
         if (UserService.getLoginUser() == null)
-            throw new NotRegisteredException("You are not log in");
+            throw new NotRegisteredException("User are not log in");
 
         if (UserService.getLoginUser().getUserType() != UserType.ADMIN)
-            throw new NoAccessException("You don`t have enough rights");
+            throw new NoAccessException("User don`t have enough rights");
 
         roomDAO.deleteRoom(roomId);
     }

@@ -23,14 +23,14 @@ public class UserService {
         for (User user : userDAO.getFromFile()) {
             if (user.getUserName().equals(userName)) {
                 if (loginUser.getId().equals(user.getId()))
-                    throw new BadRequestException("User: " + user.getId() + " already login");
+                    throw new BadRequestException("User already log in");
 
                 if (user.getPassword().equals(password))
                     loginUser = user;
-                throw new BadRequestException("wrong user password: " + user.getId());
+                throw new BadRequestException("Wrong password");
             }
         }
-        throw new BadRequestException("wrong username or user not registered");
+        throw new BadRequestException("Wrong username or user not registered");
     }
 
     public void logout() {
