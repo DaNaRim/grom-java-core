@@ -1,5 +1,6 @@
 package Project.DAO;
 
+import Project.model.Hotel;
 import Project.model.User;
 import Project.model.UserType;
 
@@ -22,10 +23,11 @@ public class UserDAO extends MainDAO<User> {
         //TODO logout user
     }
 
-    public static User findUserById(long id) {
-        //TODO findUserById
-
-        return null;
+    public User findUserById(long id) throws Exception { //TODO Exception
+        for (User user : getFromFile()) {
+            if (user.getId() == id) return user;
+        }
+        throw new Exception("Missing hotel with id: " + id);
     }
 
     @Override

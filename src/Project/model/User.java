@@ -15,6 +15,10 @@ public class User {
         this.userType = userType;
     }
 
+    public Long getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return id + ", " + userName + ", " + password + ", " + country + ", " + userType;

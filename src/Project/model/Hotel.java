@@ -15,6 +15,18 @@ public class Hotel {
         this.street = street;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
     @Override
     public String toString() {
         return id + ", " +

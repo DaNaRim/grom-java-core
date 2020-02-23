@@ -7,22 +7,25 @@ import java.util.LinkedList;
 public class HotelDAO extends MainDAO<Hotel> {
     private String path = "testPath";
 
-    public Hotel findHotelByName(String name) {
-        //TODO findHotelByName
-
-        return null;
+    public Hotel findHotelByName(String name) throws Exception { //TODO Exception
+        for (Hotel hotel : getFromFile()) {
+            if (hotel.getName().equals(name)) return hotel;
+        }
+        throw new Exception("There is no hotel with the name: " + name);
     }
 
-    public Hotel findHotelByCity(String city) {
-        //TODO findHotelByCity
-
-        return null;
+    public Hotel findHotelByCity(String city) throws Exception { //TODO Exception
+        for (Hotel hotel : getFromFile()) {
+            if (hotel.getCity().equals(city)) return hotel;
+        }
+        throw new Exception("Missing hotel in city: " + city);
     }
 
-    public static Hotel findHotelById(long id) {
-        //TODO findHotelById
-
-        return null;
+    public Hotel findHotelById(long id) throws Exception { //TODO Exception
+        for (Hotel hotel : getFromFile()) {
+            if (hotel.getId() == id) return hotel;
+        }
+        throw new Exception("Missing hotel with id: " + id);
     }
 
     public Hotel addHotel(Hotel hotel) {
@@ -48,7 +51,7 @@ public class HotelDAO extends MainDAO<Hotel> {
     }
 
     @Override
-    Hotel map(String line) throws Exception {
+    Hotel map(String line) throws Exception { //TODO Exception
         String[] fields = line.split(",");
 
         for (int i = 0; i < fields.length; i++) {

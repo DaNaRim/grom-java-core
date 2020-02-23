@@ -39,5 +39,5 @@ public abstract class MainDAO<T> {
         }
     }
 
-    abstract T map(String line) throws Exception;
+    abstract T map(String line) throws Exception; //TODO Exception
 }

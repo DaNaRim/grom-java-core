@@ -10,6 +10,7 @@ import java.util.List;
 
 public class RoomDAO extends MainDAO<Room> {
     private String path = "testPath";
+    private HotelDAO hotelDAO = new HotelDAO();
 
     public List findRooms(Filter filter) {
         //TODO findRooms
@@ -29,10 +30,11 @@ public class RoomDAO extends MainDAO<Room> {
         return null;
     }
 
-    public static Room findRoomById(long id) {
-        //TODO findRoomById
-
-        return null;
+    public Room findRoomById(long id) throws Exception { //TODO Exception
+        for (Room room : getFromFile()) {
+            if (room.getId() == id) return room;
+        }
+        throw new Exception("Missing hotel with id: " + id);
     }
 
     @Override
@@ -61,6 +63,6 @@ public class RoomDAO extends MainDAO<Room> {
                 Boolean.parseBoolean(fields[4]),
                 Boolean.parseBoolean(fields[5]),
                 format.parse(fields[6]),
-                HotelDAO.findHotelById(Long.parseLong(fields[7])));
+                hotelDAO.findHotelById(Long.parseLong(fields[7])));
     }
 }
