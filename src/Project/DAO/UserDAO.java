@@ -1,18 +1,20 @@
 package Project.DAO;
 
-import Project.model.Hotel;
 import Project.model.User;
 import Project.model.UserType;
 
 import java.util.LinkedList;
+import java.util.UUID;
 
 public class UserDAO extends MainDAO<User> {
     private String path = "testPath";
 
     public User registerUser(User user) {
-        //TODO save user to db (file)
-
-        return user;
+        return addToFile(new User(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
+                user.getUserName(),
+                user.getPassword(),
+                user.getCountry(),
+                user.getUserType()));
     }
 
     public void login(String userName, String password) {
@@ -27,7 +29,7 @@ public class UserDAO extends MainDAO<User> {
         for (User user : getFromFile()) {
             if (user.getId() == id) return user;
         }
-        throw new Exception("Missing hotel with id: " + id);
+        throw new Exception("Missing user with id: " + id);
     }
 
     @Override
@@ -36,8 +38,13 @@ public class UserDAO extends MainDAO<User> {
     }
 
     @Override
-    void addToFile(User user) {
-        super.addToFile(user);
+    User addToFile(User user) {
+        return super.addToFile(user);
+    }
+
+    @Override
+    void deleteFromFile(Long id) {
+        super.deleteFromFile(id);
     }
 
     @Override

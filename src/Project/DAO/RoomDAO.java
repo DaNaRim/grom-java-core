@@ -1,12 +1,12 @@
 package Project.DAO;
 
 import Project.model.Filter;
-import Project.model.Hotel;
 import Project.model.Room;
 
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 public class RoomDAO extends MainDAO<Room> {
     private String path = "testPath";
@@ -19,22 +19,24 @@ public class RoomDAO extends MainDAO<Room> {
     }
 
     public Room addRoom(Room room) {
-        //TODO addRoom
-
-        return null;
+        return addToFile(new Room(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
+                room.getNumberOfGuests(),
+                room.getPrice(),
+                room.getBreakfastIncluded(),
+                room.getPetsAllowed(),
+                room.getDateAvailableFrom(),
+                room.getHotel()));
     }
 
-    public Room deleteRoom(long roomId) {
-        //TODO deleteRoom
-
-        return null;
+    public void deleteRoom(long roomId) {
+        deleteFromFile(roomId);
     }
 
     public Room findRoomById(long id) throws Exception { //TODO Exception
         for (Room room : getFromFile()) {
             if (room.getId() == id) return room;
         }
-        throw new Exception("Missing hotel with id: " + id);
+        throw new Exception("Missing room with id: " + id);
     }
 
     @Override
@@ -43,8 +45,13 @@ public class RoomDAO extends MainDAO<Room> {
     }
 
     @Override
-    void addToFile(Room room) {
-        super.addToFile(room);
+    Room addToFile(Room room) {
+        return super.addToFile(room);
+    }
+
+    @Override
+    void deleteFromFile(Long id) {
+        super.deleteFromFile(id);
     }
 
     @Override

@@ -3,6 +3,7 @@ package Project.DAO;
 import Project.model.Hotel;
 
 import java.util.LinkedList;
+import java.util.UUID;
 
 public class HotelDAO extends MainDAO<Hotel> {
     private String path = "testPath";
@@ -29,15 +30,15 @@ public class HotelDAO extends MainDAO<Hotel> {
     }
 
     public Hotel addHotel(Hotel hotel) {
-        //TODO addHotel
-
-        return null;
+        return addToFile(new Hotel(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
+                hotel.getName(),
+                hotel.getCountry(),
+                hotel.getCity(),
+                hotel.getStreet()));
     }
 
-    public Hotel deleteHotel(long hotelId) {
-        //TODO deleteHotel
-
-        return null;
+    public void deleteHotel(long hotelId) {
+        deleteFromFile(hotelId);
     }
 
     @Override
@@ -46,8 +47,13 @@ public class HotelDAO extends MainDAO<Hotel> {
     }
 
     @Override
-    void addToFile(Hotel hotel) {
-        super.addToFile(hotel);
+    Hotel addToFile(Hotel hotel) {
+        return super.addToFile(hotel);
+    }
+
+    @Override
+    void deleteFromFile(Long id) {
+        super.deleteFromFile(id);
     }
 
     @Override

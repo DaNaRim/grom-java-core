@@ -21,9 +21,9 @@ public class RoomService {
         return roomDAO.addRoom(room);
     }
 
-    public Room deleteRoom(long roomId) {
+    public void deleteRoom(long roomId) {
         //TODO check business logic
 
-        return roomDAO.deleteRoom(roomId);
+        roomDAO.deleteRoom(roomId);
     }
 }

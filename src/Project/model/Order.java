@@ -2,7 +2,7 @@ package Project.model;
 
 import java.util.Date;
 
-public class Order {
+public class Order extends MainModel {
     private Long id;
     private User user;
     private Room room;
@@ -17,6 +17,19 @@ public class Order {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.moneyPaid = moneyPaid;
+    }
+
+    @Override
+    public Long getId() {
+        return super.getId();
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Room getRoom() {
+        return room;
     }
 
     @Override

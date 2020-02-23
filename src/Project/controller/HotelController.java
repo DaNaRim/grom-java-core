@@ -18,7 +18,7 @@ public class HotelController {
         return hotelService.addHotel(hotel);
     }
 
-    public Hotel deleteHotel(long hotelId) {
-        return hotelService.deleteHotel(hotelId);
+    public void deleteHotel(long hotelId) {
+        hotelService.deleteHotel(hotelId);
     }
 }

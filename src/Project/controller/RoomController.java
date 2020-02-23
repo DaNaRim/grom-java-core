@@ -17,7 +17,7 @@ public class RoomController {
         return roomService.addRoom(room);
     }
 
-    public Room deleteRoom(long roomId) {
-        return roomService.deleteRoom(roomId);
+    public void deleteRoom(long roomId) {
+        roomService.deleteRoom(roomId);
     }
 }

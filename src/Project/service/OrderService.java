@@ -10,12 +10,12 @@ public class OrderService {
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) {
         //TODO check business logic
 
-        orderDAO.bookRoom(roomId, userId, dateFrom, dateTo);
+        //orderDAO.bookRoom(roomId, userId, dateFrom, dateTo);
     }
 
     public void cancelReservation(long roomId, long userId) {
         //TODO check business logic
 
-        orderDAO.cancelReservation(roomId, userId);
+        //orderDAO.cancelReservation(roomId, userId);
     }
 }

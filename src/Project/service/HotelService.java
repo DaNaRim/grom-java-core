@@ -9,13 +9,15 @@ public class HotelService {
     public Hotel findHotelByName(String name) {
         //TODO check business logic
 
-        return hotelDAO.findHotelByName(name);
+        //hotelDAO.findHotelByName(name)
+        return null;
     }
 
     public Hotel findHotelByCity(String city) {
         //TODO check business logic
 
-        return hotelDAO.findHotelByCity(city);
+        //hotelDAO.findHotelByCity(city)
+        return null;
     }
 
     public Hotel addHotel(Hotel hotel) {
@@ -24,9 +26,9 @@ public class HotelService {
         return hotelDAO.addHotel(hotel);
     }
 
-    public Hotel deleteHotel(long hotelId) {
+    public void deleteHotel(long hotelId) {
         //TODO check business logic
 
-        return hotelDAO.deleteHotel(hotelId);
+        hotelDAO.deleteHotel(hotelId);
     }
 }

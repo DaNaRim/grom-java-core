@@ -5,18 +5,31 @@ import Project.model.Order;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.UUID;
 
 public class OrderDAO extends MainDAO<Order> {
     private String path = "testPath";
     private UserDAO userDAO = new UserDAO();
     private RoomDAO roomDAO = new RoomDAO();
 
-    public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) {
-        //TODO bookRoom
+    public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) throws Exception { //TODO Exception
+        addToFile(new Order(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
+                userDAO.findUserById(userId),
+                roomDAO.findRoomById(roomId),
+                dateFrom,
+                dateTo,
+                roomDAO.findRoomById(roomId).getPrice()));
     }
 
-    public void cancelReservation(long roomId, long userId) {
-        //TODO cancelReservation
+    public void cancelReservation(long roomId, long userId) throws Exception {
+        deleteFromFile(findOrderByRoomAndUser(roomId, userId).getId());
+    }
+
+    Order findOrderByRoomAndUser(long roomId, long userId) throws Exception { //TODO Exception
+        for (Order order : getFromFile()) {
+            if (order.getRoom().getId() == roomId && order.getUser().getId() == userId) return order;
+        }
+        throw new Exception("Missing order with room: " + roomId + " and user: " + userId);
     }
 
     @Override
@@ -25,8 +38,13 @@ public class OrderDAO extends MainDAO<Order> {
     }
 
     @Override
-    void addToFile(Order order) {
-        super.addToFile(order);
+    Order addToFile(Order order) {
+        return super.addToFile(order);
+    }
+
+    @Override
+    void deleteFromFile(Long id) {
+        super.deleteFromFile(id);
     }
 
     @Override

@@ -1,11 +1,18 @@
 package Project.model;
 
-public class Hotel {
+public class Hotel extends MainModel {
     private Long id;
     private String name;
     private String country;
     private String city;
     private String street;
+
+    public Hotel(String name, String country, String city, String street) {
+        this.name = name;
+        this.country = country;
+        this.city = city;
+        this.street = street;
+    }
 
     public Hotel(Long id, String name, String country, String city, String street) {
         this.id = id;
@@ -15,16 +22,25 @@ public class Hotel {
         this.street = street;
     }
 
+    @Override
     public Long getId() {
-        return id;
+        return super.getId();
     }
 
     public String getName() {
         return name;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
     public String getCity() {
         return city;
+    }
+
+    public String getStreet() {
+        return street;
     }
 
     @Override
