@@ -1,10 +1,10 @@
 package Project.DAO;
 
 public class FileLocations {
-    private static final String HotelFileLocation = "testPath1";
-    private static final String OrderFileLocation = "testPath2";
-    private static final String RoomFileLocation = "testPath3";
-    private static final String UserFileLocation = "testPath4";
+    private static final String HotelFileLocation = "HotelDb.txt";
+    private static final String OrderFileLocation = "OrderDb.txt";
+    private static final String RoomFileLocation = "RoomDb.txt";
+    private static final String UserFileLocation = "UserDb.txt";
 
     public static String getHotelFileLocation() {
         return HotelFileLocation;
