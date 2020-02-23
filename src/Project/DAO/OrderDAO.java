@@ -72,7 +72,7 @@ public class OrderDAO extends MainDAO<Order> {
         }
 
         SimpleDateFormat format = new SimpleDateFormat();
-        format.applyPattern("dd.MM.yyyy");
+        format.applyPattern("dd.MM.yyyy"); //TODO correct data format
         return new Order(Long.parseLong(fields[1]),
                 userDAO.findUserById(Long.parseLong(fields[2])),
                 roomDAO.findRoomById(Long.parseLong(fields[3])),

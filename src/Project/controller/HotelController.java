@@ -3,7 +3,7 @@ package Project.controller;
 import Project.exception.BadRequestException;
 import Project.exception.BrokenFileException;
 import Project.exception.NoAccessException;
-import Project.exception.NotRegisteredException;
+import Project.exception.NotLogInException;
 import Project.model.Hotel;
 import Project.service.HotelService;
 
@@ -39,7 +39,7 @@ public class HotelController {
         try {
             resHotel = hotelService.addHotel(hotel);
             System.out.println("addHotel successful: " + resHotel.getId());
-        } catch (NotRegisteredException |
+        } catch (NotLogInException |
                 BadRequestException |
                 BrokenFileException |
                 IOException |
@@ -53,7 +53,7 @@ public class HotelController {
         try {
             hotelService.deleteHotel(hotelId);
             System.out.println("deleteHotel successful");
-        } catch (NotRegisteredException |
+        } catch (NotLogInException |
                 NoAccessException |
                 BadRequestException |
                 BrokenFileException |

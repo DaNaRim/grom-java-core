@@ -4,14 +4,14 @@ import Project.DAO.HotelDAO;
 import Project.exception.BadRequestException;
 import Project.exception.BrokenFileException;
 import Project.exception.NoAccessException;
-import Project.exception.NotRegisteredException;
+import Project.exception.NotLogInException;
 import Project.model.Hotel;
-import Project.model.UserType;
 
 import java.io.IOException;
 
 public class HotelService {
-    HotelDAO hotelDAO = new HotelDAO();
+    private HotelDAO hotelDAO = new HotelDAO();
+    private UserService userService = new UserService();
 
     public Hotel findHotelByName(String name) throws BadRequestException, IOException, BrokenFileException {
         return hotelDAO.findHotelByName(name);
@@ -22,24 +22,19 @@ public class HotelService {
     }
 
     public Hotel addHotel(Hotel hotel)
-            throws NotRegisteredException, NoAccessException, BadRequestException, BrokenFileException, IOException {
+            throws NotLogInException, NoAccessException, BadRequestException, BrokenFileException, IOException {
 
-        if (UserService.getLoginUser() == null)
-            throw new NotRegisteredException("User are not log in");
-
-        if (UserService.getLoginUser().getUserType() != UserType.ADMIN)
-            throw new NoAccessException("User don`t have enough rights");
+        userService.checkLogin();
+        userService.checkRights();
 
         return hotelDAO.addHotel(hotel);
     }
 
     public void deleteHotel(long hotelId)
-            throws NotRegisteredException, NoAccessException, BadRequestException, BrokenFileException, IOException {
-        if (UserService.getLoginUser() == null)
-            throw new NotRegisteredException("User are not log in");
+            throws NotLogInException, NoAccessException, BadRequestException, BrokenFileException, IOException {
 
-        if (UserService.getLoginUser().getUserType() != UserType.ADMIN)
-            throw new NoAccessException("User don`t have enough rights");
+        userService.checkLogin();
+        userService.checkRights();
 
         hotelDAO.deleteHotel(hotelId);
     }

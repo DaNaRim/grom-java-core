@@ -3,7 +3,7 @@ package Project.controller;
 import Project.exception.BadRequestException;
 import Project.exception.BrokenFileException;
 import Project.exception.NoAccessException;
-import Project.exception.NotRegisteredException;
+import Project.exception.NotLogInException;
 import Project.model.Filter;
 import Project.model.Room;
 import Project.service.RoomService;
@@ -30,7 +30,7 @@ public class RoomController {
         try {
             room1 = roomService.addRoom(room);
             System.out.println("addRoom successful" + room1.getId());
-        } catch (NotRegisteredException | NoAccessException | IOException | BrokenFileException e) {
+        } catch (NotLogInException | NoAccessException | IOException | BrokenFileException e) {
             System.err.println("addRoom failed: " + e.getMessage());
         }
         return room1;
@@ -40,7 +40,7 @@ public class RoomController {
         try {
             roomService.deleteRoom(roomId);
             System.out.println("deleteRoom successful");
-        } catch (NotRegisteredException | NoAccessException | IOException | BrokenFileException e) {
+        } catch (NotLogInException | NoAccessException | IOException | BrokenFileException e) {
             System.err.println("deleteRoom failed: " + e.getMessage());
         }
     }

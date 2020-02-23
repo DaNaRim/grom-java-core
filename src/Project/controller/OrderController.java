@@ -2,7 +2,7 @@ package Project.controller;
 
 import Project.exception.BadRequestException;
 import Project.exception.InternalServerException;
-import Project.exception.NotRegisteredException;
+import Project.exception.NotLogInException;
 import Project.service.OrderService;
 
 import java.io.IOException;
@@ -15,7 +15,7 @@ public class OrderController {
         try {
             orderService.bookRoom(roomId, userId, dateFrom, dateTo);
             System.out.println("bookRoom successful: " + roomId);
-        } catch (NotRegisteredException | IOException | InternalServerException | BadRequestException e) {
+        } catch (NotLogInException | IOException | InternalServerException | BadRequestException e) {
             System.out.println("bookRoom failed: " + e.getMessage());
         }
     }
@@ -24,7 +24,7 @@ public class OrderController {
         try {
             orderService.cancelReservation(roomId, userId);
             System.out.println("cancelReservation successful");
-        } catch (NotRegisteredException | IOException | InternalServerException | BadRequestException e) {
+        } catch (NotLogInException | IOException | InternalServerException | BadRequestException e) {
             System.err.println("cancelReservation failed: " + e.getMessage());
         }
     }

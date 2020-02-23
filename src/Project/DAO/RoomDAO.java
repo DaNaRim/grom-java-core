@@ -77,7 +77,7 @@ public class RoomDAO extends MainDAO<Room> {
         }
 
         SimpleDateFormat format = new SimpleDateFormat();
-        format.applyPattern("dd.MM.yyyy");
+        format.applyPattern("dd.MM.yyyy"); //TODO correct data format
         return new Room(Long.parseLong(fields[1]),
                 Integer.parseInt(fields[2]),
                 Double.parseDouble(fields[3]),
