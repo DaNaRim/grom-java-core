@@ -14,19 +14,18 @@ public class OrderController {
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) {
         try {
             orderService.bookRoom(roomId, userId, dateFrom, dateTo);
-            System.out.println("Room: " + roomId + " book successfully");
+            System.out.println("bookRoom successful: " + roomId);
         } catch (NotRegisteredException | IOException | InternalServerException | BadRequestException e) {
-            System.err.println("Can`t book room: " + roomId + " : " + e.getMessage());
+            System.out.println("bookRoom failed: " + e.getMessage());
         }
     }
 
     public void cancelReservation(long roomId, long userId) {
         try {
             orderService.cancelReservation(roomId, userId);
-            System.out.println("Reservation canceled successfully");
+            System.out.println("cancelReservation successful");
         } catch (NotRegisteredException | IOException | InternalServerException | BadRequestException e) {
-            System.err.println("Can`t cancel reservation with room: " + roomId + " and user: " + userId + " : " +
-                    e.getMessage());
+            System.err.println("cancelReservation failed: " + e.getMessage());
         }
     }
 }

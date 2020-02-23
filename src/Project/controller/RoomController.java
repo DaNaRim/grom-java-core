@@ -18,9 +18,9 @@ public class RoomController {
         ArrayList<Room> arrayList = null;
         try {
             arrayList = roomService.findRooms(filter);
-            System.out.println("Rooms find successfully");
+            System.out.println("findRooms successful");
         } catch (BadRequestException | IOException | BrokenFileException e) {
-            System.err.println("Can`t find rooms: " + e.getMessage());
+            System.err.println("findRooms failed: " + e.getMessage());
         }
         return arrayList;
     }
@@ -29,9 +29,9 @@ public class RoomController {
         Room room1 = null;
         try {
             room1 = roomService.addRoom(room);
-            System.out.println("Room added successfully");
+            System.out.println("addRoom successful" + room1.getId());
         } catch (NotRegisteredException | NoAccessException | IOException | BrokenFileException e) {
-            System.err.println("Can`t add room: " + e.getMessage());
+            System.err.println("addRoom failed: " + e.getMessage());
         }
         return room1;
     }
@@ -39,8 +39,9 @@ public class RoomController {
     public void deleteRoom(long roomId) {
         try {
             roomService.deleteRoom(roomId);
+            System.out.println("deleteRoom successful");
         } catch (NotRegisteredException | NoAccessException | IOException | BrokenFileException e) {
-            System.err.println("Can`t delete room: " + roomId + " : " + e.getMessage());
+            System.err.println("deleteRoom failed: " + e.getMessage());
         }
     }
 }

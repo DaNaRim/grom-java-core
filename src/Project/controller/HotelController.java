@@ -16,9 +16,9 @@ public class HotelController {
         Hotel hotel = null;
         try {
             hotel = hotelService.findHotelByName(name);
-            System.out.println("Hotel find: " + hotel.getId());
+            System.out.println("findHotelByName successful: " + hotel.getId());
         } catch (BadRequestException | IOException | BrokenFileException e) {
-            System.err.println("Can`t find hotel by name " + name + " : " + e.getMessage());
+            System.err.println("findHotelByName failed: " + e.getMessage());
         }
         return hotel;
     }
@@ -27,9 +27,9 @@ public class HotelController {
         Hotel hotel = null;
         try {
             hotel = hotelService.findHotelByCity(city);
-            System.out.println("Hotel find: " + hotel.getId());
+            System.out.println("findHotelByCity successful: " + hotel.getId());
         } catch (BadRequestException | IOException | BrokenFileException e) {
-            System.err.println("Can`t find hotel in city " + city + " : " + e.getMessage());
+            System.err.println("findHotelByCity failed: " + e.getMessage());
         }
         return hotel;
     }
@@ -38,13 +38,13 @@ public class HotelController {
         Hotel resHotel = null;
         try {
             resHotel = hotelService.addHotel(hotel);
-            System.out.println("Hotel: " + resHotel.getId() + " added successfully");
+            System.out.println("addHotel successful: " + resHotel.getId());
         } catch (NotRegisteredException |
                 BadRequestException |
                 BrokenFileException |
                 IOException |
                 NoAccessException e) {
-            System.err.println("Can`t add hotel: " + hotel.getName() + " : " + e.getMessage());
+            System.err.println("addHotel failed: " + e.getMessage());
         }
         return resHotel;
     }
@@ -52,13 +52,13 @@ public class HotelController {
     public void deleteHotel(long hotelId) {
         try {
             hotelService.deleteHotel(hotelId);
-            System.out.println("Hotel delete successfully");
+            System.out.println("deleteHotel successful");
         } catch (NotRegisteredException |
                 NoAccessException |
                 BadRequestException |
                 BrokenFileException |
                 IOException e) {
-            System.err.println("Can`t delete hotel: " + hotelId + " : " + e.getMessage());
+            System.err.println("deleteHotel failed: " + e.getMessage());
         }
     }
 }

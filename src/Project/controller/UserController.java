@@ -14,9 +14,9 @@ public class UserController {
         User user1 = null;
         try {
             user1 = userService.registerUser(user);
-            System.out.println("User: " + user1.getId() + " registered successfully");
+            System.out.println("registerUser successful: " + user1.getId());
         } catch (IOException | BrokenFileException e) {
-            System.err.println("Cant register user: " + user.getUserName() + " : " + e.getMessage());
+            System.err.println("registerUser failed: " + e.getMessage());
         }
         return user1;
     }
@@ -24,14 +24,14 @@ public class UserController {
     public void login(String userName, String password) {
         try {
             userService.login(userName, password);
-            System.out.println("User: " + userName + " login successfully");
+            System.out.println("login successful");
         } catch (IOException | BrokenFileException | BadRequestException e) {
-            System.err.println("Login user: " + userName + " failed: " + e.getMessage());
+            System.err.println("login failed: " + e.getMessage());
         }
     }
 
     public void logout() {
         userService.logout();
-        System.out.println("logout was successful");
+        System.out.println("logout successful");
     }
 }
