@@ -17,4 +17,16 @@ public class HotelService {
 
         return hotelDAO.findHotelByCity(city);
     }
+
+    public Hotel addHotel(Hotel hotel) {
+        //TODO check business logic
+
+        return hotelDAO.addHotel(hotel);
+    }
+
+    public Hotel deleteHotel(long hotelId) {
+        //TODO check business logic
+
+        return hotelDAO.deleteHotel(hotelId);
+    }
 }

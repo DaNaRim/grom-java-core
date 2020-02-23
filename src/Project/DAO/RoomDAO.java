@@ -17,6 +17,18 @@ public class RoomDAO extends MainDAO<Room> {
         return null;
     }
 
+    public Room addRoom(Room room) {
+        //TODO addRoom
+
+        return null;
+    }
+
+    public Room deleteRoom(long roomId) {
+        //TODO deleteRoom
+
+        return null;
+    }
+
     public static Room findRoomById(long id) {
         //TODO findRoomById
 
@@ -34,25 +46,21 @@ public class RoomDAO extends MainDAO<Room> {
     }
 
     @Override
-    Room map(String line) throws Exception {
-        try {
-            String[] fields = line.split(",");
+    Room map(String line) throws Exception { //TODO Exception
+        String[] fields = line.split(",");
 
-            for (int i = 0; i < fields.length; i++) {
-                fields[i] = fields[i].trim();
-            }
-
-            SimpleDateFormat format = new SimpleDateFormat();
-            format.applyPattern("dd.MM.yyyy");
-            return new Room(Long.parseLong(fields[1]),
-                    Integer.parseInt(fields[2]),
-                    Double.parseDouble(fields[3]),
-                    Boolean.parseBoolean(fields[4]),
-                    Boolean.parseBoolean(fields[5]),
-                    format.parse(fields[6]),
-                    HotelDAO.findHotelById(Long.parseLong(fields[7])));
-        } catch (Exception e) {
-            throw new Exception("broken line");
+        for (int i = 0; i < fields.length; i++) {
+            fields[i] = fields[i].trim();
         }
+
+        SimpleDateFormat format = new SimpleDateFormat();
+        format.applyPattern("dd.MM.yyyy");
+        return new Room(Long.parseLong(fields[1]),
+                Integer.parseInt(fields[2]),
+                Double.parseDouble(fields[3]),
+                Boolean.parseBoolean(fields[4]),
+                Boolean.parseBoolean(fields[5]),
+                format.parse(fields[6]),
+                HotelDAO.findHotelById(Long.parseLong(fields[7])));
     }
 }

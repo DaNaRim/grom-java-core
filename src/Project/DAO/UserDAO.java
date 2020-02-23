@@ -1,6 +1,5 @@
 package Project.DAO;
 
-import Project.model.Hotel;
 import Project.model.User;
 import Project.model.UserType;
 
@@ -40,16 +39,12 @@ public class UserDAO extends MainDAO<User> {
     }
 
     @Override
-    User map(String line) throws Exception {
-        try {
-            String[] fields = line.split(",");
+    User map(String line) throws Exception { //TODO Exception
+        String[] fields = line.split(",");
 
-            for (int i = 0; i < fields.length; i++) {
-                fields[i] = fields[i].trim();
-            }
-            return new User(Long.parseLong(fields[1]), fields[2], fields[3], fields[4], UserType.valueOf(fields[5]));
-        } catch (Exception e) {
-            throw new Exception("broken line");
+        for (int i = 0; i < fields.length; i++) {
+            fields[i] = fields[i].trim();
         }
+        return new User(Long.parseLong(fields[1]), fields[2], fields[3], fields[4], UserType.valueOf(fields[5]));
     }
 }

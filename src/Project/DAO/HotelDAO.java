@@ -25,6 +25,18 @@ public class HotelDAO extends MainDAO<Hotel> {
         return null;
     }
 
+    public Hotel addHotel(Hotel hotel) {
+        //TODO addHotel
+
+        return null;
+    }
+
+    public Hotel deleteHotel(long hotelId) {
+        //TODO deleteHotel
+
+        return null;
+    }
+
     @Override
     LinkedList<Hotel> getFromFile() {
         return super.getFromFile();
@@ -37,15 +49,11 @@ public class HotelDAO extends MainDAO<Hotel> {
 
     @Override
     Hotel map(String line) throws Exception {
-        try {
-            String[] fields = line.split(",");
+        String[] fields = line.split(",");
 
-            for (int i = 0; i < fields.length; i++) {
-                fields[i] = fields[i].trim();
-            }
-            return new Hotel(Long.parseLong(fields[1]), fields[2], fields[3], fields[4], fields[5]);
-        } catch (Exception e) {
-            throw new Exception("broken line");
+        for (int i = 0; i < fields.length; i++) {
+            fields[i] = fields[i].trim();
         }
+        return new Hotel(Long.parseLong(fields[1]), fields[2], fields[3], fields[4], fields[5]);
     }
 }

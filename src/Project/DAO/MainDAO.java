@@ -10,14 +10,13 @@ public abstract class MainDAO<T> {
         LinkedList<T> t = new LinkedList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            int lineIndex = 0;
-
+            int lineIndex = 1;
             String line;
             while ((line = br.readLine()) != null) {
                 try {
                     t.add(map(line));
                 } catch (Exception e) {
-                    System.err.println(e.getMessage() + ": " + lineIndex);
+                    System.err.println("broken line: " + lineIndex);
                 }
                 lineIndex++;
             }
