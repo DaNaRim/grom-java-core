@@ -12,7 +12,7 @@ import java.util.UUID;
 public class HotelDAO extends MainDAO<Hotel> {
 
     public HotelDAO() {
-        super("testPath");
+        super(FileLocations.getHotelFileLocation());
     }
 
     public Hotel findHotelByName(String name) throws BadRequestException, IOException, BrokenFileException {

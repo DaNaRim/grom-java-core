@@ -12,7 +12,7 @@ import java.util.UUID;
 public class UserDAO extends MainDAO<User> {
 
     public UserDAO() {
-        super("testPath");
+        super(FileLocations.getUserFileLocation());
     }
 
     public User registerUser(User user) throws IOException, BrokenFileException {

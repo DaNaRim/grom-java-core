@@ -16,7 +16,7 @@ public class OrderDAO extends MainDAO<Order> {
     private RoomDAO roomDAO = new RoomDAO();
 
     public OrderDAO() {
-        super("testPath");
+        super(FileLocations.getOrderFileLocation());
     }
 
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo)

@@ -16,7 +16,7 @@ public class RoomDAO extends MainDAO<Room> {
     private HotelDAO hotelDAO = new HotelDAO();
 
     public RoomDAO() {
-        super("testPath");
+        super(FileLocations.getRoomFileLocation());
     }
 
     public ArrayList<Room> findRooms(Filter filter) throws IOException, BrokenFileException, BadRequestException {
