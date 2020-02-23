@@ -10,7 +10,10 @@ import java.util.LinkedList;
 import java.util.UUID;
 
 public class UserDAO extends MainDAO<User> {
-    private String path = "testPath";
+
+    public UserDAO() {
+        super("testPath");
+    }
 
     public User registerUser(User user) throws IOException, BrokenFileException {
         return addToFile(new User(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
@@ -43,7 +46,7 @@ public class UserDAO extends MainDAO<User> {
     }
 
     @Override
-    public User map(String line) throws Exception {
+    public User map(String line) throws NumberFormatException {
         String[] fields = line.split(",");
 
         for (int i = 0; i < fields.length; i++) {

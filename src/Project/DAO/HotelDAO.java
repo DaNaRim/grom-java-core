@@ -10,7 +10,10 @@ import java.util.LinkedList;
 import java.util.UUID;
 
 public class HotelDAO extends MainDAO<Hotel> {
-    private String path = "testPath";
+
+    public HotelDAO() {
+        super("testPath");
+    }
 
     public Hotel findHotelByName(String name) throws BadRequestException, IOException, BrokenFileException {
         for (Hotel hotel : getFromFile()) {
@@ -36,7 +39,7 @@ public class HotelDAO extends MainDAO<Hotel> {
     public Hotel addHotel(Hotel hotel) throws IOException, BrokenFileException, BadRequestException {
         for (Hotel hotel1 : getFromFile()) {
             if (hotel1.equals(hotel))
-                throw new BadRequestException("The hotel is already exist");
+                throw new BadRequestException("The hotel is already exist: " + hotel1.getId());
         }
 
         return addToFile(new Hotel(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
@@ -50,7 +53,7 @@ public class HotelDAO extends MainDAO<Hotel> {
         for (Hotel hotel : getFromFile()) {
             if (hotel.getId().equals(hotelId)) deleteFromFile(hotel.getId());
         }
-        throw new BadRequestException("There is no hotel with this id");
+        throw new BadRequestException("There is no hotel with this id: " + hotelId);
     }
 
     @Override
@@ -69,7 +72,7 @@ public class HotelDAO extends MainDAO<Hotel> {
     }
 
     @Override
-    public Hotel map(String line) throws Exception {
+    public Hotel map(String line) throws NumberFormatException {
         String[] fields = line.split(",");
 
         for (int i = 0; i < fields.length; i++) {

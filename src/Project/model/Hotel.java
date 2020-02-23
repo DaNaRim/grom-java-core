@@ -26,7 +26,7 @@ public class Hotel extends MainModel {
 
     @Override
     public Long getId() {
-        return super.getId();
+        return id;
     }
 
     public String getName() {
@@ -69,6 +69,4 @@ public class Hotel extends MainModel {
                 city + ", " +
                 street;
     }
-
-    //TODO simplify
 }

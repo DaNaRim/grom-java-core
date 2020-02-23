@@ -32,7 +32,7 @@ public class Room extends MainModel {
 
     @Override
     public Long getId() {
-        return super.getId();
+        return id;
     }
 
     public Integer getNumberOfGuests() {
@@ -59,6 +59,10 @@ public class Room extends MainModel {
         return hotel;
     }
 
+    public void setDateAvailableFrom(Date dateAvailableFrom) {
+        this.dateAvailableFrom = dateAvailableFrom;
+    }
+
     @Override
     public String toString() {
         return id + ", " +
@@ -69,6 +73,4 @@ public class Room extends MainModel {
                 dateAvailableFrom + ", " +
                 hotel;
     }
-
-    //TODO simplify
 }

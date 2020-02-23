@@ -12,14 +12,19 @@ import java.util.LinkedList;
 import java.util.UUID;
 
 public class OrderDAO extends MainDAO<Order> {
-    private String path = "testPath";
     private UserDAO userDAO = new UserDAO();
     private RoomDAO roomDAO = new RoomDAO();
 
-    public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) throws Exception {
+    public OrderDAO() {
+        super("testPath");
+    }
+
+    public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo)
+            throws BadRequestException, IOException, InternalServerException {
+
         for (Order order : getFromFile()) {
             if (order.getRoom().getId() == roomId && order.getUser().getId() == userId)
-                throw new BadRequestException("You already booked this room");
+                throw new BadRequestException("You already booked room: " + roomId + " in order: " + order.getId());
         }
 
         addToFile(new Order(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
@@ -28,21 +33,19 @@ public class OrderDAO extends MainDAO<Order> {
                 dateFrom,
                 dateTo,
                 roomDAO.findRoomById(roomId).getPrice()));
+
+        roomDAO.findRoomById(roomId).setDateAvailableFrom(dateTo);
     }
 
-    public void cancelReservation(long roomId, long userId)
-            throws InternalServerException, IOException {
-
+    public void cancelReservation(long roomId, long userId) throws InternalServerException, IOException {
         deleteFromFile(findOrderByRoomAndUser(roomId, userId).getId());
     }
 
-    public Order findOrderByRoomAndUser(long roomId, long userId)
-            throws InternalServerException, IOException {
-
+    public Order findOrderByRoomAndUser(long roomId, long userId) throws InternalServerException, IOException {
         for (Order order : getFromFile()) {
             if (order.getRoom().getId() == roomId && order.getUser().getId() == userId) return order;
         }
-        throw new InternalServerException("Missing order with room: " + roomId + " and user: " + userId);
+        throw new InternalServerException("Missing order");
     }
 
     @Override

@@ -9,7 +9,11 @@ import java.util.LinkedList;
 public abstract class MainDAO<T extends MainModel> {
     private String path;
 
-    public LinkedList<T> getFromFile() throws BrokenFileException, IOException{
+    public MainDAO(String path) {
+        this.path = path;
+    }
+
+    public LinkedList<T> getFromFile() throws BrokenFileException, IOException {
         validate(path);
 
         LinkedList<T> t = new LinkedList<>();
@@ -20,24 +24,24 @@ public abstract class MainDAO<T extends MainModel> {
                 try {
                     t.add(map(line));
                 } catch (Exception e) {
-                    throw new BrokenFileException("broken line: " + lineIndex);
+                    throw new BrokenFileException("broken line: " + lineIndex + " in file: " + path);
                 }
                 lineIndex++;
             }
         } catch (IOException e) {
-            throw new IOException("Reading from file failed");
+            throw new IOException("Reading from file: " + path + " failed");
         }
         return t;
     }
 
-    public T addToFile(T t) throws IOException, BrokenFileException{
+    public T addToFile(T t) throws IOException, BrokenFileException {
         validate(path);
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             if (getFromFile() != null) bw.append("\n");
             bw.append(t.toString());
         } catch (IOException e) {
-            throw new IOException("Writing to file failed");
+            throw new IOException("Writing to file: " + path + " failed");
         }
         return t;
     }
@@ -59,7 +63,7 @@ public abstract class MainDAO<T extends MainModel> {
 
     private void validate(String path) throws FileNotFoundException {
         if (!new File(path).exists())
-            throw new FileNotFoundException("File does not exist");
+            throw new FileNotFoundException("File: " + path + " does not exist");
     }
 
     private void deleteFileContent() throws IOException {
@@ -68,7 +72,7 @@ public abstract class MainDAO<T extends MainModel> {
         try (BufferedWriter br = new BufferedWriter(new FileWriter(path))) {
             br.write("");
         } catch (IOException e) {
-            throw new IOException("Delete from file failed");
+            throw new IOException("Delete from file: " + path + " failed");
         }
     }
 }

@@ -24,7 +24,7 @@ public class User extends MainModel {
 
     @Override
     public Long getId() {
-        return super.getId();
+        return id;
     }
 
     public String getUserName() {
@@ -47,6 +47,4 @@ public class User extends MainModel {
     public String toString() {
         return id + ", " + userName + ", " + password + ", " + country + ", " + userType;
     }
-
-    //TODO simplify
 }

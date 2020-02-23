@@ -1,5 +1,6 @@
 package Project.DAO;
 
+import Project.exception.BadRequestException;
 import Project.exception.BrokenFileException;
 import Project.exception.InternalServerException;
 import Project.model.Filter;
@@ -7,18 +8,28 @@ import Project.model.Room;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.UUID;
 
 public class RoomDAO extends MainDAO<Room> {
-    private String path = "testPath";
     private HotelDAO hotelDAO = new HotelDAO();
 
-    public List findRooms(Filter filter) {
-        //TODO findRooms
+    public RoomDAO() {
+        super("testPath");
+    }
 
-        return null;
+    public ArrayList<Room> findRooms(Filter filter) throws IOException, BrokenFileException, BadRequestException {
+        ArrayList<Room> rooms = new ArrayList<>();
+
+        for (Room room : getFromFile()) {
+            if (checkRoomByFilter(room, filter)) rooms.add(room);
+        }
+
+        if (rooms.size() == 0)
+            throw new BadRequestException("There is no room with parameters: " + filter.toString());
+
+        return rooms;
     }
 
     public Room addRoom(Room room) throws IOException, BrokenFileException {
@@ -74,5 +85,22 @@ public class RoomDAO extends MainDAO<Room> {
                 Boolean.parseBoolean(fields[5]),
                 format.parse(fields[6]),
                 hotelDAO.findHotelById(Long.parseLong(fields[7])));
+    }
+
+    private boolean checkRoomByFilter(Room room, Filter filter) {
+        return ((filter.getNumberOfGuests() == null ||
+                filter.getNumberOfGuests().equals(room.getNumberOfGuests())) &&
+                (filter.getPrice() == null ||
+                        filter.getPrice().equals(room.getPrice())) &&
+                (filter.getBreakfastIncluded() == null ||
+                        filter.getBreakfastIncluded() == room.getBreakfastIncluded()) &&
+                (filter.getPetsAllowed() == null ||
+                        filter.getPetsAllowed() == room.getPetsAllowed()) &&
+                (filter.getDateAvailableFrom() == null ||
+                        filter.getDateAvailableFrom().after(room.getDateAvailableFrom())) &&
+                (filter.getCountry() == null ||
+                        filter.getCountry().equals(room.getHotel().getCountry())) &&
+                (filter.getCity() == null ||
+                        filter.getCity().equals(room.getHotel().getCity())));
     }
 }

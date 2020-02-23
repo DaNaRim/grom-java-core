@@ -21,7 +21,7 @@ public class Order extends MainModel {
 
     @Override
     public Long getId() {
-        return super.getId();
+        return id;
     }
 
     public User getUser() {
@@ -41,6 +41,4 @@ public class Order extends MainModel {
                 dateTo + ", " +
                 moneyPaid;
     }
-
-    //TODO simplify
 }
