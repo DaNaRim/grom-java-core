@@ -11,7 +11,7 @@ public class DemoHotel {
 
         System.out.println(hotelController.findHotelByName("name"));
 
-        Hotel hotel = new Hotel("Orange", "Ukraine", "test", "Rose");
+        Hotel hotel = new Hotel(555L, "Orange", "Ukraine", "test", "Rose");
 
         System.out.println(hotelController.addHotel(hotel));
 

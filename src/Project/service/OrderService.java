@@ -19,9 +19,8 @@ public class OrderService {
 
         userService.checkLogin();
 
-        Date dateAvailableFrom = roomDAO.findRoomById(roomId).getDateAvailableFrom();
-        if (dateAvailableFrom.after(dateFrom))
-            throw new BadRequestException("The room is busy before time: " + dateAvailableFrom);
+        if (roomDAO.findRoomById(roomId).getDateAvailableFrom().after(dateFrom))
+            throw new BadRequestException("The room is busy");
 
         orderDAO.bookRoom(roomId, userId, dateFrom, dateTo);
     }

@@ -22,12 +22,10 @@ public class OrderDAO extends MainDAO<Order> {
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo)
             throws BadRequestException, IOException, InternalServerException {
 
-        for (Order order : getFromFile()) {
-            if (order.getRoom().getId() == roomId && order.getUser().getId() == userId)
-                throw new BadRequestException("You already booked room: " + roomId + " in order: " + order.getId());
-        }
+        isBooked(roomId, userId);
 
-        addToFile(new Order(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
+        addToFile(new Order(
+                UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
                 userDAO.findUserById(userId),
                 roomDAO.findRoomById(roomId),
                 dateFrom,
@@ -39,13 +37,8 @@ public class OrderDAO extends MainDAO<Order> {
 
     public void cancelReservation(long roomId, long userId) throws InternalServerException, IOException {
         deleteFromFile(findOrderByRoomAndUser(roomId, userId).getId());
-    }
 
-    public Order findOrderByRoomAndUser(long roomId, long userId) throws InternalServerException, IOException {
-        for (Order order : getFromFile()) {
-            if (order.getRoom().getId() == roomId && order.getUser().getId() == userId) return order;
-        }
-        throw new InternalServerException("Missing order");
+        roomDAO.findRoomById(roomId).setDateAvailableFrom(new Date());
     }
 
     @Override
@@ -65,19 +58,30 @@ public class OrderDAO extends MainDAO<Order> {
 
     @Override
     public Order map(String line) throws Exception {
-        String[] fields = line.split(",");
-
-        for (int i = 0; i < fields.length; i++) {
-            fields[i] = fields[i].trim();
-        }
+        String[] fields = line.split(", ");
 
         SimpleDateFormat format = new SimpleDateFormat();
         format.applyPattern("dd.MM.yyyy"); //TODO correct data format
-        return new Order(Long.parseLong(fields[1]),
+        return new Order(
+                Long.parseLong(fields[1]),
                 userDAO.findUserById(Long.parseLong(fields[2])),
                 roomDAO.findRoomById(Long.parseLong(fields[3])),
                 format.parse(fields[4]),
                 format.parse(fields[5]),
                 Double.parseDouble(fields[6]));
+    }
+
+    private Order findOrderByRoomAndUser(long roomId, long userId) throws InternalServerException, IOException {
+        for (Order order : getFromFile()) {
+            if (order.getRoom().getId() == roomId && order.getUser().getId() == userId) return order;
+        }
+        throw new InternalServerException("Missing order");
+    }
+
+    private void isBooked(long roomId, long userId) throws IOException, BrokenFileException, BadRequestException {
+        for (Order order : getFromFile()) {
+            if (order.getRoom().getId() == roomId && order.getUser().getId() == userId)
+                throw new BadRequestException("You already booked room: " + roomId + " in order: " + order.getId());
+        }
     }
 }

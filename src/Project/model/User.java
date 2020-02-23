@@ -7,13 +7,6 @@ public class User extends MainModel {
     private String country;
     private UserType userType;
 
-    public User(String userName, String password, String country, UserType userType) {
-        this.userName = userName;
-        this.password = password;
-        this.country = country;
-        this.userType = userType;
-    }
-
     public User(Long id, String userName, String password, String country, UserType userType) {
         this.id = id;
         this.userName = userName;
@@ -35,12 +28,12 @@ public class User extends MainModel {
         return password;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
     public UserType getUserType() {
         return userType;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override

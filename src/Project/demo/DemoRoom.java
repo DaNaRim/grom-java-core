@@ -16,8 +16,9 @@ public class DemoRoom {
 
         roomController.findRooms(filter);
 
-        Hotel hotel = new Hotel("Orange", "Ukraine", "Cherkassy", "Rose");
-        Room room = new Room(1, 100.40, true, true, new Date(), hotel);
+        Hotel hotel = new Hotel(333L, "Orange", "Ukraine", "Cherkassy", "Rose");
+        Room room = new Room(55L, 1, 100.40, true, true,
+                new Date(), hotel);
 
         System.out.println(roomController.addRoom(room));
 

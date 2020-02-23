@@ -8,7 +8,7 @@ public class DemoUser {
     private static UserController userController = new UserController();
 
     public static void main(String[] args) {
-        User user1 = new User("Oleg", "fs341", "Ukraine", UserType.USER);
+        User user1 = new User(345L, "Oleg", "fs341", "Ukraine", UserType.USER);
 
         System.out.println(userController.registerUser(user1));
 

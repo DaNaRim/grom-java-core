@@ -11,15 +11,6 @@ public class Room extends MainModel {
     private Date dateAvailableFrom;
     private Hotel hotel;
 
-    public Room(Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed, Date dateAvailableFrom, Hotel hotel) {
-        this.numberOfGuests = numberOfGuests;
-        this.price = price;
-        this.breakfastIncluded = breakfastIncluded;
-        this.petsAllowed = petsAllowed;
-        this.dateAvailableFrom = dateAvailableFrom;
-        this.hotel = hotel;
-    }
-
     public Room(Long id, Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed, Date dateAvailableFrom, Hotel hotel) {
         this.id = id;
         this.numberOfGuests = numberOfGuests;
@@ -57,6 +48,10 @@ public class Room extends MainModel {
 
     public Hotel getHotel() {
         return hotel;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setDateAvailableFrom(Date dateAvailableFrom) {

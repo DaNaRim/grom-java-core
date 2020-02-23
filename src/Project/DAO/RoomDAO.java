@@ -33,13 +33,9 @@ public class RoomDAO extends MainDAO<Room> {
     }
 
     public Room addRoom(Room room) throws IOException, BrokenFileException {
-        return addToFile(new Room(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
-                room.getNumberOfGuests(),
-                room.getPrice(),
-                room.getBreakfastIncluded(),
-                room.getPetsAllowed(),
-                room.getDateAvailableFrom(),
-                room.getHotel()));
+        room.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
+
+        return addToFile(room);
     }
 
     public void deleteRoom(long roomId) throws IOException, BrokenFileException {
@@ -70,15 +66,12 @@ public class RoomDAO extends MainDAO<Room> {
 
     @Override
     public Room map(String line) throws Exception {
-        String[] fields = line.split(",");
-
-        for (int i = 0; i < fields.length; i++) {
-            fields[i] = fields[i].trim();
-        }
+        String[] fields = line.split(", ");
 
         SimpleDateFormat format = new SimpleDateFormat();
         format.applyPattern("dd.MM.yyyy"); //TODO correct data format
-        return new Room(Long.parseLong(fields[1]),
+        return new Room(
+                Long.parseLong(fields[1]),
                 Integer.parseInt(fields[2]),
                 Double.parseDouble(fields[3]),
                 Boolean.parseBoolean(fields[4]),
@@ -88,19 +81,13 @@ public class RoomDAO extends MainDAO<Room> {
     }
 
     private boolean checkRoomByFilter(Room room, Filter filter) {
-        return ((filter.getNumberOfGuests() == null ||
-                filter.getNumberOfGuests().equals(room.getNumberOfGuests())) &&
-                (filter.getPrice() == null ||
-                        filter.getPrice().equals(room.getPrice())) &&
-                (filter.getBreakfastIncluded() == null ||
-                        filter.getBreakfastIncluded() == room.getBreakfastIncluded()) &&
-                (filter.getPetsAllowed() == null ||
-                        filter.getPetsAllowed() == room.getPetsAllowed()) &&
+        return ((filter.getNumberOfGuests() == 0 || filter.getNumberOfGuests().equals(room.getNumberOfGuests())) &&
+                (filter.getPrice() == 0 || filter.getPrice().equals(room.getPrice())) &&
+                filter.getBreakfastIncluded() == room.getBreakfastIncluded() &&
+                filter.getPetsAllowed() == room.getPetsAllowed() &&
                 (filter.getDateAvailableFrom() == null ||
                         filter.getDateAvailableFrom().after(room.getDateAvailableFrom())) &&
-                (filter.getCountry() == null ||
-                        filter.getCountry().equals(room.getHotel().getCountry())) &&
-                (filter.getCity() == null ||
-                        filter.getCity().equals(room.getHotel().getCity())));
+                (filter.getCountry() == null || filter.getCountry().equals(room.getHotel().getCountry())) &&
+                (filter.getCity() == null || filter.getCity().equals(room.getHotel().getCity())));
     }
 }

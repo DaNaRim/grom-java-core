@@ -21,28 +21,25 @@ public class UserService {
     public void login(String userName, String password) throws IOException, BrokenFileException, BadRequestException {
         for (User user : userDAO.getFromFile()) {
             if (user.getUserName().equals(userName)) {
-                if (loggedUser.getId().equals(user.getId()))
-                    throw new BadRequestException("User already log in");
+                if (loggedUser.getId().equals(user.getId())) throw new BadRequestException("User already log in");
 
-                if (user.getPassword().equals(password))
-                    loggedUser = user;
+                if (user.getPassword().equals(password)) loggedUser = user;
                 throw new BadRequestException("Wrong password");
             }
         }
         throw new BadRequestException("Wrong username or user not registered");
     }
 
-    public void logout() {
+    public void logout() throws BadRequestException {
+        if (loggedUser == null) throw new BadRequestException("User is not logged in");
         loggedUser = null;
     }
 
     public void checkLogin() throws NotLogInException {
-        if (loggedUser == null)
-            throw new NotLogInException("User are not log in");
+        if (loggedUser == null) throw new NotLogInException("User are not log in");
     }
 
     public void checkRights() throws NoAccessException {
-        if (loggedUser.getUserType() != UserType.ADMIN)
-            throw new NoAccessException("User don`t have enough rights");
+        if (loggedUser.getUserType() != UserType.ADMIN) throw new NoAccessException("User don`t have enough rights");
     }
 }

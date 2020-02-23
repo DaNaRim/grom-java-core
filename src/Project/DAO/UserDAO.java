@@ -16,11 +16,9 @@ public class UserDAO extends MainDAO<User> {
     }
 
     public User registerUser(User user) throws IOException, BrokenFileException {
-        return addToFile(new User(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
-                user.getUserName(),
-                user.getPassword(),
-                user.getCountry(),
-                user.getUserType()));
+        user.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
+
+        return addToFile(user);
     }
 
     public User findUserById(long id) throws InternalServerException, IOException {
@@ -47,11 +45,8 @@ public class UserDAO extends MainDAO<User> {
 
     @Override
     public User map(String line) throws NumberFormatException {
-        String[] fields = line.split(",");
+        String[] fields = line.split(", ");
 
-        for (int i = 0; i < fields.length; i++) {
-            fields[i] = fields[i].trim();
-        }
         return new User(Long.parseLong(fields[1]), fields[2], fields[3], fields[4], UserType.valueOf(fields[5]));
     }
 }

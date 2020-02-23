@@ -31,7 +31,11 @@ public class UserController {
     }
 
     public void logout() {
-        userService.logout();
-        System.out.println("logout successful");
+        try {
+            userService.logout();
+            System.out.println("logout successful");
+        } catch (BadRequestException e) {
+            System.err.println("logout failed: " + e.getMessage());
+        }
     }
 }
