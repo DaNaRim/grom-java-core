@@ -24,21 +24,15 @@ public class OrderDAO extends MainDAO<Order> {
 
         isBooked(roomId, userId);
 
-        addToFile(new Order(
-                UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
-                userDAO.findUserById(userId),
-                roomDAO.findRoomById(roomId),
-                dateFrom,
-                dateTo,
-                roomDAO.findRoomById(roomId).getPrice()));
+        addToFile(createOrder(roomId, userId, dateFrom, dateTo));
 
-        roomDAO.findRoomById(roomId).setDateAvailableFrom(dateTo);
+        roomDAO.findById(roomId).setDateAvailableFrom(dateTo);
     }
 
     public void cancelReservation(long roomId, long userId) throws InternalServerException, IOException {
         deleteFromFile(findOrderByRoomAndUser(roomId, userId).getId());
 
-        roomDAO.findRoomById(roomId).setDateAvailableFrom(new Date());
+        roomDAO.findById(roomId).setDateAvailableFrom(new Date());
     }
 
     @Override
@@ -64,11 +58,21 @@ public class OrderDAO extends MainDAO<Order> {
         format.applyPattern("dd.MM.yyyy"); //TODO correct data format
         return new Order(
                 Long.parseLong(fields[1]),
-                userDAO.findUserById(Long.parseLong(fields[2])),
-                roomDAO.findRoomById(Long.parseLong(fields[3])),
+                userDAO.findById(Long.parseLong(fields[2])),
+                roomDAO.findById(Long.parseLong(fields[3])),
                 format.parse(fields[4]),
                 format.parse(fields[5]),
                 Double.parseDouble(fields[6]));
+    }
+
+    private Order createOrder(long roomId, long userId, Date dateFrom, Date dateTo) throws IOException, InternalServerException {
+        return new Order(
+                UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
+                userDAO.findById(userId),
+                roomDAO.findById(roomId),
+                dateFrom,
+                dateTo,
+                roomDAO.findById(roomId).getPrice());
     }
 
     private Order findOrderByRoomAndUser(long roomId, long userId) throws InternalServerException, IOException {

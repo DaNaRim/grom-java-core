@@ -1,6 +1,7 @@
 package Project.DAO;
 
 import Project.exception.BrokenFileException;
+import Project.exception.InternalServerException;
 import Project.model.MainModel;
 
 import java.io.*;
@@ -11,6 +12,13 @@ public abstract class MainDAO<T extends MainModel> {
 
     public MainDAO(String path) {
         this.path = path;
+    }
+
+    public T findById(long id) throws IOException, InternalServerException {
+        for (T t : getFromFile()) {
+            if (t.getId() == id) return t;
+        }
+        throw new InternalServerException("Missing object with id: " + id);
     }
 
     public LinkedList<T> getFromFile() throws BrokenFileException, IOException {

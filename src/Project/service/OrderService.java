@@ -16,23 +16,29 @@ public class OrderService {
 
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo)
             throws NotLogInException, IOException, InternalServerException, BadRequestException {
-
         userService.checkLogin();
-
-        if (roomDAO.findRoomById(roomId).getDateAvailableFrom().after(dateFrom))
-            throw new BadRequestException("The room is busy");
+        checkRoomForBusy(roomId, dateFrom);
 
         orderDAO.bookRoom(roomId, userId, dateFrom, dateTo);
     }
 
     public void cancelReservation(long roomId, long userId)
             throws NotLogInException, IOException, InternalServerException, BadRequestException {
-
         userService.checkLogin();
-
-        if (roomDAO.findRoomById(roomId).getDateAvailableFrom().before(new Date()))
-            throw new BadRequestException("Possible cancellation has expired");
+        checkPossibleCancellation(roomId);
 
         orderDAO.cancelReservation(roomId, userId);
+    }
+
+    private void checkRoomForBusy(long roomId, Date dateFrom)
+            throws BadRequestException, IOException, InternalServerException {
+        if (roomDAO.findById(roomId).getDateAvailableFrom().after(dateFrom))
+            throw new BadRequestException("The room is busy");
+    }
+
+    private void checkPossibleCancellation(long roomId)
+            throws IOException, InternalServerException, BadRequestException {
+        if (roomDAO.findById(roomId).getDateAvailableFrom().before(new Date()))
+            throw new BadRequestException("Possible cancellation has expired");
     }
 }

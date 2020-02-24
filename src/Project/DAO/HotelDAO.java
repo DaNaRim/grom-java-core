@@ -29,13 +29,6 @@ public class HotelDAO extends MainDAO<Hotel> {
         throw new BadRequestException("Missing hotel in city: " + city);
     }
 
-    public Hotel findHotelById(long id) throws InternalServerException, IOException {
-        for (Hotel hotel : getFromFile()) {
-            if (hotel.getId() == id) return hotel;
-        }
-        throw new InternalServerException("Missing hotel with id: " + id);
-    }
-
     public Hotel addHotel(Hotel hotel) throws IOException, BrokenFileException, BadRequestException {
         isExist(hotel);
 
@@ -52,6 +45,11 @@ public class HotelDAO extends MainDAO<Hotel> {
             }
         }
         throw new BadRequestException("There is no hotel with this id: " + hotelId);
+    }
+
+    @Override
+    public Hotel findById(long id) throws IOException, InternalServerException {
+        return super.findById(id);
     }
 
     @Override

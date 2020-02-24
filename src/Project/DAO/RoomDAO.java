@@ -20,14 +20,9 @@ public class RoomDAO extends MainDAO<Room> {
     }
 
     public ArrayList<Room> findRooms(Filter filter) throws IOException, BrokenFileException, BadRequestException {
-        ArrayList<Room> rooms = new ArrayList<>();
+        ArrayList<Room> rooms = findRoomsByFilter(filter);
 
-        for (Room room : getFromFile()) {
-            if (checkRoomByFilter(room, filter)) rooms.add(room);
-        }
-
-        if (rooms.size() == 0)
-            throw new BadRequestException("There is no room with parameters: " + filter.toString());
+        checkResultSize(rooms);
 
         return rooms;
     }
@@ -42,11 +37,9 @@ public class RoomDAO extends MainDAO<Room> {
         deleteFromFile(roomId);
     }
 
-    public Room findRoomById(long id) throws InternalServerException, IOException {
-        for (Room room : getFromFile()) {
-            if (room.getId() == id) return room;
-        }
-        throw new InternalServerException("Missing room with id: " + id);
+    @Override
+    public Room findById(long id) throws IOException, InternalServerException {
+        return super.findById(id);
     }
 
     @Override
@@ -77,7 +70,20 @@ public class RoomDAO extends MainDAO<Room> {
                 Boolean.parseBoolean(fields[4]),
                 Boolean.parseBoolean(fields[5]),
                 format.parse(fields[6]),
-                hotelDAO.findHotelById(Long.parseLong(fields[7])));
+                hotelDAO.findById(Long.parseLong(fields[7])));
+    }
+
+    private void checkResultSize(ArrayList<Room> rooms) throws BadRequestException {
+        if (rooms.size() == 0)
+            throw new BadRequestException("There is no room with this parameters");
+    }
+
+    private ArrayList<Room> findRoomsByFilter(Filter filter) throws IOException, BrokenFileException {
+        ArrayList<Room> rooms = new ArrayList<>();
+        for (Room room : getFromFile()) {
+            if (checkRoomByFilter(room, filter)) rooms.add(room);
+        }
+        return rooms;
     }
 
     private boolean checkRoomByFilter(Room room, Filter filter) {

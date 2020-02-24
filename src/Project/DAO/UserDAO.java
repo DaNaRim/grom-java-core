@@ -21,11 +21,9 @@ public class UserDAO extends MainDAO<User> {
         return addToFile(user);
     }
 
-    public User findUserById(long id) throws InternalServerException, IOException {
-        for (User user : getFromFile()) {
-            if (user.getId() == id) return user;
-        }
-        throw new InternalServerException("Missing user with id: " + id);
+    @Override
+    public User findById(long id) throws IOException, InternalServerException {
+        return super.findById(id);
     }
 
     @Override

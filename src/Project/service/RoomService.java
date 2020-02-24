@@ -16,7 +16,7 @@ public class RoomService {
     private UserService userService = new UserService();
 
     public ArrayList<Room> findRooms(Filter filter) throws BadRequestException, IOException, BrokenFileException {
-        if (filter == null) throw new BadRequestException("You have not selected options for filtering");
+        validateFilter(filter);
 
         return roomDAO.findRooms(filter);
     }
@@ -33,5 +33,9 @@ public class RoomService {
         userService.checkRights();
 
         roomDAO.deleteRoom(roomId);
+    }
+
+    private void validateFilter(Filter filter) throws BadRequestException {
+        if (filter == null) throw new BadRequestException("You have not selected options for filtering");
     }
 }
