@@ -48,17 +48,4 @@ public class Filter {
     public String getCity() {
         return city;
     }
-
-    @Override
-    public String toString() {
-        return "Filter{" +
-                "numberOfGuests=" + numberOfGuests +
-                ", price=" + price +
-                ", breakfastIncluded=" + breakfastIncluded +
-                ", petsAllowed=" + petsAllowed +
-                ", dateAvailableFrom=" + dateAvailableFrom +
-                ", country='" + country + '\'' +
-                ", city='" + city + '\'' +
-                '}';
-    }
 }

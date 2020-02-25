@@ -1,9 +1,6 @@
 package Project.controller;
 
-import Project.exception.BadRequestException;
-import Project.exception.BrokenFileException;
-import Project.exception.NoAccessException;
-import Project.exception.NotLogInException;
+import Project.exception.*;
 import Project.model.Hotel;
 import Project.service.HotelService;
 
