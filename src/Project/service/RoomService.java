@@ -15,27 +15,27 @@ public class RoomService {
     private RoomDAO roomDAO = new RoomDAO();
     private UserService userService = new UserService();
 
-    public ArrayList<Room> findRooms(Filter filter) throws BadRequestException, IOException, BrokenFileException {
+    public ArrayList<Room> findRooms(Filter filter)
+            throws BadRequestException, IOException, BrokenFileException, NoAccessException {
         validateFilter(filter);
-
         return roomDAO.findRooms(filter);
     }
 
     public Room addRoom(Room room) throws NotLogInException, NoAccessException, IOException, BrokenFileException {
+        //TODO checkRoom
         userService.checkLogin();
         userService.checkRights();
-
         return roomDAO.addRoom(room);
     }
 
     public void deleteRoom(long roomId) throws NotLogInException, NoAccessException, IOException, BrokenFileException {
         userService.checkLogin();
         userService.checkRights();
-
         roomDAO.deleteRoom(roomId);
     }
 
     private void validateFilter(Filter filter) throws BadRequestException {
-        if (filter == null) throw new BadRequestException("You have not selected options for filtering");
+        if (filter == null)
+            throw new BadRequestException("validateFilter failed: you have not selected options for filtering");
     }
 }

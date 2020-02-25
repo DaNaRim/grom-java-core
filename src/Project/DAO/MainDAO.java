@@ -2,6 +2,7 @@ package Project.DAO;
 
 import Project.exception.BrokenFileException;
 import Project.exception.InternalServerException;
+import Project.exception.NoAccessException;
 import Project.model.MainModel;
 
 import java.io.*;
@@ -14,14 +15,14 @@ public abstract class MainDAO<T extends MainModel> {
         this.path = path;
     }
 
-    public T findById(long id) throws IOException, InternalServerException {
+    public T findById(long id) throws IOException, InternalServerException, NoAccessException {
         for (T t : getFromFile()) {
             if (t.getId() == id) return t;
         }
-        throw new InternalServerException("Missing object with id: " + id);
+        throw new InternalServerException("findById failed: missing object with id: " + id);
     }
 
-    public LinkedList<T> getFromFile() throws BrokenFileException, IOException {
+    public LinkedList<T> getFromFile() throws BrokenFileException, IOException, NoAccessException {
         validate(path);
 
         LinkedList<T> t = new LinkedList<>();
@@ -32,55 +33,72 @@ public abstract class MainDAO<T extends MainModel> {
                 try {
                     t.add(map(line));
                 } catch (Exception e) {
-                    throw new BrokenFileException("broken line: " + lineIndex + " in file: " + path);
+                    throw new BrokenFileException("getFromFile failed: broken line: " + lineIndex +
+                            " in file: " + path);
                 }
                 lineIndex++;
             }
         } catch (IOException e) {
-            throw new IOException("Reading from file: " + path + " failed");
+            throw new IOException("getFromFile failed: reading from file: " + path + " failed");
         }
         return t;
     }
 
-    public T addToFile(T t) throws IOException, BrokenFileException {
+    public T addToFile(T t) throws IOException, BrokenFileException, NoAccessException {
         validate(path);
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
             if (getFromFile() != null) bw.append("\r\n");
             bw.append(t.toString());
         } catch (IOException e) {
-            throw new IOException("Writing to file: " + path + " failed");
+            throw new IOException("addToFile failed: writing to file: " + path + " failed");
         }
         return t;
     }
 
-    public void deleteFromFile(Long id) throws IOException, BrokenFileException {
-        LinkedList<T> newToWrite = new LinkedList<>();
-
-        for (T t1 : getFromFile()) {
-            if (!t1.getId().equals(id)) newToWrite.add(t1);
-        }
+    public void deleteFromFile(Long id) throws IOException, BrokenFileException, NoAccessException {
+        LinkedList<T> newToWrite = getNewContent(id);
         deleteFileContent();
-
-        for (T t1 : newToWrite) {
-            addToFile(t1);
-        }
+        writeNewContent(newToWrite);
     }
 
     public abstract T map(String line) throws Exception;
 
-    private void validate(String path) throws FileNotFoundException {
-        if (!new File(path).exists())
-            throw new FileNotFoundException("File: " + path + " does not exist");
+    private void validate(String path) throws FileNotFoundException, NoAccessException {
+        File file = new File(path);
+
+        if (!file.exists())
+            throw new FileNotFoundException("validate failed: file: " + path + " does not exist");
+
+        if (!file.canRead())
+            throw new NoAccessException("validate failed: file " + path + " does not have permissions to read");
+
+        if (!file.canWrite())
+            throw new NoAccessException("validate failed: file " + path + " does not have permissions to write");
     }
 
-    private void deleteFileContent() throws IOException {
+    private void deleteFileContent() throws IOException, NoAccessException {
         validate(path);
 
         try (BufferedWriter br = new BufferedWriter(new FileWriter(path))) {
             br.write("");
         } catch (IOException e) {
-            throw new IOException("Delete from file: " + path + " failed");
+            throw new IOException("deleteFileContent failed: delete from file: " + path + " failed");
+        }
+    }
+
+    private LinkedList<T> getNewContent(Long id) throws IOException, BrokenFileException, NoAccessException {
+        LinkedList<T> newToWrite = new LinkedList<>();
+
+        for (T t1 : getFromFile()) {
+            if (!t1.getId().equals(id)) newToWrite.add(t1);
+        }
+        return newToWrite;
+    }
+
+    private void writeNewContent(LinkedList<T> newToWrite) throws NoAccessException, BrokenFileException, IOException {
+        for (T t1 : newToWrite) {
+            addToFile(t1);
         }
     }
 }

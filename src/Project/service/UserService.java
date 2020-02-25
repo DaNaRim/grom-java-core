@@ -14,11 +14,12 @@ public class UserService {
     private UserDAO userDAO = new UserDAO();
     private static User loggedUser = null;
 
-    public User registerUser(User user) throws IOException, BrokenFileException {
+    public User registerUser(User user) throws IOException, BrokenFileException, NoAccessException {
         return userDAO.registerUser(user);
     }
 
-    public void login(String userName, String password) throws IOException, BrokenFileException, BadRequestException {
+    public void login(String userName, String password)
+            throws IOException, BrokenFileException, BadRequestException, NoAccessException {
         loggedUser = validateLogin(userName, password);
     }
 
@@ -28,26 +29,26 @@ public class UserService {
     }
 
     public void checkLogin() throws NotLogInException {
-        if (loggedUser == null) throw new NotLogInException("User is not log in");
+        if (loggedUser == null) throw new NotLogInException("checkLogin failed: user is not log in");
     }
 
     public void checkRights() throws NoAccessException {
-        if (loggedUser.getUserType() != UserType.ADMIN) throw new NoAccessException("User don`t have enough rights");
+        if (loggedUser.getUserType() != UserType.ADMIN)
+            throw new NoAccessException("checkRights failed: user don`t have enough rights");
     }
 
     private User validateLogin(String userName, String password)
-            throws IOException, BrokenFileException, BadRequestException {
+            throws IOException, BrokenFileException, BadRequestException, NoAccessException {
         for (User user : userDAO.getFromFile()) {
             if (user.getUserName().equals(userName)) return checkUser(user, password);
         }
-        throw new BadRequestException("Wrong username or user not registered");
+        throw new BadRequestException("validateLogin failed: wrong username or user not registered");
     }
 
     private User checkUser(User user, String password) throws BadRequestException {
-        if (loggedUser.getId().equals(user.getId())) throw new BadRequestException("User already log in");
-
+        if (loggedUser.getId().equals(user.getId()))
+            throw new BadRequestException("checkUser failed: user already log in");
         if (user.getPassword().equals(password)) return user;
-
-        throw new BadRequestException("Wrong password");
+        throw new BadRequestException("checkUser failed: wrong password");
     }
 }

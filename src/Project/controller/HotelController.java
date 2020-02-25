@@ -12,53 +12,23 @@ import java.io.IOException;
 public class HotelController {
     HotelService hotelService = new HotelService();
 
-    public Hotel findHotelByName(String name) {
-        Hotel hotel = null;
-        try {
-            hotel = hotelService.findHotelByName(name);
-            System.out.println("findHotelByName successful: " + hotel.getId());
-        } catch (BadRequestException | IOException | BrokenFileException e) {
-            System.err.println("findHotelByName failed: " + e.getMessage());
-        }
-        return hotel;
+    public Hotel findHotelByName(String name)
+            throws BadRequestException, NoAccessException, BrokenFileException, IOException {
+        return hotelService.findHotelByName(name);
     }
 
-    public Hotel findHotelByCity(String city) {
-        Hotel hotel = null;
-        try {
-            hotel = hotelService.findHotelByCity(city);
-            System.out.println("findHotelByCity successful: " + hotel.getId());
-        } catch (BadRequestException | IOException | BrokenFileException e) {
-            System.err.println("findHotelByCity failed: " + e.getMessage());
-        }
-        return hotel;
+    public Hotel findHotelByCity(String city)
+            throws BadRequestException, NoAccessException, BrokenFileException, IOException {
+        return hotelService.findHotelByCity(city);
     }
 
-    public Hotel addHotel(Hotel hotel) {
-        Hotel resHotel = null;
-        try {
-            resHotel = hotelService.addHotel(hotel);
-            System.out.println("addHotel successful: " + resHotel.getId());
-        } catch (NotLogInException |
-                BadRequestException |
-                BrokenFileException |
-                IOException |
-                NoAccessException e) {
-            System.err.println("addHotel failed: " + e.getMessage());
-        }
-        return resHotel;
+    public Hotel addHotel(Hotel hotel)
+            throws BrokenFileException, NotLogInException, NoAccessException, BadRequestException, IOException {
+        return hotelService.addHotel(hotel);
     }
 
-    public void deleteHotel(long hotelId) {
-        try {
-            hotelService.deleteHotel(hotelId);
-            System.out.println("deleteHotel successful");
-        } catch (NotLogInException |
-                NoAccessException |
-                BadRequestException |
-                BrokenFileException |
-                IOException e) {
-            System.err.println("deleteHotel failed: " + e.getMessage());
-        }
+    public void deleteHotel(long hotelId)
+            throws BrokenFileException, NotLogInException, NoAccessException, BadRequestException, IOException {
+        hotelService.deleteHotel(hotelId);
     }
 }

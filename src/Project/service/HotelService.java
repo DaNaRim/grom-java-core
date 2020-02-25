@@ -13,19 +13,23 @@ public class HotelService {
     private HotelDAO hotelDAO = new HotelDAO();
     private UserService userService = new UserService();
 
-    public Hotel findHotelByName(String name) throws BadRequestException, IOException, BrokenFileException {
+    public Hotel findHotelByName(String name)
+            throws BadRequestException, IOException, BrokenFileException, NoAccessException {
+        //TODO checkName
         return hotelDAO.findHotelByName(name);
     }
 
-    public Hotel findHotelByCity(String city) throws BadRequestException, IOException, BrokenFileException {
+    public Hotel findHotelByCity(String city)
+            throws BadRequestException, IOException, BrokenFileException, NoAccessException {
+        //TODO checkCity
         return hotelDAO.findHotelByCity(city);
     }
 
     public Hotel addHotel(Hotel hotel)
             throws NotLogInException, NoAccessException, BadRequestException, BrokenFileException, IOException {
+        //TODO checkHotel
         userService.checkLogin();
         userService.checkRights();
-
         return hotelDAO.addHotel(hotel);
     }
 
@@ -33,7 +37,6 @@ public class HotelService {
             throws NotLogInException, NoAccessException, BadRequestException, BrokenFileException, IOException {
         userService.checkLogin();
         userService.checkRights();
-
         hotelDAO.deleteHotel(hotelId);
     }
 }
