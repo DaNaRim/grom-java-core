@@ -61,15 +61,13 @@ public class RoomDAO extends MainDAO<Room> {
     public Room map(String line) throws Exception {
         String[] fields = line.split(", ");
 
-        SimpleDateFormat format = new SimpleDateFormat();
-        format.applyPattern("dd.MM.yyyy"); //TODO correct data format
         return new Room(
                 Long.parseLong(fields[1]),
                 Integer.parseInt(fields[2]),
                 Double.parseDouble(fields[3]),
                 Boolean.parseBoolean(fields[4]),
                 Boolean.parseBoolean(fields[5]),
-                format.parse(fields[6]),
+                new SimpleDateFormat("dd.MM.yyyy").parse(fields[6]),
                 hotelDAO.findById(Long.parseLong(fields[7])));
     }
 

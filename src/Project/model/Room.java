@@ -1,5 +1,6 @@
 package Project.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Room extends MainModel {
@@ -65,7 +66,7 @@ public class Room extends MainModel {
                 price + ", " +
                 breakfastIncluded + ", " +
                 petsAllowed + ", " +
-                dateAvailableFrom.toString() + ", " +
+                new SimpleDateFormat("dd.MM.yyyy").format(dateAvailableFrom) + ", " +
                 hotel.getId();
     }
 }

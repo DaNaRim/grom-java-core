@@ -54,14 +54,13 @@ public class OrderDAO extends MainDAO<Order> {
     public Order map(String line) throws Exception {
         String[] fields = line.split(", ");
 
-        SimpleDateFormat format = new SimpleDateFormat();
-        format.applyPattern("dd.MM.yyyy"); //TODO correct data format
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         return new Order(
                 Long.parseLong(fields[1]),
                 userDAO.findById(Long.parseLong(fields[2])),
                 roomDAO.findById(Long.parseLong(fields[3])),
-                format.parse(fields[4]),
-                format.parse(fields[5]),
+                simpleDateFormat.parse(fields[4]),
+                simpleDateFormat.parse(fields[5]),
                 Double.parseDouble(fields[6]));
     }
 

@@ -1,5 +1,6 @@
 package Project.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Order extends MainModel {
@@ -34,11 +35,13 @@ public class Order extends MainModel {
 
     @Override
     public String toString() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+
         return id + ", " +
                 user.getId() + ", " +
                 room.getId() + ", " +
-                dateFrom.toString() + ", " +
-                dateTo.toString() + ", " +
+                simpleDateFormat.format(dateFrom) + ", " +
+                simpleDateFormat.format(dateTo) + ", " +
                 moneyPaid;
     }
 }
