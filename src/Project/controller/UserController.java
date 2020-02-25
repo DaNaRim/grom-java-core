@@ -2,6 +2,7 @@ package Project.controller;
 
 import Project.exception.BadRequestException;
 import Project.exception.BrokenFileException;
+import Project.exception.NotLogInException;
 import Project.model.User;
 import Project.service.UserService;
 
@@ -34,7 +35,7 @@ public class UserController {
         try {
             userService.logout();
             System.out.println("logout successful");
-        } catch (BadRequestException e) {
+        } catch (NotLogInException e) {
             System.err.println("logout failed: " + e.getMessage());
         }
     }

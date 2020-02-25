@@ -16,7 +16,7 @@ public class OrderController {
             orderService.bookRoom(roomId, userId, dateFrom, dateTo);
             System.out.println("bookRoom successful: " + roomId);
         } catch (NotLogInException | IOException | InternalServerException | BadRequestException e) {
-            System.out.println("bookRoom failed: " + e.getMessage());
+            System.err.println("bookRoom failed: " + e.getMessage());
         }
     }
 
