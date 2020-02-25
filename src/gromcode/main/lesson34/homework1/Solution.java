@@ -24,9 +24,10 @@ public class Solution {
             String line;
             while ((line = br.readLine()) != null) {
                 res.append(line);
-                res.append("\n");
+                res.append("\r\n");
             }
-            res.replace(res.length() - 1, res.length(), "");
+            if (res.length() > 1)
+                res.replace(res.length() - 1, res.length(), "");
         } catch (IOException e) {
             System.err.println("Reading from file " + path + "failed");
         }
@@ -34,10 +35,10 @@ public class Solution {
     }
 
     private static void writeToFile(String path, StringBuffer contentToWriter) {
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path, true))) {
-            if (readFromFile(path).toString().equals(""))
-                bufferedWriter.append("\n");
-            bufferedWriter.append(contentToWriter);
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
+            if (!readFromFile(path).toString().equals(""))
+                bw.append("\r\n");
+            bw.append(contentToWriter);
         } catch (IOException e) {
             System.err.println("Writing to file " + path + " failed");
         }
@@ -53,12 +54,17 @@ public class Solution {
         if (!fileFrom.canRead())
             throw new Exception("File " + fileFrom + " does not have permissions to read");
 
-        if (!fileFrom.canWrite())
-            throw new Exception("File " + fileFrom + " does not have permissions to written");
+        checkToWrite(fileFrom);
+        checkToWrite(fileTo);
     }
 
-    private static void checkFile(File file) throws FileNotFoundException{
+    private static void checkFile(File file) throws FileNotFoundException {
         if (!file.exists())
             throw new FileNotFoundException("File " + file + " does not exist");
+    }
+
+    private static void checkToWrite(File file) throws Exception {
+        if (!file.canWrite())
+            throw new Exception("File " + file + " does not have permissions to written");
     }
 }
