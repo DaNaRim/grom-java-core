@@ -19,7 +19,8 @@ public class RoomController {
         return roomService.findRooms(filter);
     }
 
-    public Room addRoom(Room room) throws NotLogInException, NoAccessException, BrokenFileException, IOException {
+    public Room addRoom(Room room)
+            throws NotLogInException, NoAccessException, BrokenFileException, IOException, BadRequestException {
         return roomService.addRoom(room);
     }
 

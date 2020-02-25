@@ -60,14 +60,16 @@ public class RoomDAO extends MainDAO<Room> {
     @Override
     public Room map(String line) throws IOException, InternalServerException, ParseException, NumberFormatException, NoAccessException {
         String[] fields = line.split(", ");
+        if (fields.length > 7) throw new BrokenFileException("map failed: broken line");
+
         return new Room(
-                Long.parseLong(fields[1]),
-                Integer.parseInt(fields[2]),
-                Double.parseDouble(fields[3]),
+                Long.parseLong(fields[0]),
+                Integer.parseInt(fields[1]),
+                Double.parseDouble(fields[2]),
+                Boolean.parseBoolean(fields[3]),
                 Boolean.parseBoolean(fields[4]),
-                Boolean.parseBoolean(fields[5]),
-                new SimpleDateFormat("dd.MM.yyyy").parse(fields[6]),
-                hotelDAO.findById(Long.parseLong(fields[7])));
+                new SimpleDateFormat("dd.MM.yyyy").parse(fields[5]),
+                hotelDAO.findById(Long.parseLong(fields[6])));
     }
 
     private void checkResultSize(ArrayList<Room> rooms) throws BadRequestException {

@@ -1,5 +1,6 @@
 package Project.DAO;
 
+import Project.exception.BadRequestException;
 import Project.exception.BrokenFileException;
 import Project.exception.InternalServerException;
 import Project.exception.NoAccessException;
@@ -42,8 +43,9 @@ public class UserDAO extends MainDAO<User> {
     }
 
     @Override
-    public User map(String line) throws NumberFormatException {
+    public User map(String line) throws NumberFormatException, BrokenFileException {
         String[] fields = line.split(", ");
-        return new User(Long.parseLong(fields[1]), fields[2], fields[3], fields[4], UserType.valueOf(fields[5]));
+        if (fields.length > 5) throw new BrokenFileException("map failed: broken line");
+        return new User(Long.parseLong(fields[0]), fields[1], fields[2], fields[3], UserType.valueOf(fields[4]));
     }
 }

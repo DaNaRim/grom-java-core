@@ -47,8 +47,8 @@ public abstract class MainDAO<T extends MainModel> {
     public T addToFile(T t) throws IOException, BrokenFileException, NoAccessException {
         validate(path);
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
-            if (getFromFile() != null) bw.append("\r\n");
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
+            if (!getFromFile().toString().equals("[]")) bw.append("\r\n");
             bw.append(t.toString());
         } catch (IOException e) {
             throw new IOException("addToFile failed: writing to file: " + path + " failed");

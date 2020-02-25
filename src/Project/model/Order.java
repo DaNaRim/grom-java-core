@@ -11,6 +11,14 @@ public class Order extends MainModel {
     private Date dateTo;
     private Double moneyPaid;
 
+    public Order(User user, Room room, Date dateFrom, Date dateTo, Double moneyPaid) {
+        this.user = user;
+        this.room = room;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.moneyPaid = moneyPaid;
+    }
+
     public Order(Long id, User user, Room room, Date dateFrom, Date dateTo, Double moneyPaid) {
         this.id = id;
         this.user = user;

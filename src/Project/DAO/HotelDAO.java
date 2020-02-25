@@ -70,9 +70,10 @@ public class HotelDAO extends MainDAO<Hotel> {
     }
 
     @Override
-    public Hotel map(String line) throws NumberFormatException {
+    public Hotel map(String line) throws NumberFormatException, BrokenFileException {
         String[] fields = line.split(", ");
-        return new Hotel(Long.parseLong(fields[1]), fields[2], fields[3], fields[4], fields[5]);
+        if (fields.length > 5) throw new BrokenFileException("map failed: broken line");
+        return new Hotel(Long.parseLong(fields[0]), fields[1], fields[2], fields[3], fields[4]);
     }
 
     private void isExist(Hotel hotel) throws IOException, BrokenFileException, BadRequestException, NoAccessException {

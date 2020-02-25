@@ -17,6 +17,8 @@ public class UserService {
     public User registerUser(User user)
             throws IOException, BrokenFileException, NoAccessException, BadRequestException {
         checkUser(user);
+        checkUserName(user);
+        checkUserPassword(user);
         return userDAO.registerUser(user);
     }
 
@@ -62,5 +64,18 @@ public class UserService {
         if (user.getUserName() == null || user.getPassword() == null ||
                 user.getCountry() == null || user.getUserType() == null)
             throw new BadRequestException("checkUser failed: not all fields are filled");
+    }
+
+    private void checkUserName(User user)
+            throws NoAccessException, BrokenFileException, IOException, BadRequestException {
+        for (User user1 : userDAO.getFromFile()) {
+            if (user1.getUserName().equals(user.getUserName()))
+                throw new BadRequestException("checkUserName failed: username is already taken");
+        }
+    }
+
+    private void checkUserPassword(User user) throws BadRequestException {
+        if (user.getPassword().length() < 8)
+            throw new BadRequestException("checkUserPassword failed: password must be at least 8 characters");
     }
 }

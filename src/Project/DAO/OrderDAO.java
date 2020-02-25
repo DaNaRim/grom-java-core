@@ -52,15 +52,16 @@ public class OrderDAO extends MainDAO<Order> {
     public Order map(String line)
             throws IOException, InternalServerException, ParseException, NumberFormatException, NoAccessException {
         String[] fields = line.split(", ");
+        if (fields.length > 6) throw new BrokenFileException("map failed: broken line");
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
         return new Order(
-                Long.parseLong(fields[1]),
-                userDAO.findById(Long.parseLong(fields[2])),
-                roomDAO.findById(Long.parseLong(fields[3])),
+                Long.parseLong(fields[0]),
+                userDAO.findById(Long.parseLong(fields[1])),
+                roomDAO.findById(Long.parseLong(fields[2])),
+                simpleDateFormat.parse(fields[3]),
                 simpleDateFormat.parse(fields[4]),
-                simpleDateFormat.parse(fields[5]),
-                Double.parseDouble(fields[6]));
+                Double.parseDouble(fields[5]));
     }
 
     private Order createOrder(long roomId, long userId, Date dateFrom, Date dateTo)

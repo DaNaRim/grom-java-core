@@ -12,7 +12,8 @@ import java.io.IOException;
 public class UserController {
     private UserService userService = new UserService();
 
-    public User registerUser(User user) throws NoAccessException, BrokenFileException, IOException {
+    public User registerUser(User user)
+            throws NoAccessException, BrokenFileException, IOException, BadRequestException {
         return userService.registerUser(user);
     }
 
