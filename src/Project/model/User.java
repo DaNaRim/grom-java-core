@@ -28,6 +28,10 @@ public class User extends MainModel {
         return password;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
     public UserType getUserType() {
         return userType;
     }

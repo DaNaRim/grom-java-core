@@ -15,19 +15,19 @@ public class HotelService {
 
     public Hotel findHotelByName(String name)
             throws BadRequestException, IOException, BrokenFileException, NoAccessException {
-        //TODO checkName
+        checkName(name);
         return hotelDAO.findHotelByName(name);
     }
 
     public Hotel findHotelByCity(String city)
             throws BadRequestException, IOException, BrokenFileException, NoAccessException {
-        //TODO checkCity
+        checkCity(city);
         return hotelDAO.findHotelByCity(city);
     }
 
     public Hotel addHotel(Hotel hotel)
             throws NotLogInException, NoAccessException, BadRequestException, BrokenFileException, IOException {
-        //TODO checkHotel
+        checkHotel(hotel);
         userService.checkLogin();
         userService.checkRights();
         return hotelDAO.addHotel(hotel);
@@ -38,5 +38,21 @@ public class HotelService {
         userService.checkLogin();
         userService.checkRights();
         hotelDAO.deleteHotel(hotelId);
+    }
+
+    private void checkName(String name) throws BadRequestException {
+        if (name == null)
+            throw new BadRequestException("checkName failed: not all fields are filled");
+    }
+
+    private void checkCity(String city) throws BadRequestException {
+        if (city == null)
+            throw new BadRequestException("checkCity failed: not all fields are filled");
+    }
+
+    private void checkHotel(Hotel hotel) throws BadRequestException {
+        if (hotel.getName() == null || hotel.getCity() == null ||
+                hotel.getCountry() == null || hotel.getStreet() == null)
+            throw new BadRequestException("checkHotel failed: not all fields are filled");
     }
 }

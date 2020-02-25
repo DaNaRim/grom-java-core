@@ -14,7 +14,9 @@ public class UserService {
     private UserDAO userDAO = new UserDAO();
     private static User loggedUser = null;
 
-    public User registerUser(User user) throws IOException, BrokenFileException, NoAccessException {
+    public User registerUser(User user)
+            throws IOException, BrokenFileException, NoAccessException, BadRequestException {
+        checkUser(user);
         return userDAO.registerUser(user);
     }
 
@@ -39,16 +41,26 @@ public class UserService {
 
     private User validateLogin(String userName, String password)
             throws IOException, BrokenFileException, BadRequestException, NoAccessException {
+        if (loggedUser.getUserName().equals(userName))
+            throw new BadRequestException("validateLogin failed: user already log in");
+
         for (User user : userDAO.getFromFile()) {
-            if (user.getUserName().equals(userName)) return checkUser(user, password);
+            if (user.getUserName().equals(userName)) {
+                return checkPassword(user, password);
+            }
         }
         throw new BadRequestException("validateLogin failed: wrong username or user not registered");
     }
 
-    private User checkUser(User user, String password) throws BadRequestException {
-        if (loggedUser.getId().equals(user.getId()))
-            throw new BadRequestException("checkUser failed: user already log in");
-        if (user.getPassword().equals(password)) return user;
-        throw new BadRequestException("checkUser failed: wrong password");
+    private User checkPassword(User user, String password) throws BadRequestException {
+        if (user.getPassword().equals(password))
+            return user;
+        throw new BadRequestException("validateLogin failed: wrong password");
+    }
+
+    private void checkUser(User user) throws BadRequestException {
+        if (user.getUserName() == null || user.getPassword() == null ||
+                user.getCountry() == null || user.getUserType() == null)
+            throw new BadRequestException("checkUser failed: not all fields are filled");
     }
 }

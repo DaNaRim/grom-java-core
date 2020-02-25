@@ -21,8 +21,9 @@ public class RoomService {
         return roomDAO.findRooms(filter);
     }
 
-    public Room addRoom(Room room) throws NotLogInException, NoAccessException, IOException, BrokenFileException {
-        //TODO checkRoom
+    public Room addRoom(Room room)
+            throws NotLogInException, NoAccessException, IOException, BrokenFileException, BadRequestException {
+        checkRoom(room);
         userService.checkLogin();
         userService.checkRights();
         return roomDAO.addRoom(room);
@@ -37,5 +38,11 @@ public class RoomService {
     private void validateFilter(Filter filter) throws BadRequestException {
         if (filter == null)
             throw new BadRequestException("validateFilter failed: you have not selected options for filtering");
+    }
+
+    private void checkRoom(Room room) throws BadRequestException {
+        if (room.getNumberOfGuests() == 0 || room.getPrice() == 0 ||
+                room.getDateAvailableFrom() == null || room.getHotel() == null)
+            throw new BadRequestException("checkRoom failed: not all fields are filled");
     }
 }

@@ -2,10 +2,9 @@ package Project.service;
 
 import Project.DAO.OrderDAO;
 import Project.DAO.RoomDAO;
-import Project.exception.BadRequestException;
-import Project.exception.InternalServerException;
-import Project.exception.NoAccessException;
-import Project.exception.NotLogInException;
+import Project.DAO.UserDAO;
+import Project.exception.*;
+import Project.model.Order;
 
 import java.io.IOException;
 import java.util.Date;
@@ -13,12 +12,18 @@ import java.util.Date;
 public class OrderService {
     private OrderDAO orderDAO = new OrderDAO();
     private RoomDAO roomDAO = new RoomDAO();
+    private UserDAO userDAO = new UserDAO();
     private UserService userService = new UserService();
 
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo)
             throws NotLogInException, IOException, InternalServerException, BadRequestException, NoAccessException {
+        checkOrder(roomId, userId, dateFrom, dateTo);
+
         userService.checkLogin();
+
+        isBooked(roomId, userId);
         checkRoomForBusy(roomId, dateFrom);
+
         orderDAO.bookRoom(roomId, userId, dateFrom, dateTo);
     }
 
@@ -39,5 +44,22 @@ public class OrderService {
             throws IOException, InternalServerException, BadRequestException, NoAccessException {
         if (roomDAO.findById(roomId).getDateAvailableFrom().before(new Date()))
             throw new BadRequestException("checkPossibleCancellation failed: possible cancellation has expired");
+    }
+
+    private void isBooked(long roomId, long userId)
+            throws IOException, BrokenFileException, BadRequestException, NoAccessException {
+        for (Order order : orderDAO.getFromFile()) {
+            if (order.getRoom().getId() == roomId && order.getUser().getId() == userId)
+                throw new BadRequestException("isBooked failed: you already booked room: " + roomId +
+                        " in order: " + order.getId());
+        }
+    }
+
+    private void checkOrder(long roomId, long userId, Date dateFrom, Date dateTo)
+            throws BadRequestException, InternalServerException, IOException, NoAccessException {
+        roomDAO.findById(roomId);
+        userDAO.findById(userId);
+        if (dateFrom == null || dateTo == null)
+            throw new BadRequestException("checkOrder failed: not all fields are filled");
     }
 }

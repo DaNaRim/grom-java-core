@@ -22,8 +22,7 @@ public class OrderDAO extends MainDAO<Order> {
     }
 
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo)
-            throws BadRequestException, IOException, InternalServerException, NoAccessException {
-        isBooked(roomId, userId);
+            throws IOException, InternalServerException, NoAccessException {
         addToFile(createOrder(roomId, userId, dateFrom, dateTo));
         roomDAO.findById(roomId).setDateAvailableFrom(dateTo);
     }
@@ -81,14 +80,5 @@ public class OrderDAO extends MainDAO<Order> {
             if (order.getRoom().getId() == roomId && order.getUser().getId() == userId) return order;
         }
         throw new InternalServerException("findOrderByRoomAndUser failed: Missing order");
-    }
-
-    private void isBooked(long roomId, long userId)
-            throws IOException, BrokenFileException, BadRequestException, NoAccessException {
-        for (Order order : getFromFile()) {
-            if (order.getRoom().getId() == roomId && order.getUser().getId() == userId)
-                throw new BadRequestException("isBooked failed: you already booked room: " + roomId +
-                        " in order: " + order.getId());
-        }
     }
 }
