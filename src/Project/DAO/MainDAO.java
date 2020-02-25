@@ -46,7 +46,7 @@ public abstract class MainDAO<T extends MainModel> {
         validate(path);
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path))) {
-            if (getFromFile() != null) bw.append("\n");
+            if (getFromFile() != null) bw.append("\r\n");
             bw.append(t.toString());
         } catch (IOException e) {
             throw new IOException("Writing to file: " + path + " failed");
