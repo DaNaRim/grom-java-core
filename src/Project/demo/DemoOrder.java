@@ -1,21 +1,33 @@
 package Project.demo;
 
 import Project.controller.OrderController;
-import Project.exception.BadRequestException;
-import Project.exception.InternalServerException;
-import Project.exception.NoAccessException;
-import Project.exception.NotLogInException;
+import Project.controller.UserController;
+import Project.exception.*;
 
 import java.io.IOException;
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 public class DemoOrder {
     private static OrderController orderController = new OrderController();
+    private static UserController userController = new UserController();
 
     public static void main(String[] args)
-            throws NotLogInException, InternalServerException, NoAccessException, BadRequestException, IOException {
-        orderController.bookRoom(1001, 101, new Date(), new Date());
+            throws NotLogInException, InternalServerException, NoAccessException, BadRequestException, IOException,
+            ParseException {
 
-        orderController.cancelReservation(1001, 101);
+        userController.login("Oleg", "wf45a4w44f");
+
+        userController.login("DaNaRim", "f5urhg%89aohfol347hgfv93");
+
+        orderController.bookRoom(5946096940029333433L, 6025197426307648867L,
+                new SimpleDateFormat("dd.MM.yyyy").parse("25.02.2020"),
+                new SimpleDateFormat("dd.MM.yyyy").parse("26.02.2020"));
+
+        orderController.bookRoom(5946096940029333433L, 7734607807666275015L,
+                new SimpleDateFormat("dd.MM.yyyy").parse("26.02.2020"),
+                new SimpleDateFormat("dd.MM.yyyy").parse("28.02.2020"));
+
+        orderController.cancelReservation(5946096940029333433L, 6025197426307648867L);
     }
 }

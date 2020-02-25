@@ -1,34 +1,44 @@
 package Project.demo;
 
 import Project.controller.RoomController;
-import Project.exception.BadRequestException;
-import Project.exception.BrokenFileException;
-import Project.exception.NoAccessException;
-import Project.exception.NotLogInException;
+import Project.controller.UserController;
+import Project.exception.*;
 import Project.model.Filter;
 import Project.model.Hotel;
 import Project.model.Room;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DemoRoom {
     private static RoomController roomController = new RoomController();
+    private static UserController userController = new UserController();
+
 
     public static void main(String[] args)
-            throws BadRequestException, NoAccessException, BrokenFileException, IOException, NotLogInException {
+            throws BadRequestException, NoAccessException, InternalServerException, IOException, NotLogInException,
+            ParseException {
 
-        Filter filter = new Filter(4, 400.0, false, false, new Date(),
-                "Spain", "testCity");
+        userController.login("Oleg", "wf45a4w44f");
 
-        roomController.findRooms(filter);
+        userController.login("DaNaRim", "f5urhg%89aohfol347hgfv93");
 
-        Hotel hotel = new Hotel(333L, "Orange", "Ukraine", "Cherkassy", "Rose");
-        Room room = new Room(55L, 1, 100.40, true, true,
+        Hotel hotel = new Hotel(8931379287882549163L, "Orange", "Ukraine",
+                "Cherkassy", "Rose");
+        Room room = new Room(3, 150.40, false, true,
                 new Date(), hotel);
 
-        System.out.println(roomController.addRoom(room));
+        roomController.addRoom(room);
 
-        roomController.deleteRoom(room.getId());
+
+        Filter filter = new Filter(1, 100.4, true, true,
+                new SimpleDateFormat("dd.MM.yyyy").parse("25.02.2020"),
+                "Ukraine", null);
+
+        System.out.println(roomController.findRooms(filter).toString());
+
+        roomController.deleteRoom(4979440108398463469L);
     }
 }

@@ -1,9 +1,6 @@
 package Project.DAO;
 
-import Project.exception.BadRequestException;
-import Project.exception.BrokenFileException;
-import Project.exception.InternalServerException;
-import Project.exception.NoAccessException;
+import Project.exception.*;
 import Project.model.User;
 import Project.model.UserType;
 
@@ -11,7 +8,7 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.UUID;
 
-public class UserDAO extends MainDAO<User> {
+public class UserDAO extends DAOTools<User> {
 
     public UserDAO() {
         super(FileLocations.getUserFileLocation());

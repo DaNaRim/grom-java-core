@@ -1,9 +1,6 @@
 package Project.DAO;
 
-import Project.exception.BadRequestException;
-import Project.exception.BrokenFileException;
-import Project.exception.InternalServerException;
-import Project.exception.NoAccessException;
+import Project.exception.*;
 import Project.model.Filter;
 import Project.model.Room;
 
@@ -14,7 +11,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.UUID;
 
-public class RoomDAO extends MainDAO<Room> {
+public class RoomDAO extends DAOTools<Room> {
     private HotelDAO hotelDAO = new HotelDAO();
 
     public RoomDAO() {
@@ -33,7 +30,8 @@ public class RoomDAO extends MainDAO<Room> {
         return addToFile(room);
     }
 
-    public void deleteRoom(long roomId) throws IOException, BrokenFileException, NoAccessException {
+    public void deleteRoom(long roomId) throws IOException, InternalServerException, NoAccessException {
+        findById(roomId);
         deleteFromFile(roomId);
     }
 
@@ -88,10 +86,12 @@ public class RoomDAO extends MainDAO<Room> {
 
     private boolean checkRoomByFilter(Room room, Filter filter) {
         return ((filter.getNumberOfGuests() == 0 || filter.getNumberOfGuests().equals(room.getNumberOfGuests())) &&
-                (filter.getPrice() == 0 || filter.getPrice().equals(room.getPrice())) &&
-                filter.getBreakfastIncluded() == room.getBreakfastIncluded() &&
-                filter.getPetsAllowed() == room.getPetsAllowed() &&
+                (filter.getPrice() == 0.0 || filter.getPrice().equals(room.getPrice())) &&
+                (filter.getBreakfastIncluded() == null ||
+                        filter.getBreakfastIncluded() == room.getBreakfastIncluded()) &&
+                (filter.getPetsAllowed() == null || filter.getPetsAllowed() == room.getPetsAllowed()) &&
                 (filter.getDateAvailableFrom() == null ||
+                        filter.getDateAvailableFrom().equals(room.getDateAvailableFrom()) ||
                         filter.getDateAvailableFrom().after(room.getDateAvailableFrom())) &&
                 (filter.getCountry() == null || filter.getCountry().equals(room.getHotel().getCountry())) &&
                 (filter.getCity() == null || filter.getCity().equals(room.getHotel().getCity())));

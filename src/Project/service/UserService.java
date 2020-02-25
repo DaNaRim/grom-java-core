@@ -1,10 +1,7 @@
 package Project.service;
 
 import Project.DAO.UserDAO;
-import Project.exception.BadRequestException;
-import Project.exception.BrokenFileException;
-import Project.exception.NoAccessException;
-import Project.exception.NotLogInException;
+import Project.exception.*;
 import Project.model.User;
 import Project.model.UserType;
 
@@ -23,7 +20,7 @@ public class UserService {
     }
 
     public void login(String userName, String password)
-            throws IOException, BrokenFileException, BadRequestException, NoAccessException {
+            throws IOException, InternalServerException, BadRequestException, NoAccessException {
         loggedUser = validateLogin(userName, password);
     }
 
@@ -42,9 +39,12 @@ public class UserService {
     }
 
     private User validateLogin(String userName, String password)
-            throws IOException, BrokenFileException, BadRequestException, NoAccessException {
-        if (loggedUser.getUserName().equals(userName))
-            throw new BadRequestException("validateLogin failed: user already log in");
+            throws IOException, InternalServerException, BadRequestException, NoAccessException {
+        if (loggedUser != null) {
+            if (loggedUser.getUserName().equals(userName))
+                throw new BadRequestException("validateLogin failed: user already log in");
+            throw new InternalServerException("validateLogin failed: another user is logged in now");
+        }
 
         for (User user : userDAO.getFromFile()) {
             if (user.getUserName().equals(userName)) {

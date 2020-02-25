@@ -1,16 +1,13 @@
 package Project.DAO;
 
-import Project.exception.BadRequestException;
-import Project.exception.BrokenFileException;
-import Project.exception.InternalServerException;
-import Project.exception.NoAccessException;
+import Project.exception.*;
 import Project.model.Hotel;
 
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.UUID;
 
-public class HotelDAO extends MainDAO<Hotel> {
+public class HotelDAO extends DAOTools<Hotel> {
 
     public HotelDAO() {
         super(FileLocations.getHotelFileLocation());

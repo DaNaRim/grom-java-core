@@ -1,17 +1,15 @@
 package Project.DAO;
 
-import Project.exception.BrokenFileException;
-import Project.exception.InternalServerException;
-import Project.exception.NoAccessException;
+import Project.exception.*;
 import Project.model.MainModel;
 
 import java.io.*;
 import java.util.LinkedList;
 
-public abstract class MainDAO<T extends MainModel> {
+public abstract class DAOTools<T extends MainModel> {
     private String path;
 
-    public MainDAO(String path) {
+    public DAOTools(String path) {
         this.path = path;
     }
 

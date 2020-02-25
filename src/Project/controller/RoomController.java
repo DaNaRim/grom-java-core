@@ -1,9 +1,6 @@
 package Project.controller;
 
-import Project.exception.BadRequestException;
-import Project.exception.BrokenFileException;
-import Project.exception.NoAccessException;
-import Project.exception.NotLogInException;
+import Project.exception.*;
 import Project.model.Filter;
 import Project.model.Room;
 import Project.service.RoomService;
@@ -20,11 +17,12 @@ public class RoomController {
     }
 
     public Room addRoom(Room room)
-            throws NotLogInException, NoAccessException, BrokenFileException, IOException, BadRequestException {
+            throws NotLogInException, NoAccessException, InternalServerException, IOException, BadRequestException {
         return roomService.addRoom(room);
     }
 
-    public void deleteRoom(long roomId) throws NotLogInException, NoAccessException, BrokenFileException, IOException {
+    public void deleteRoom(long roomId)
+            throws NotLogInException, NoAccessException, InternalServerException, IOException {
         roomService.deleteRoom(roomId);
     }
 }

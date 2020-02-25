@@ -1,10 +1,7 @@
 package Project.demo;
 
 import Project.controller.UserController;
-import Project.exception.BadRequestException;
-import Project.exception.BrokenFileException;
-import Project.exception.NoAccessException;
-import Project.exception.NotLogInException;
+import Project.exception.*;
 import Project.model.User;
 import Project.model.UserType;
 
@@ -14,17 +11,14 @@ public class DemoUser {
     private static UserController userController = new UserController();
 
     public static void main(String[] args)
-            throws IOException, BrokenFileException, NoAccessException, BadRequestException, NotLogInException {
+            throws IOException, InternalServerException, NoAccessException, BadRequestException, NotLogInException {
 
-        User user1 = new User("DaNaRim", "f5urhg%89aohfol347hgfv93", "Ukraine", UserType.ADMIN);
+        User user1 = new User("Kratos", "8800553535", "Ukraine", UserType.ADMIN);
 
         userController.registerUser(user1);
 
+        userController.login("Oleg", "wf45a4w44f");
 
-//        System.out.println(userController.registerUser(user1));
-//
-//        userController.login("Oleg", "fs341");
-//
-//        userController.logout();
+        userController.logout();
     }
 }

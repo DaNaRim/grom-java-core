@@ -1,9 +1,6 @@
 package Project.DAO;
 
-import Project.exception.BadRequestException;
-import Project.exception.BrokenFileException;
-import Project.exception.InternalServerException;
-import Project.exception.NoAccessException;
+import Project.exception.*;
 import Project.model.Order;
 
 import java.io.IOException;
@@ -13,7 +10,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.UUID;
 
-public class OrderDAO extends MainDAO<Order> {
+public class OrderDAO extends DAOTools<Order> {
     private UserDAO userDAO = new UserDAO();
     private RoomDAO roomDAO = new RoomDAO();
 

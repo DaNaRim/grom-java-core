@@ -1,10 +1,7 @@
 package Project.service;
 
 import Project.DAO.HotelDAO;
-import Project.exception.BadRequestException;
-import Project.exception.BrokenFileException;
-import Project.exception.NoAccessException;
-import Project.exception.NotLogInException;
+import Project.exception.*;
 import Project.model.Hotel;
 
 import java.io.IOException;
@@ -42,12 +39,12 @@ public class HotelService {
 
     private void checkName(String name) throws BadRequestException {
         if (name == null)
-            throw new BadRequestException("checkName failed: not all fields are filled");
+            throw new BadRequestException("checkName failed: the field is not filled");
     }
 
     private void checkCity(String city) throws BadRequestException {
         if (city == null)
-            throw new BadRequestException("checkCity failed: not all fields are filled");
+            throw new BadRequestException("checkCity failed: the field is not filled");
     }
 
     private void checkHotel(Hotel hotel) throws BadRequestException {

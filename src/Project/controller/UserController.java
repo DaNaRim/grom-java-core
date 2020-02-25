@@ -1,9 +1,6 @@
 package Project.controller;
 
-import Project.exception.BadRequestException;
-import Project.exception.BrokenFileException;
-import Project.exception.NoAccessException;
-import Project.exception.NotLogInException;
+import Project.exception.*;
 import Project.model.User;
 import Project.service.UserService;
 
@@ -18,7 +15,7 @@ public class UserController {
     }
 
     public void login(String userName, String password)
-            throws BadRequestException, NoAccessException, BrokenFileException, IOException {
+            throws BadRequestException, NoAccessException, InternalServerException, IOException {
         userService.login(userName, password);
     }
 
