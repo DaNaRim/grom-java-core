@@ -47,7 +47,7 @@ public class RoomDAO extends DAOTools<Room> {
                     Double.parseDouble(fields[2]),
                     Boolean.parseBoolean(fields[3]),
                     Boolean.parseBoolean(fields[4]),
-                    new SimpleDateFormat("dd.MM.yyyy").parse(fields[5]),
+                    new SimpleDateFormat("dd.MM.yyyy kk:00").parse(fields[5]),
                     hotelDAO.findById(Long.parseLong(fields[6])));
         } catch (ParseException | NumberFormatException | InternalServerException e) {
             throw new BrokenFileException("map failed: broken line");

@@ -75,7 +75,7 @@ public class Room implements MainModel {
                 price + ", " +
                 breakfastIncluded + ", " +
                 petsAllowed + ", " +
-                new SimpleDateFormat("dd.MM.yyyy").format(dateAvailableFrom) + ", " +
+                new SimpleDateFormat("dd.MM.yyyy kk:00").format(dateAvailableFrom) + ", " +
                 hotel.getId();
     }
 }

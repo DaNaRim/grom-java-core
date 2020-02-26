@@ -22,7 +22,7 @@ public class OrderService {
 
         checkOrder(roomId, userId, dateFrom, dateTo);
         isBooked(roomId, userId);
-        checkRoomForBusy(roomId, dateFrom);
+        checkRoomForBusy(roomId, dateFrom, dateTo);
 
         orderDAO.bookRoom(roomId, userId, dateFrom, dateTo);
     }
@@ -35,10 +35,23 @@ public class OrderService {
         orderDAO.cancelReservation(roomId, userId);
     }
 
-    private void checkRoomForBusy(long roomId, Date dateFrom) throws InternalServerException, BadRequestException {
-        if (!roomDAO.findById(roomId).getDateAvailableFrom().equals(dateFrom) ||
-                roomDAO.findById(roomId).getDateAvailableFrom().before(dateFrom))
-            throw new BadRequestException("checkRoomForBusy failed: the room is busy");
+    private void checkRoomForBusy(long roomId, Date dateFrom, Date dateTo)
+            throws InternalServerException, BadRequestException {
+        Date dateAvailableFrom = roomDAO.findById(roomId).getDateAvailableFrom();
+        if (dateAvailableFrom.after(dateFrom))
+            throw new BadRequestException("checkRoomForBusy failed: the room is busy until " + dateAvailableFrom);
+
+        Date busyTimeRoomFrom;
+        Date busyTimeRoomTo;
+        for (Order order : orderDAO.getFromFile()) {
+            busyTimeRoomFrom = order.getDateFrom();
+            busyTimeRoomTo = order.getDateTo();
+            if (order.getDateTo().after(new Date()) &&
+                    !(busyTimeRoomTo.before(dateFrom) || busyTimeRoomFrom.after(dateTo))) {
+                throw new BadRequestException("checkRoomForBusy failed: the room is busy from " +
+                        busyTimeRoomFrom + " to " + busyTimeRoomTo);
+            }
+        }
     }
 
     private void checkPossibleCancellation(long roomId) throws InternalServerException, BadRequestException {

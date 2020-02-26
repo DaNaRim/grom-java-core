@@ -41,9 +41,17 @@ public class Order implements MainModel {
         return room;
     }
 
+    public Date getDateFrom() {
+        return dateFrom;
+    }
+
+    public Date getDateTo() {
+        return dateTo;
+    }
+
     @Override
     public String toString() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy kk:00");
 
         return id + ", " +
                 user.getId() + ", " +

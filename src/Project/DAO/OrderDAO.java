@@ -33,7 +33,7 @@ public class OrderDAO extends DAOTools<Order> {
             String[] fields = line.split(", ");
             if (fields.length > 6) throw new BrokenFileException("broken line");
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy kk:00");
             return new Order(
                     Long.parseLong(fields[0]),
                     userDAO.findById(Long.parseLong(fields[1])),
