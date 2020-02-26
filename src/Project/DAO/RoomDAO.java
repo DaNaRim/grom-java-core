@@ -9,7 +9,6 @@ import Project.model.Room;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.UUID;
 
 public class RoomDAO extends DAOTools<Room> {
@@ -33,26 +32,6 @@ public class RoomDAO extends DAOTools<Room> {
     public void deleteRoom(long roomId) throws InternalServerException {
         findById(roomId);
         deleteFromFile(roomId);
-    }
-
-    @Override
-    public Room findById(long id) throws InternalServerException {
-        return super.findById(id);
-    }
-
-    @Override
-    public LinkedList<Room> getFromFile() throws InternalServerException {
-        return super.getFromFile();
-    }
-
-    @Override
-    public Room addToFile(Room room) throws InternalServerException {
-        return super.addToFile(room);
-    }
-
-    @Override
-    public void deleteFromFile(Long id) throws InternalServerException {
-        super.deleteFromFile(id);
     }
 
     @Override

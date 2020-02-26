@@ -14,14 +14,14 @@ public abstract class DAOTools<T extends MainModel> {
         this.path = path;
     }
 
-    public T findById(long id) throws InternalServerException {
+    public final T findById(long id) throws InternalServerException {
         for (T t : getFromFile()) {
             if (t.getId() == id) return t;
         }
         throw new InternalServerException("findById failed: missing object with id: " + id);
     }
 
-    public LinkedList<T> getFromFile() throws InternalServerException {
+    public final LinkedList<T> getFromFile() throws InternalServerException {
         validate(path);
 
         LinkedList<T> t = new LinkedList<>();
@@ -40,7 +40,7 @@ public abstract class DAOTools<T extends MainModel> {
         return t;
     }
 
-    public T addToFile(T t) throws InternalServerException {
+    public final T addToFile(T t) throws InternalServerException {
         validate(path);
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
@@ -52,7 +52,7 @@ public abstract class DAOTools<T extends MainModel> {
         return t;
     }
 
-    public void deleteFromFile(Long id) throws InternalServerException {
+    public final void deleteFromFile(Long id) throws InternalServerException {
         LinkedList<T> newToWrite = getNewContent(id);
         deleteFileContent();
         writeNewContent(newToWrite);

@@ -5,7 +5,6 @@ import Project.exception.InternalServerException;
 import Project.model.User;
 import Project.model.UserType;
 
-import java.util.LinkedList;
 import java.util.UUID;
 
 public class UserDAO extends DAOTools<User> {
@@ -17,26 +16,6 @@ public class UserDAO extends DAOTools<User> {
     public User registerUser(User user) throws InternalServerException {
         user.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
         return addToFile(user);
-    }
-
-    @Override
-    public User findById(long id) throws InternalServerException {
-        return super.findById(id);
-    }
-
-    @Override
-    public LinkedList<User> getFromFile() throws InternalServerException {
-        return super.getFromFile();
-    }
-
-    @Override
-    public User addToFile(User user) throws InternalServerException {
-        return super.addToFile(user);
-    }
-
-    @Override
-    public void deleteFromFile(Long id) throws InternalServerException {
-        super.deleteFromFile(id);
     }
 
     @Override

@@ -7,7 +7,6 @@ import Project.model.Order;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.UUID;
 
 public class OrderDAO extends DAOTools<Order> {
@@ -26,21 +25,6 @@ public class OrderDAO extends DAOTools<Order> {
     public void cancelReservation(long roomId, long userId) throws InternalServerException {
         deleteFromFile(findOrderByRoomAndUser(roomId, userId).getId());
         roomDAO.findById(roomId).setDateAvailableFrom(new Date());
-    }
-
-    @Override
-    public LinkedList<Order> getFromFile() throws InternalServerException {
-        return super.getFromFile();
-    }
-
-    @Override
-    public Order addToFile(Order order) throws InternalServerException {
-        return super.addToFile(order);
-    }
-
-    @Override
-    public void deleteFromFile(Long id) throws InternalServerException {
-        super.deleteFromFile(id);
     }
 
     @Override

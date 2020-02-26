@@ -1,8 +1,8 @@
 package Project.model;
 
-public abstract class MainModel {
+public interface MainModel {
 
-    abstract public Long getId();
+    Long getId();
 
-    abstract public String toString();
+    String toString();
 }

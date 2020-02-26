@@ -5,7 +5,6 @@ import Project.exception.BrokenFileException;
 import Project.exception.InternalServerException;
 import Project.model.Hotel;
 
-import java.util.LinkedList;
 import java.util.UUID;
 
 public class HotelDAO extends DAOTools<Hotel> {
@@ -42,26 +41,6 @@ public class HotelDAO extends DAOTools<Hotel> {
             }
         }
         throw new BadRequestException("deleteHotel failed: there is no hotel with this id: " + hotelId);
-    }
-
-    @Override
-    public Hotel findById(long id) throws InternalServerException {
-        return super.findById(id);
-    }
-
-    @Override
-    public LinkedList<Hotel> getFromFile() throws InternalServerException {
-        return super.getFromFile();
-    }
-
-    @Override
-    public Hotel addToFile(Hotel hotel) throws InternalServerException {
-        return super.addToFile(hotel);
-    }
-
-    @Override
-    public void deleteFromFile(Long id) throws InternalServerException {
-        super.deleteFromFile(id);
     }
 
     @Override
