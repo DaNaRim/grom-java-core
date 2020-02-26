@@ -1,17 +1,22 @@
 package Project.model;
 
+import Project.exception.NoAccessException;
+import Project.exception.NotLogInException;
+import Project.service.UserService;
+
 public class User extends MainModel {
     private Long id;
     private String userName;
     private String password;
     private String country;
-    private UserType userType;
+    private UserType userType = UserType.USER;
 
-    public User(String userName, String password, String country, UserType userType) {
+    private static UserService userService = new UserService();
+
+    public User(String userName, String password, String country) {
         this.userName = userName;
         this.password = password;
         this.country = country;
-        this.userType = userType;
     }
 
     public User(Long id, String userName, String password, String country, UserType userType) {
@@ -45,6 +50,12 @@ public class User extends MainModel {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void setUserType(UserType userType) throws NotLogInException, NoAccessException {
+        userService.checkLogin();
+        userService.checkRights();
+        this.userType = userType;
     }
 
     @Override
