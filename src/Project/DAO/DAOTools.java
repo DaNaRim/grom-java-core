@@ -1,6 +1,7 @@
 package Project.DAO;
 
-import Project.exception.*;
+import Project.exception.BrokenFileException;
+import Project.exception.InternalServerException;
 import Project.model.MainModel;
 
 import java.io.*;
@@ -13,79 +14,76 @@ public abstract class DAOTools<T extends MainModel> {
         this.path = path;
     }
 
-    public T findById(long id) throws IOException, InternalServerException, NoAccessException {
+    public T findById(long id) throws InternalServerException {
         for (T t : getFromFile()) {
             if (t.getId() == id) return t;
         }
         throw new InternalServerException("findById failed: missing object with id: " + id);
     }
 
-    public LinkedList<T> getFromFile() throws BrokenFileException, IOException, NoAccessException {
+    public LinkedList<T> getFromFile() throws InternalServerException {
         validate(path);
 
         LinkedList<T> t = new LinkedList<>();
+        int lineIndex = 1;
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            int lineIndex = 1;
             String line;
             while ((line = br.readLine()) != null) {
-                try {
-                    t.add(map(line));
-                } catch (Exception e) {
-                    throw new BrokenFileException("getFromFile failed: broken line: " + lineIndex +
-                            " in file: " + path);
-                }
+                t.add(map(line));
                 lineIndex++;
             }
         } catch (IOException e) {
-            throw new IOException("getFromFile failed: reading from file: " + path + " failed");
+            throw new InternalServerException("getFromFile failed: reading from file: " + path + " failed");
+        } catch (BrokenFileException e) {
+            throw new InternalServerException("getFromFile failed: broken line: " + lineIndex + " in file: " + path);
         }
         return t;
     }
 
-    public T addToFile(T t) throws IOException, BrokenFileException, NoAccessException {
+    public T addToFile(T t) throws InternalServerException {
         validate(path);
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
             if (!getFromFile().toString().equals("[]")) bw.append("\r\n");
             bw.append(t.toString());
         } catch (IOException e) {
-            throw new IOException("addToFile failed: writing to file: " + path + " failed");
+            throw new InternalServerException("addToFile failed: writing to file: " + path + " failed");
         }
         return t;
     }
 
-    public void deleteFromFile(Long id) throws IOException, BrokenFileException, NoAccessException {
+    public void deleteFromFile(Long id) throws InternalServerException {
         LinkedList<T> newToWrite = getNewContent(id);
         deleteFileContent();
         writeNewContent(newToWrite);
     }
 
-    public abstract T map(String line) throws Exception;
+    public abstract T map(String line) throws BrokenFileException;
 
-    private void validate(String path) throws FileNotFoundException, NoAccessException {
+    private void validate(String path) throws InternalServerException {
         File file = new File(path);
 
         if (!file.exists())
-            throw new FileNotFoundException("validate failed: file: " + path + " does not exist");
+            throw new InternalServerException("validate failed: file: " + path + " does not exist");
 
         if (!file.canRead())
-            throw new NoAccessException("validate failed: file " + path + " does not have permissions to read");
+            throw new InternalServerException("validate failed: file " + path + " does not have permissions to read");
 
         if (!file.canWrite())
-            throw new NoAccessException("validate failed: file " + path + " does not have permissions to write");
+            throw new InternalServerException("validate failed: file " + path + " does not have permissions to write");
     }
 
-    private void deleteFileContent() throws IOException, NoAccessException {
+    private void deleteFileContent() throws InternalServerException {
         validate(path);
 
         try (BufferedWriter br = new BufferedWriter(new FileWriter(path))) {
             br.write("");
         } catch (IOException e) {
-            throw new IOException("deleteFileContent failed: delete from file: " + path + " failed");
+            throw new InternalServerException("deleteFileContent failed: delete from file: " + path + " failed");
         }
     }
 
-    private LinkedList<T> getNewContent(Long id) throws IOException, BrokenFileException, NoAccessException {
+    private LinkedList<T> getNewContent(Long id) throws InternalServerException {
         LinkedList<T> newToWrite = new LinkedList<>();
 
         for (T t1 : getFromFile()) {
@@ -94,7 +92,7 @@ public abstract class DAOTools<T extends MainModel> {
         return newToWrite;
     }
 
-    private void writeNewContent(LinkedList<T> newToWrite) throws NoAccessException, BrokenFileException, IOException {
+    private void writeNewContent(LinkedList<T> newToWrite) throws InternalServerException {
         for (T t1 : newToWrite) {
             addToFile(t1);
         }

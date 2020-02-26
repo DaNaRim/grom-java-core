@@ -1,10 +1,11 @@
 package Project.DAO;
 
-import Project.exception.*;
+import Project.exception.BadRequestException;
+import Project.exception.BrokenFileException;
+import Project.exception.InternalServerException;
 import Project.model.Filter;
 import Project.model.Room;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,56 +19,60 @@ public class RoomDAO extends DAOTools<Room> {
         super(FileLocations.getRoomFileLocation());
     }
 
-    public ArrayList<Room> findRooms(Filter filter)
-            throws IOException, BrokenFileException, BadRequestException, NoAccessException {
+    public ArrayList<Room> findRooms(Filter filter) throws InternalServerException, BadRequestException {
         ArrayList<Room> rooms = findRoomsByFilter(filter);
         checkResultSize(rooms);
         return rooms;
     }
 
-    public Room addRoom(Room room) throws IOException, BrokenFileException, NoAccessException {
+    public Room addRoom(Room room) throws InternalServerException {
         room.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
         return addToFile(room);
     }
 
-    public void deleteRoom(long roomId) throws IOException, InternalServerException, NoAccessException {
+    public void deleteRoom(long roomId) throws InternalServerException {
         findById(roomId);
         deleteFromFile(roomId);
     }
 
     @Override
-    public Room findById(long id) throws IOException, InternalServerException, NoAccessException {
+    public Room findById(long id) throws InternalServerException {
         return super.findById(id);
     }
 
     @Override
-    public LinkedList<Room> getFromFile() throws IOException, BrokenFileException, NoAccessException {
+    public LinkedList<Room> getFromFile() throws InternalServerException {
         return super.getFromFile();
     }
 
     @Override
-    public Room addToFile(Room room) throws IOException, BrokenFileException, NoAccessException {
+    public Room addToFile(Room room) throws InternalServerException {
         return super.addToFile(room);
     }
 
     @Override
-    public void deleteFromFile(Long id) throws IOException, BrokenFileException, NoAccessException {
+    public void deleteFromFile(Long id) throws InternalServerException {
         super.deleteFromFile(id);
     }
 
     @Override
-    public Room map(String line) throws IOException, InternalServerException, ParseException, NumberFormatException, NoAccessException {
-        String[] fields = line.split(", ");
-        if (fields.length > 7) throw new BrokenFileException("map failed: broken line");
+    public Room map(String line) throws BrokenFileException {
+        try {
+            String[] fields = line.split(", ");
+            if (fields.length > 7)
+                throw new BrokenFileException("broken line");
 
-        return new Room(
-                Long.parseLong(fields[0]),
-                Integer.parseInt(fields[1]),
-                Double.parseDouble(fields[2]),
-                Boolean.parseBoolean(fields[3]),
-                Boolean.parseBoolean(fields[4]),
-                new SimpleDateFormat("dd.MM.yyyy").parse(fields[5]),
-                hotelDAO.findById(Long.parseLong(fields[6])));
+            return new Room(
+                    Long.parseLong(fields[0]),
+                    Integer.parseInt(fields[1]),
+                    Double.parseDouble(fields[2]),
+                    Boolean.parseBoolean(fields[3]),
+                    Boolean.parseBoolean(fields[4]),
+                    new SimpleDateFormat("dd.MM.yyyy").parse(fields[5]),
+                    hotelDAO.findById(Long.parseLong(fields[6])));
+        } catch (ParseException | NumberFormatException | InternalServerException e) {
+            throw new BrokenFileException("map failed: broken line");
+        }
     }
 
     private void checkResultSize(ArrayList<Room> rooms) throws BadRequestException {
@@ -75,8 +80,7 @@ public class RoomDAO extends DAOTools<Room> {
             throw new BadRequestException("checkResultSize failed: there is no room with this filter parameters");
     }
 
-    private ArrayList<Room> findRoomsByFilter(Filter filter)
-            throws IOException, BrokenFileException, NoAccessException {
+    private ArrayList<Room> findRoomsByFilter(Filter filter) throws InternalServerException {
         ArrayList<Room> rooms = new ArrayList<>();
         for (Room room : getFromFile()) {
             if (checkRoomByFilter(room, filter)) rooms.add(room);

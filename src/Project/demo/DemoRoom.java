@@ -2,12 +2,14 @@ package Project.demo;
 
 import Project.controller.RoomController;
 import Project.controller.UserController;
-import Project.exception.*;
+import Project.exception.BadRequestException;
+import Project.exception.InternalServerException;
+import Project.exception.NoAccessException;
+import Project.exception.NotLogInException;
 import Project.model.Filter;
 import Project.model.Hotel;
 import Project.model.Room;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,8 +20,7 @@ public class DemoRoom {
 
 
     public static void main(String[] args)
-            throws BadRequestException, NoAccessException, InternalServerException, IOException, NotLogInException,
-            ParseException {
+            throws BadRequestException, NoAccessException, InternalServerException, NotLogInException, ParseException {
 
         userController.login("Oleg", "wf45a4w44f");
 

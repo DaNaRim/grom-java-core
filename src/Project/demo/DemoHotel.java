@@ -2,17 +2,18 @@ package Project.demo;
 
 import Project.controller.HotelController;
 import Project.controller.UserController;
-import Project.exception.*;
+import Project.exception.BadRequestException;
+import Project.exception.InternalServerException;
+import Project.exception.NoAccessException;
+import Project.exception.NotLogInException;
 import Project.model.Hotel;
-
-import java.io.IOException;
 
 public class DemoHotel {
     private static HotelController hotelController = new HotelController();
     private static UserController userController = new UserController();
 
     public static void main(String[] args)
-            throws BadRequestException, NoAccessException, InternalServerException, IOException, NotLogInException {
+            throws BadRequestException, NoAccessException, InternalServerException, NotLogInException {
 
         userController.login("Oleg", "wf45a4w44f");
 

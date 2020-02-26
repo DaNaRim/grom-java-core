@@ -1,17 +1,18 @@
 package Project.demo;
 
 import Project.controller.UserController;
-import Project.exception.*;
+import Project.exception.BadRequestException;
+import Project.exception.InternalServerException;
+import Project.exception.NoAccessException;
+import Project.exception.NotLogInException;
 import Project.model.User;
 import Project.model.UserType;
-
-import java.io.IOException;
 
 public class DemoUser {
     private static UserController userController = new UserController();
 
     public static void main(String[] args)
-            throws IOException, InternalServerException, NoAccessException, BadRequestException, NotLogInException {
+            throws InternalServerException, NoAccessException, BadRequestException, NotLogInException {
 
         User user1 = new User("Kratos", "8800553535", "Ukraine");
 

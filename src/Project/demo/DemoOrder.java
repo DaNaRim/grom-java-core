@@ -4,7 +4,6 @@ import Project.controller.OrderController;
 import Project.controller.UserController;
 import Project.exception.*;
 
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -13,8 +12,7 @@ public class DemoOrder {
     private static UserController userController = new UserController();
 
     public static void main(String[] args)
-            throws NotLogInException, InternalServerException, NoAccessException, BadRequestException, IOException,
-            ParseException {
+            throws NotLogInException, InternalServerException, BadRequestException, ParseException {
 
         userController.login("Oleg", "wf45a4w44f");
 

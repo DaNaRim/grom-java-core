@@ -1,26 +1,25 @@
 package Project.service;
 
 import Project.DAO.UserDAO;
-import Project.exception.*;
+import Project.exception.BadRequestException;
+import Project.exception.InternalServerException;
+import Project.exception.NoAccessException;
+import Project.exception.NotLogInException;
 import Project.model.User;
 import Project.model.UserType;
-
-import java.io.IOException;
 
 public class UserService {
     private static UserDAO userDAO = new UserDAO();
     private static User loggedUser = null;
 
-    public User registerUser(User user)
-            throws IOException, BrokenFileException, NoAccessException, BadRequestException {
+    public User registerUser(User user) throws InternalServerException, BadRequestException {
         checkUser(user);
         checkUserName(user);
         checkUserPassword(user);
         return userDAO.registerUser(user);
     }
 
-    public void login(String userName, String password)
-            throws IOException, InternalServerException, BadRequestException, NoAccessException {
+    public void login(String userName, String password) throws InternalServerException, BadRequestException {
         loggedUser = validateLogin(userName, password);
     }
 
@@ -38,12 +37,11 @@ public class UserService {
             throw new NoAccessException("checkRights failed: user don`t have enough rights");
     }
 
-    private User validateLogin(String userName, String password)
-            throws IOException, InternalServerException, BadRequestException, NoAccessException {
+    private User validateLogin(String userName, String password) throws InternalServerException, BadRequestException {
         if (loggedUser != null) {
             if (loggedUser.getUserName().equals(userName))
                 throw new BadRequestException("validateLogin failed: user already log in");
-            throw new InternalServerException("validateLogin failed: another user is logged in now");
+            throw new BadRequestException("validateLogin failed: another user is logged in now");
         }
 
         for (User user : userDAO.getFromFile()) {
@@ -66,8 +64,7 @@ public class UserService {
             throw new BadRequestException("checkUser failed: not all fields are filled");
     }
 
-    private void checkUserName(User user)
-            throws NoAccessException, BrokenFileException, IOException, BadRequestException {
+    private void checkUserName(User user) throws InternalServerException, BadRequestException {
         for (User user1 : userDAO.getFromFile()) {
             if (user1.getUserName().equals(user.getUserName()))
                 throw new BadRequestException("checkUserName failed: username is already taken");

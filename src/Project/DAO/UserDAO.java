@@ -1,10 +1,10 @@
 package Project.DAO;
 
-import Project.exception.*;
+import Project.exception.BrokenFileException;
+import Project.exception.InternalServerException;
 import Project.model.User;
 import Project.model.UserType;
 
-import java.io.IOException;
 import java.util.LinkedList;
 import java.util.UUID;
 
@@ -14,35 +14,41 @@ public class UserDAO extends DAOTools<User> {
         super(FileLocations.getUserFileLocation());
     }
 
-    public User registerUser(User user) throws IOException, BrokenFileException, NoAccessException {
+    public User registerUser(User user) throws InternalServerException {
         user.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
         return addToFile(user);
     }
 
     @Override
-    public User findById(long id) throws IOException, InternalServerException, NoAccessException {
+    public User findById(long id) throws InternalServerException {
         return super.findById(id);
     }
 
     @Override
-    public LinkedList<User> getFromFile() throws IOException, BrokenFileException, NoAccessException {
+    public LinkedList<User> getFromFile() throws InternalServerException {
         return super.getFromFile();
     }
 
     @Override
-    public User addToFile(User user) throws IOException, BrokenFileException, NoAccessException {
+    public User addToFile(User user) throws InternalServerException {
         return super.addToFile(user);
     }
 
     @Override
-    public void deleteFromFile(Long id) throws IOException, BrokenFileException, NoAccessException {
+    public void deleteFromFile(Long id) throws InternalServerException {
         super.deleteFromFile(id);
     }
 
     @Override
-    public User map(String line) throws NumberFormatException, BrokenFileException {
-        String[] fields = line.split(", ");
-        if (fields.length > 5) throw new BrokenFileException("map failed: broken line");
-        return new User(Long.parseLong(fields[0]), fields[1], fields[2], fields[3], UserType.valueOf(fields[4]));
+    public User map(String line) throws BrokenFileException {
+        try {
+            String[] fields = line.split(", ");
+            if (fields.length > 5)
+                throw new BrokenFileException("broken line");
+
+            return new User(Long.parseLong(fields[0]), fields[1], fields[2], fields[3], UserType.valueOf(fields[4]));
+        } catch (NumberFormatException | BrokenFileException e) {
+            throw new BrokenFileException("map failed: broken line");
+        }
     }
 }
