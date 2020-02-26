@@ -7,7 +7,7 @@ import Project.service.HotelService;
 import java.io.IOException;
 
 public class HotelController {
-    HotelService hotelService = new HotelService();
+    private static HotelService hotelService = new HotelService();
 
     public Hotel findHotelByName(String name)
             throws BadRequestException, NoAccessException, BrokenFileException, IOException {

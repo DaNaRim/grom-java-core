@@ -10,7 +10,6 @@ import java.io.IOException;
 public class DemoUser {
     private static UserController userController = new UserController();
 
-
     public static void main(String[] args)
             throws IOException, InternalServerException, NoAccessException, BadRequestException, NotLogInException {
 

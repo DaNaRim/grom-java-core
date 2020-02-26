@@ -11,8 +11,8 @@ import java.util.LinkedList;
 import java.util.UUID;
 
 public class OrderDAO extends DAOTools<Order> {
-    private UserDAO userDAO = new UserDAO();
-    private RoomDAO roomDAO = new RoomDAO();
+    private static UserDAO userDAO = new UserDAO();
+    private static RoomDAO roomDAO = new RoomDAO();
 
     public OrderDAO() {
         super(FileLocations.getOrderFileLocation());

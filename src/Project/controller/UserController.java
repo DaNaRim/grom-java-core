@@ -7,7 +7,7 @@ import Project.service.UserService;
 import java.io.IOException;
 
 public class UserController {
-    private UserService userService = new UserService();
+    private static UserService userService = new UserService();
 
     public User registerUser(User user)
             throws NoAccessException, BrokenFileException, IOException, BadRequestException {

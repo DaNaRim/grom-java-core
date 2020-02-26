@@ -8,7 +8,7 @@ import Project.model.UserType;
 import java.io.IOException;
 
 public class UserService {
-    private UserDAO userDAO = new UserDAO();
+    private static UserDAO userDAO = new UserDAO();
     private static User loggedUser = null;
 
     public User registerUser(User user)

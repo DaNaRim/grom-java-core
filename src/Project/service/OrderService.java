@@ -10,10 +10,10 @@ import java.io.IOException;
 import java.util.Date;
 
 public class OrderService {
-    private OrderDAO orderDAO = new OrderDAO();
-    private RoomDAO roomDAO = new RoomDAO();
-    private UserDAO userDAO = new UserDAO();
-    private UserService userService = new UserService();
+    private static OrderDAO orderDAO = new OrderDAO();
+    private static RoomDAO roomDAO = new RoomDAO();
+    private static UserDAO userDAO = new UserDAO();
+    private static UserService userService = new UserService();
 
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo)
             throws NotLogInException, IOException, InternalServerException, BadRequestException, NoAccessException {

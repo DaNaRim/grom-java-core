@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class RoomService {
-    private RoomDAO roomDAO = new RoomDAO();
-    private UserService userService = new UserService();
-    private HotelDAO hotelDAO = new HotelDAO();
+    private static RoomDAO roomDAO = new RoomDAO();
+    private static UserService userService = new UserService();
+    private static HotelDAO hotelDAO = new HotelDAO();
 
     public ArrayList<Room> findRooms(Filter filter)
             throws BadRequestException, IOException, BrokenFileException, NoAccessException {

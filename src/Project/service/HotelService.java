@@ -7,8 +7,8 @@ import Project.model.Hotel;
 import java.io.IOException;
 
 public class HotelService {
-    private HotelDAO hotelDAO = new HotelDAO();
-    private UserService userService = new UserService();
+    private static HotelDAO hotelDAO = new HotelDAO();
+    private static UserService userService = new UserService();
 
     public Hotel findHotelByName(String name)
             throws BadRequestException, IOException, BrokenFileException, NoAccessException {

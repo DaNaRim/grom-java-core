@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Date;
 
 public class OrderController {
-    private OrderService orderService = new OrderService();
+    private static OrderService orderService = new OrderService();
 
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo)
             throws NotLogInException, InternalServerException, NoAccessException, BadRequestException, IOException {

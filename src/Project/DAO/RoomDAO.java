@@ -12,7 +12,7 @@ import java.util.LinkedList;
 import java.util.UUID;
 
 public class RoomDAO extends DAOTools<Room> {
-    private HotelDAO hotelDAO = new HotelDAO();
+    private static HotelDAO hotelDAO = new HotelDAO();
 
     public RoomDAO() {
         super(FileLocations.getRoomFileLocation());

@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class RoomController {
-    private RoomService roomService = new RoomService();
+    private static RoomService roomService = new RoomService();
 
     public ArrayList<Room> findRooms(Filter filter)
             throws BadRequestException, NoAccessException, BrokenFileException, IOException {
