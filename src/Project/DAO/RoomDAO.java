@@ -8,7 +8,7 @@ import Project.model.Room;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.UUID;
 
 public class RoomDAO extends DAOTools<Room> {
@@ -18,8 +18,8 @@ public class RoomDAO extends DAOTools<Room> {
         super(FileLocations.getRoomFileLocation());
     }
 
-    public ArrayList<Room> findRooms(Filter filter) throws InternalServerException, BadRequestException {
-        ArrayList<Room> rooms = findRoomsByFilter(filter);
+    public LinkedList<Room> findRooms(Filter filter) throws InternalServerException, BadRequestException {
+        LinkedList<Room> rooms = findRoomsByFilter(filter);
         checkResultSize(rooms);
         return rooms;
     }
@@ -30,7 +30,6 @@ public class RoomDAO extends DAOTools<Room> {
     }
 
     public void deleteRoom(long roomId) throws InternalServerException {
-        findById(roomId);
         deleteFromFile(roomId);
     }
 
@@ -39,7 +38,7 @@ public class RoomDAO extends DAOTools<Room> {
         try {
             String[] fields = line.split(", ");
             if (fields.length > 7)
-                throw new BrokenFileException("broken line");
+                throw new BrokenFileException("broken line: to many elements");
 
             return new Room(
                     Long.parseLong(fields[0]),
@@ -49,18 +48,18 @@ public class RoomDAO extends DAOTools<Room> {
                     Boolean.parseBoolean(fields[4]),
                     new SimpleDateFormat("dd.MM.yyyy kk:00").parse(fields[5]),
                     hotelDAO.findById(Long.parseLong(fields[6])));
-        } catch (ParseException | NumberFormatException | InternalServerException e) {
+        } catch (ParseException | NumberFormatException | InternalServerException | BadRequestException e) {
             throw new BrokenFileException("map failed: broken line");
         }
     }
 
-    private void checkResultSize(ArrayList<Room> rooms) throws BadRequestException {
+    private void checkResultSize(LinkedList<Room> rooms) throws BadRequestException {
         if (rooms.size() == 0)
             throw new BadRequestException("checkResultSize failed: there is no room with this filter parameters");
     }
 
-    private ArrayList<Room> findRoomsByFilter(Filter filter) throws InternalServerException {
-        ArrayList<Room> rooms = new ArrayList<>();
+    private LinkedList<Room> findRoomsByFilter(Filter filter) throws InternalServerException {
+        LinkedList<Room> rooms = new LinkedList<>();
         for (Room room : getFromFile()) {
             if (checkRoomByFilter(room, filter)) rooms.add(room);
         }

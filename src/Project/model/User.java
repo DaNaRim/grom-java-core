@@ -53,7 +53,6 @@ public class User implements MainModel {
     }
 
     public void setUserType(UserType userType) throws NotLogInException, NoAccessException {
-        userService.checkLogin();
         userService.checkRights();
         this.userType = userType;
     }

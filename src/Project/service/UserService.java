@@ -32,7 +32,8 @@ public class UserService {
         if (loggedUser == null) throw new NotLogInException("checkLogin failed: user is not log in");
     }
 
-    public void checkRights() throws NoAccessException {
+    public void checkRights() throws NoAccessException, NotLogInException {
+        checkLogin();
         if (loggedUser.getUserType() != UserType.ADMIN)
             throw new NoAccessException("checkRights failed: user don`t have enough rights");
     }
@@ -59,8 +60,10 @@ public class UserService {
     }
 
     private void checkUser(User user) throws BadRequestException {
-        if (user.getUserName() == null || user.getPassword() == null ||
-                user.getCountry() == null || user.getUserType() == null)
+        if (user == null)
+            throw new BadRequestException("checkUser failed: impossible to process null user");
+
+        if (user.getUserName() == null || user.getPassword() == null || user.getCountry() == null)
             throw new BadRequestException("checkUser failed: not all fields are filled");
     }
 

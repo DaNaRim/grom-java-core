@@ -1,5 +1,6 @@
 package Project.DAO;
 
+import Project.exception.BadRequestException;
 import Project.exception.BrokenFileException;
 import Project.exception.InternalServerException;
 import Project.model.Order;
@@ -17,12 +18,13 @@ public class OrderDAO extends DAOTools<Order> {
         super(FileLocations.getOrderFileLocation());
     }
 
-    public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo) throws InternalServerException {
+    public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo)
+            throws InternalServerException, BadRequestException {
         addToFile(createOrder(roomId, userId, dateFrom, dateTo));
         roomDAO.findById(roomId).setDateAvailableFrom(dateTo);
     }
 
-    public void cancelReservation(long roomId, long userId) throws InternalServerException {
+    public void cancelReservation(long roomId, long userId) throws InternalServerException, BadRequestException {
         deleteFromFile(findOrderByRoomAndUser(roomId, userId).getId());
         roomDAO.findById(roomId).setDateAvailableFrom(new Date());
     }
@@ -31,7 +33,8 @@ public class OrderDAO extends DAOTools<Order> {
     public Order map(String line) throws BrokenFileException {
         try {
             String[] fields = line.split(", ");
-            if (fields.length > 6) throw new BrokenFileException("broken line");
+            if (fields.length > 6)
+                throw new BrokenFileException("broken line: to many elements");
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy kk:00");
             return new Order(
@@ -41,12 +44,13 @@ public class OrderDAO extends DAOTools<Order> {
                     simpleDateFormat.parse(fields[3]),
                     simpleDateFormat.parse(fields[4]),
                     Double.parseDouble(fields[5]));
-        } catch (InternalServerException | ParseException | NumberFormatException e) {
+        } catch (InternalServerException | ParseException | NumberFormatException | BadRequestException e) {
             throw new BrokenFileException("map failed: broken line");
         }
     }
 
-    private Order createOrder(long roomId, long userId, Date dateFrom, Date dateTo) throws InternalServerException {
+    private Order createOrder(long roomId, long userId, Date dateFrom, Date dateTo)
+            throws InternalServerException, BadRequestException {
         return new Order(
                 UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
                 userDAO.findById(userId),

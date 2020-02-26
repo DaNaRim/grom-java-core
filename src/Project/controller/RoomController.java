@@ -8,12 +8,12 @@ import Project.model.Filter;
 import Project.model.Room;
 import Project.service.RoomService;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class RoomController {
     private static RoomService roomService = new RoomService();
 
-    public ArrayList<Room> findRooms(Filter filter) throws BadRequestException, InternalServerException {
+    public LinkedList<Room> findRooms(Filter filter) throws BadRequestException, InternalServerException {
         return roomService.findRooms(filter);
     }
 
@@ -22,7 +22,8 @@ public class RoomController {
         return roomService.addRoom(room);
     }
 
-    public void deleteRoom(long roomId) throws NotLogInException, NoAccessException, InternalServerException {
+    public void deleteRoom(long roomId)
+            throws NotLogInException, NoAccessException, InternalServerException, BadRequestException {
         roomService.deleteRoom(roomId);
     }
 }

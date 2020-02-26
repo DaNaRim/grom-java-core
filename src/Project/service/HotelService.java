@@ -23,16 +23,18 @@ public class HotelService {
 
     public Hotel addHotel(Hotel hotel)
             throws NotLogInException, NoAccessException, BadRequestException, InternalServerException {
-        checkHotel(hotel);
-        userService.checkLogin();
         userService.checkRights();
+
+        checkHotel(hotel);
+        isExist(hotel);
+
         return hotelDAO.addHotel(hotel);
     }
 
     public void deleteHotel(long hotelId)
             throws NotLogInException, NoAccessException, BadRequestException, InternalServerException {
-        userService.checkLogin();
         userService.checkRights();
+        hotelDAO.findById(hotelId);
         hotelDAO.deleteHotel(hotelId);
     }
 
@@ -47,8 +49,18 @@ public class HotelService {
     }
 
     private void checkHotel(Hotel hotel) throws BadRequestException {
+        if (hotel == null)
+            throw new BadRequestException("checkUser failed: impossible to process null hotel");
+
         if (hotel.getName() == null || hotel.getCity() == null ||
                 hotel.getCountry() == null || hotel.getStreet() == null)
             throw new BadRequestException("checkHotel failed: not all fields are filled");
+    }
+
+    private void isExist(Hotel hotel) throws InternalServerException, BadRequestException {
+        for (Hotel hotel1 : hotelDAO.getFromFile()) {
+            if (hotel1.equals(hotel))
+                throw new BadRequestException("isExist failed: the hotel is already exist: " + hotel1.getId());
+        }
     }
 }

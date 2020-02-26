@@ -30,8 +30,10 @@ public class OrderService {
     public void cancelReservation(long roomId, long userId)
             throws InternalServerException, NotLogInException, BadRequestException {
         userService.checkLogin();
+
         checkRoomAndUser(roomId, userId);
         checkPossibleCancellation(roomId);
+
         orderDAO.cancelReservation(roomId, userId);
     }
 
@@ -62,8 +64,8 @@ public class OrderService {
     private void isBooked(long roomId, long userId) throws InternalServerException, BadRequestException {
         for (Order order : orderDAO.getFromFile()) {
             if (order.getRoom().getId() == roomId && order.getUser().getId() == userId)
-                throw new BadRequestException("isBooked failed: you already booked room: " + roomId +
-                        " in order: " + order.getId());
+                throw new BadRequestException("isBooked failed: user: " + userId + " already booked room: "
+                        + roomId + " in order: " + order.getId());
         }
     }
 
@@ -71,12 +73,12 @@ public class OrderService {
             throws InternalServerException, BadRequestException {
         checkRoomAndUser(roomId, userId);
         if (dateFrom == null || dateTo == null)
-            throw new BadRequestException("checkOrder failed: not all fields are filled");
+            throw new BadRequestException("checkOrder failed: not all fields are filled correctly");
 
         if (dateTo.before(dateFrom)) throw new BadRequestException("checkOrder failed: date is incorrect");
     }
 
-    private void checkRoomAndUser(long roomId, long userId) throws InternalServerException {
+    private void checkRoomAndUser(long roomId, long userId) throws InternalServerException, BadRequestException {
         roomDAO.findById(roomId);
         userDAO.findById(userId);
     }

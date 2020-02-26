@@ -1,5 +1,6 @@
 package Project.DAO;
 
+import Project.exception.BadRequestException;
 import Project.exception.BrokenFileException;
 import Project.exception.InternalServerException;
 import Project.model.MainModel;
@@ -14,11 +15,11 @@ public abstract class DAOTools<T extends MainModel> {
         this.path = path;
     }
 
-    public final T findById(long id) throws InternalServerException {
+    public final T findById(long id) throws InternalServerException, BadRequestException {
         for (T t : getFromFile()) {
             if (t.getId() == id) return t;
         }
-        throw new InternalServerException("findById failed: missing object with id: " + id);
+        throw new BadRequestException("findById failed: missing object with id: " + id);
     }
 
     public final LinkedList<T> getFromFile() throws InternalServerException {

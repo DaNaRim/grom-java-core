@@ -27,20 +27,16 @@ public class HotelDAO extends DAOTools<Hotel> {
         throw new BadRequestException("findHotelByCity failed: there is no hotel in city: " + city);
     }
 
-    public Hotel addHotel(Hotel hotel) throws InternalServerException, BadRequestException {
-        isExist(hotel);
+    public Hotel addHotel(Hotel hotel) throws InternalServerException {
         hotel.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
         return addToFile(hotel);
     }
 
-    public void deleteHotel(long hotelId) throws InternalServerException, BadRequestException {
+    public void deleteHotel(long hotelId) throws InternalServerException {
         for (Hotel hotel : getFromFile()) {
-            if (hotel.getId().equals(hotelId)) {
+            if (hotel.getId().equals(hotelId))
                 deleteFromFile(hotel.getId());
-                return;
-            }
         }
-        throw new BadRequestException("deleteHotel failed: there is no hotel with this id: " + hotelId);
     }
 
     @Override
@@ -48,18 +44,11 @@ public class HotelDAO extends DAOTools<Hotel> {
         try {
             String[] fields = line.split(", ");
             if (fields.length > 5)
-                throw new BrokenFileException("broken line");
+                throw new BrokenFileException("broken line: to many elements");
 
             return new Hotel(Long.parseLong(fields[0]), fields[1], fields[2], fields[3], fields[4]);
         } catch (NumberFormatException | BrokenFileException e) {
             throw new BrokenFileException("map failed: broken line");
-        }
-    }
-
-    private void isExist(Hotel hotel) throws InternalServerException, BadRequestException {
-        for (Hotel hotel1 : getFromFile()) {
-            if (hotel1.equals(hotel))
-                throw new BadRequestException("isExist failed: the hotel is already exist: " + hotel1.getId());
         }
     }
 }

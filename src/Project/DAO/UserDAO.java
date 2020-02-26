@@ -23,11 +23,11 @@ public class UserDAO extends DAOTools<User> {
         try {
             String[] fields = line.split(", ");
             if (fields.length > 5)
-                throw new BrokenFileException("broken line");
+                throw new BrokenFileException("broken line: to many elements");
 
             return new User(Long.parseLong(fields[0]), fields[1], fields[2], fields[3], UserType.valueOf(fields[4]));
         } catch (NumberFormatException | BrokenFileException e) {
-            throw new BrokenFileException("map failed: broken line");
+            throw new BrokenFileException("map failed: " + e.getMessage());
         }
     }
 }
