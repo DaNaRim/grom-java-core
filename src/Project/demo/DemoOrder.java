@@ -14,7 +14,7 @@ public class DemoOrder {
     public static void main(String[] args)
             throws NotLogInException, InternalServerException, BadRequestException, ParseException {
 
-//        userController.login("Oleg", "wf45a4w44f");
+        userController.login("Oleg", "wf45a4w44f");
 
         userController.login("DaNaRim", "f5urhg%89aohfol347hgfv93");
 
@@ -22,10 +22,10 @@ public class DemoOrder {
                 new SimpleDateFormat("dd.MM.yyyy kk:00").parse("26.02.2020 12:00"),
                 new SimpleDateFormat("dd.MM.yyyy kk:00").parse("27.02.2020 12:00"));
 
-//        orderController.bookRoom(5946096940029333433L, 7734607807666275015L,
-//                new SimpleDateFormat("dd.MM.yyyy").parse("26.02.2020"),
-//                new SimpleDateFormat("dd.MM.yyyy").parse("28.02.2020"));
+        orderController.bookRoom(5946096940029333433L, 7734607807666275015L,
+                new SimpleDateFormat("dd.MM.yyyy").parse("26.02.2020"),
+                new SimpleDateFormat("dd.MM.yyyy").parse("28.02.2020"));
 
-//        orderController.cancelReservation(5946096940029333433L, 6025197426307648867L);
+        orderController.cancelReservation(5946096940029333433L, 6025197426307648867L);
     }
 }
