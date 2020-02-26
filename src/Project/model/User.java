@@ -4,7 +4,7 @@ import Project.exception.NoAccessException;
 import Project.exception.NotLogInException;
 import Project.service.UserService;
 
-public class User extends MainModel {
+public class User implements MainModel {
     private Long id;
     private String userName;
     private String password;

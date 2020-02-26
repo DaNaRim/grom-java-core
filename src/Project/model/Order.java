@@ -3,7 +3,7 @@ package Project.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Order extends MainModel {
+public class Order implements MainModel {
     private Long id;
     private User user;
     private Room room;

@@ -2,7 +2,7 @@ package Project.model;
 
 import java.util.Objects;
 
-public class Hotel extends MainModel {
+public class Hotel implements MainModel {
     private Long id;
     private String name;
     private String country;
