@@ -36,8 +36,12 @@ public class RoomService {
     }
 
     private void validateFilter(Filter filter) throws BadRequestException {
-        if (filter == null)
-            throw new BadRequestException("validateFilter failed: you have not selected options for filtering");
+        if (filter == null ||
+                (filter.getNumberOfGuests() <= 0 && filter.getPrice() <= 0 &&
+                        filter.getBreakfastIncluded() == null && filter.getPetsAllowed() == null &&
+                        filter.getDateAvailableFrom() == null && filter.getCountry() == null &&
+                        filter.getCity() == null))
+            throw new BadRequestException("validateFilter failed: you have not selected correct options for filtering");
     }
 
     private void checkRoom(Room room) throws InternalServerException, BadRequestException {
