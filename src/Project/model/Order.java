@@ -65,4 +65,9 @@ public class Order implements MainModel {
                 simpleDateFormat.format(dateTo) + ", " +
                 moneyPaid;
     }
+
+    @Override
+    public int compareTo(MainModel mainModel) {
+        return this.dateFrom.before(dateFrom) ? 1 : -1;
+    }
 }

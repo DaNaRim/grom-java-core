@@ -74,4 +74,10 @@ public class Hotel implements MainModel {
                 city + ", " +
                 street;
     }
+
+    @Override
+    public int compareTo(MainModel mainModel) {
+        //TODO: return this.country.compareTo(country);
+        return 0;
+    }
 }

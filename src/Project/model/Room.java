@@ -79,4 +79,9 @@ public class Room implements MainModel {
                 new SimpleDateFormat("dd.MM.yyyy kk:00").format(dateAvailableFrom) + ", " +
                 hotel.getId();
     }
+
+    @Override
+    public int compareTo(MainModel mainModel) {
+        return this.dateAvailableFrom.before(dateAvailableFrom) ? 1 : -1;
+    }
 }

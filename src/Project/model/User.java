@@ -55,4 +55,9 @@ public class User implements MainModel {
     public String toString() {
         return id + ", " + userName + ", " + password + ", " + country + ", " + userType;
     }
+
+    @Override
+    public int compareTo(MainModel mainModel) {
+        return this.userType == UserType.ADMIN ? 1 : -1;
+    }
 }
