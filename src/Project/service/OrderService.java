@@ -7,6 +7,7 @@ import Project.exception.BadRequestException;
 import Project.exception.InternalServerException;
 import Project.exception.NotLogInException;
 import Project.model.Order;
+import Project.model.Room;
 
 import java.util.Date;
 
@@ -39,6 +40,8 @@ public class OrderService {
 
     private void checkRoomForBusy(long roomId, Date dateFrom, Date dateTo)
             throws InternalServerException, BadRequestException {
+        updateRoomDateAvailFrom(roomId);
+
         Date dateAvailableFrom = roomDAO.findById(roomId).getDateAvailableFrom();
         if (dateAvailableFrom.after(dateFrom))
             throw new BadRequestException("checkRoomForBusy failed: the room is busy until " + dateAvailableFrom);
@@ -81,5 +84,18 @@ public class OrderService {
     private void checkRoomAndUser(long roomId, long userId) throws InternalServerException, BadRequestException {
         roomDAO.findById(roomId);
         userDAO.findById(userId);
+    }
+
+    private void updateRoomDateAvailFrom(Long id) throws InternalServerException, BadRequestException {
+        Room room = roomDAO.findById(id);
+
+        Date busyTimeRoomTo;
+        Date RoomDateAvailableFrom = room.getDateAvailableFrom();
+        for (Order order : orderDAO.getFromFile()) {
+            if ((busyTimeRoomTo = order.getDateTo()).after(RoomDateAvailableFrom) &&
+                    order.getDateFrom().before(RoomDateAvailableFrom))
+                room.setDateAvailableFrom(busyTimeRoomTo);
+        }
+        roomDAO.updateInFile(id, room);
     }
 }

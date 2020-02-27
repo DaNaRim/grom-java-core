@@ -21,7 +21,6 @@ public class OrderDAO extends DAOTools<Order> {
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo)
             throws InternalServerException, BadRequestException {
         addToFile(createOrder(roomId, userId, dateFrom, dateTo));
-        roomDAO.findById(roomId).setDateAvailableFrom(dateTo);
     }
 
     public void cancelReservation(long roomId, long userId) throws InternalServerException, BadRequestException {
