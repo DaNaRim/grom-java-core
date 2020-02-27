@@ -7,14 +7,16 @@ import Project.exception.NotLogInException;
 import Project.model.Hotel;
 import Project.service.HotelService;
 
+import java.util.LinkedList;
+
 public class HotelController {
     private static HotelService hotelService = new HotelService();
 
-    public Hotel findHotelByName(String name) throws BadRequestException, InternalServerException {
+    public LinkedList<Hotel> findHotelByName(String name) throws BadRequestException, InternalServerException {
         return hotelService.findHotelByName(name);
     }
 
-    public Hotel findHotelByCity(String city) throws BadRequestException, InternalServerException {
+    public LinkedList<Hotel> findHotelByCity(String city) throws BadRequestException, InternalServerException {
         return hotelService.findHotelByCity(city);
     }
 

@@ -5,6 +5,7 @@ import Project.exception.BrokenFileException;
 import Project.exception.InternalServerException;
 import Project.model.Hotel;
 
+import java.util.LinkedList;
 import java.util.UUID;
 
 public class HotelDAO extends DAOTools<Hotel> {
@@ -13,18 +14,24 @@ public class HotelDAO extends DAOTools<Hotel> {
         super(FileLocations.getHotelFileLocation());
     }
 
-    public Hotel findHotelByName(String name) throws InternalServerException, BadRequestException {
+    public LinkedList<Hotel> findHotelByName(String name) throws InternalServerException, BadRequestException {
+        LinkedList<Hotel> hotels = new LinkedList<>();
+
         for (Hotel hotel : getFromFile()) {
-            if (hotel.getName().equals(name)) return hotel;
+            if (hotel.getName().equals(name)) hotels.add(hotel);
         }
-        throw new BadRequestException("findHotelByName failed: there is no hotel with the name: " + name);
+        checkSize(hotels);
+        return hotels;
     }
 
-    public Hotel findHotelByCity(String city) throws InternalServerException, BadRequestException {
+    public LinkedList<Hotel> findHotelByCity(String city) throws InternalServerException, BadRequestException {
+        LinkedList<Hotel> hotels = new LinkedList<>();
+
         for (Hotel hotel : getFromFile()) {
-            if (hotel.getCity().equals(city)) return hotel;
+            if (hotel.getCity().equals(city)) hotels.add(hotel);
         }
-        throw new BadRequestException("findHotelByCity failed: there is no hotel in city: " + city);
+        checkSize(hotels);
+        return hotels;
     }
 
     public Hotel addHotel(Hotel hotel) throws InternalServerException {
@@ -50,5 +57,10 @@ public class HotelDAO extends DAOTools<Hotel> {
         } catch (NumberFormatException | BrokenFileException e) {
             throw new BrokenFileException("map failed: broken line");
         }
+    }
+
+    private void checkSize(LinkedList<Hotel> hotels) throws BadRequestException {
+        if (hotels.size() == 0)
+            throw new BadRequestException("findHotelByName failed: there is no hotels with parameters");
     }
 }

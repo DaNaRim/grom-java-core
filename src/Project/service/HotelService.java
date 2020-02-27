@@ -7,16 +7,18 @@ import Project.exception.NoAccessException;
 import Project.exception.NotLogInException;
 import Project.model.Hotel;
 
+import java.util.LinkedList;
+
 public class HotelService {
     private static HotelDAO hotelDAO = new HotelDAO();
     private static UserService userService = new UserService();
 
-    public Hotel findHotelByName(String name) throws BadRequestException, InternalServerException {
+    public LinkedList<Hotel> findHotelByName(String name) throws BadRequestException, InternalServerException {
         checkName(name);
         return hotelDAO.findHotelByName(name);
     }
 
-    public Hotel findHotelByCity(String city) throws BadRequestException, InternalServerException {
+    public LinkedList<Hotel> findHotelByCity(String city) throws BadRequestException, InternalServerException {
         checkCity(city);
         return hotelDAO.findHotelByCity(city);
     }
@@ -24,10 +26,8 @@ public class HotelService {
     public Hotel addHotel(Hotel hotel)
             throws NotLogInException, NoAccessException, BadRequestException, InternalServerException {
         userService.checkRights();
-
         checkHotel(hotel);
         isExist(hotel);
-
         return hotelDAO.addHotel(hotel);
     }
 
