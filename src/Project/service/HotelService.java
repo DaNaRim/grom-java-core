@@ -4,7 +4,6 @@ import Project.DAO.HotelDAO;
 import Project.exception.BadRequestException;
 import Project.exception.InternalServerException;
 import Project.exception.NoAccessException;
-import Project.exception.NotLogInException;
 import Project.model.Hotel;
 
 import java.util.LinkedList;
@@ -23,16 +22,14 @@ public class HotelService {
         return hotelDAO.findHotelByCity(city);
     }
 
-    public Hotel addHotel(Hotel hotel)
-            throws NotLogInException, NoAccessException, BadRequestException, InternalServerException {
+    public Hotel addHotel(Hotel hotel) throws NoAccessException, BadRequestException, InternalServerException {
         userService.checkRights();
         checkHotel(hotel);
         isExist(hotel);
         return hotelDAO.addHotel(hotel);
     }
 
-    public void deleteHotel(long hotelId)
-            throws NotLogInException, NoAccessException, BadRequestException, InternalServerException {
+    public void deleteHotel(long hotelId) throws NoAccessException, BadRequestException, InternalServerException {
         userService.checkRights();
         hotelDAO.findById(hotelId);
         hotelDAO.deleteHotel(hotelId);

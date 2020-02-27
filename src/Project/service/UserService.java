@@ -32,14 +32,14 @@ public class UserService {
         if (loggedUser == null) throw new NotLogInException("checkLogin failed: user is not log in");
     }
 
-    public void checkRights() throws NoAccessException, NotLogInException {
+    public void checkRights() throws NoAccessException {
         checkLogin();
         if (loggedUser.getUserType() != UserType.ADMIN)
             throw new NoAccessException("checkRights failed: user don`t have enough rights");
     }
 
     public void setUserType(Long id, UserType userType)
-            throws NotLogInException, NoAccessException, BadRequestException, InternalServerException {
+            throws NoAccessException, BadRequestException, InternalServerException {
         checkRights();
         User user = userDAO.findById(id);
 

@@ -24,7 +24,7 @@ public class UserController {
     }
 
     public void setUserType(Long id, UserType userType)
-            throws NotLogInException, InternalServerException, NoAccessException, BadRequestException {
+            throws InternalServerException, NoAccessException, BadRequestException {
         userService.setUserType(id, userType);
     }
 }
