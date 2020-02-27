@@ -7,6 +7,7 @@ import Project.model.MainModel;
 
 import java.io.*;
 import java.util.LinkedList;
+import java.util.UUID;
 
 public abstract class DAOTools<T extends MainModel> {
     private String path;
@@ -45,6 +46,8 @@ public abstract class DAOTools<T extends MainModel> {
 
     public final T addToFile(T t) throws InternalServerException {
         validate(path);
+
+        t.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
 
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
             if (!getFromFile().toString().equals("[]")) bw.append("\r\n");

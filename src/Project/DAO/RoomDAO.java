@@ -9,7 +9,6 @@ import Project.model.Room;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
-import java.util.UUID;
 
 public class RoomDAO extends DAOTools<Room> {
     private static HotelDAO hotelDAO = new HotelDAO();
@@ -25,7 +24,6 @@ public class RoomDAO extends DAOTools<Room> {
     }
 
     public Room addRoom(Room room) throws InternalServerException {
-        room.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
         return addToFile(room);
     }
 

@@ -60,6 +60,7 @@ public class Room implements MainModel {
         return hotel;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

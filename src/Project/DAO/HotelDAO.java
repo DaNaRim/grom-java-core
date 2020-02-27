@@ -6,7 +6,6 @@ import Project.exception.InternalServerException;
 import Project.model.Hotel;
 
 import java.util.LinkedList;
-import java.util.UUID;
 
 public class HotelDAO extends DAOTools<Hotel> {
 
@@ -35,7 +34,6 @@ public class HotelDAO extends DAOTools<Hotel> {
     }
 
     public Hotel addHotel(Hotel hotel) throws InternalServerException {
-        hotel.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
         return addToFile(hotel);
     }
 

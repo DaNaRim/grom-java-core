@@ -1,19 +1,11 @@
 package Project.model;
 
-import Project.DAO.UserDAO;
-import Project.exception.NoAccessException;
-import Project.exception.NotLogInException;
-import Project.service.UserService;
-
 public class User implements MainModel {
     private Long id;
     private String userName;
     private String password;
     private String country;
     private UserType userType = UserType.USER;
-
-    private static UserService userService = new UserService();
-    private static UserDAO userDAO = new UserDAO();
 
     public User(String userName, String password, String country) {
         this.userName = userName;
@@ -50,6 +42,7 @@ public class User implements MainModel {
         return userType;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }

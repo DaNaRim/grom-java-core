@@ -8,7 +8,6 @@ import Project.model.Order;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.UUID;
 
 public class OrderDAO extends DAOTools<Order> {
     private static UserDAO userDAO = new UserDAO();
@@ -51,7 +50,6 @@ public class OrderDAO extends DAOTools<Order> {
     private Order createOrder(long roomId, long userId, Date dateFrom, Date dateTo)
             throws InternalServerException, BadRequestException {
         return new Order(
-                UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE,
                 userDAO.findById(userId),
                 roomDAO.findById(roomId),
                 dateFrom,

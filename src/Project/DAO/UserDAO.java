@@ -5,8 +5,6 @@ import Project.exception.InternalServerException;
 import Project.model.User;
 import Project.model.UserType;
 
-import java.util.UUID;
-
 public class UserDAO extends DAOTools<User> {
 
     public UserDAO() {
@@ -14,7 +12,6 @@ public class UserDAO extends DAOTools<User> {
     }
 
     public User registerUser(User user) throws InternalServerException {
-        user.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
         return addToFile(user);
     }
 

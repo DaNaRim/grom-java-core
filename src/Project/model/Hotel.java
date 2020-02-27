@@ -45,6 +45,7 @@ public class Hotel implements MainModel {
         return street;
     }
 
+    @Override
     public void setId(Long id) {
         this.id = id;
     }
