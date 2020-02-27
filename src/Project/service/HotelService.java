@@ -23,14 +23,14 @@ public class HotelService {
     }
 
     public Hotel addHotel(Hotel hotel) throws NoAccessException, BadRequestException, InternalServerException {
-        userService.checkRights();
+        userService.checkAccess();
         checkHotel(hotel);
         isExist(hotel);
         return hotelDAO.addHotel(hotel);
     }
 
     public void deleteHotel(long hotelId) throws NoAccessException, BadRequestException, InternalServerException {
-        userService.checkRights();
+        userService.checkAccess();
         hotelDAO.findById(hotelId);
         hotelDAO.deleteHotel(hotelId);
     }

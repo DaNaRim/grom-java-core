@@ -21,13 +21,13 @@ public class RoomService {
     }
 
     public Room addRoom(Room room) throws InternalServerException, BadRequestException, NoAccessException {
-        userService.checkRights();
+        userService.checkAccess();
         checkRoom(room);
         return roomDAO.addRoom(room);
     }
 
     public void deleteRoom(long roomId) throws InternalServerException, NoAccessException, BadRequestException {
-        userService.checkRights();
+        userService.checkAccess();
         roomDAO.findById(roomId);
         roomDAO.deleteRoom(roomId);
     }

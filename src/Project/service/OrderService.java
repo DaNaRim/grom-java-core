@@ -5,7 +5,7 @@ import Project.DAO.RoomDAO;
 import Project.DAO.UserDAO;
 import Project.exception.BadRequestException;
 import Project.exception.InternalServerException;
-import Project.exception.NotLogInException;
+import Project.exception.NoAccessException;
 import Project.model.Order;
 import Project.model.Room;
 
@@ -18,10 +18,11 @@ public class OrderService {
     private static UserService userService = new UserService();
 
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo)
-            throws InternalServerException, NotLogInException, BadRequestException {
-        userService.checkLogin();
-
+            throws InternalServerException, NoAccessException, BadRequestException {
         checkOrder(roomId, userId, dateFrom, dateTo);
+
+        userService.checkUserForOperation(userId);
+
         isBooked(roomId, userId);
         checkRoomForBusy(roomId, dateFrom, dateTo);
 
@@ -29,12 +30,12 @@ public class OrderService {
     }
 
     public void cancelReservation(long roomId, long userId)
-            throws InternalServerException, NotLogInException, BadRequestException {
-        userService.checkLogin();
-
+            throws InternalServerException, NoAccessException, BadRequestException {
         checkRoomAndUser(roomId, userId);
-        checkPossibleCancellation(roomId);
 
+        userService.checkUserForOperation(userId);
+
+        checkPossibleCancellation(roomId);
         orderDAO.cancelReservation(roomId, userId);
     }
 

@@ -28,24 +28,30 @@ public class UserService {
         loggedUser = null;
     }
 
-    public void checkLogin() throws NotLogInException {
-        if (loggedUser == null) throw new NotLogInException("checkLogin failed: user is not log in");
-    }
-
-    public void checkRights() throws NoAccessException {
-        checkLogin();
-        if (loggedUser.getUserType() != UserType.ADMIN)
-            throw new NoAccessException("checkRights failed: user don`t have enough rights");
-    }
-
     public void setUserType(Long id, UserType userType)
             throws NoAccessException, BadRequestException, InternalServerException {
-        checkRights();
+        checkAccess();
         User user = userDAO.findById(id);
 
         checkUserType(user, userType);
         user.setUserType(userType);
         userDAO.updateInFile(id, user);
+    }
+
+    public void checkLogin() throws NotLogInException {
+        if (loggedUser == null) throw new NotLogInException("checkLogin failed: user is not log in");
+    }
+
+    public void checkAccess() throws NoAccessException {
+        checkLogin();
+        if (loggedUser.getUserType() != UserType.ADMIN)
+            throw new NoAccessException("checkRights failed: user don`t have enough rights");
+    }
+
+    public void checkUserForOperation(Long id) throws NoAccessException {
+        checkLogin();
+        if (!loggedUser.getId().equals(id))
+            throw new NoAccessException("you cannot do this operation in the name of another user");
     }
 
     private User validateLogin(String userName, String password) throws InternalServerException, BadRequestException {
