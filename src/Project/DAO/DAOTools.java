@@ -15,6 +15,8 @@ public abstract class DAOTools<T extends MainModel> {
         this.path = path;
     }
 
+    public abstract T map(String line) throws BrokenFileException;
+
     public final T findById(long id) throws InternalServerException, BadRequestException {
         for (T t : getFromFile()) {
             if (t.getId() == id) return t;
@@ -59,7 +61,10 @@ public abstract class DAOTools<T extends MainModel> {
         writeNewContent(newToWrite);
     }
 
-    public abstract T map(String line) throws BrokenFileException;
+    public final void updateInFile(Long id, T updateObject) throws InternalServerException {
+        deleteFromFile(id);
+        addToFile(updateObject);
+    }
 
     private void validate(String path) throws InternalServerException {
         File file = new File(path);

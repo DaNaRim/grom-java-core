@@ -20,7 +20,7 @@ public class DemoUser {
 
         userController.login("Oleg", "wf45a4w44f");
 
-        user1.setUserType(UserType.ADMIN);
+        userController.setUserType(7734607807666275015L, UserType.ADMIN);
 
         userController.logout();
     }

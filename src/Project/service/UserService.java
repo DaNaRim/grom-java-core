@@ -38,6 +38,16 @@ public class UserService {
             throw new NoAccessException("checkRights failed: user don`t have enough rights");
     }
 
+    public void setUserType(Long id, UserType userType)
+            throws NotLogInException, NoAccessException, BadRequestException, InternalServerException {
+        checkRights();
+        User user = userDAO.findById(id);
+
+        checkUserType(user, userType);
+        user.setUserType(userType);
+        userDAO.updateInFile(id, user);
+    }
+
     private User validateLogin(String userName, String password) throws InternalServerException, BadRequestException {
         if (loggedUser != null) {
             if (loggedUser.getUserName().equals(userName))
@@ -77,5 +87,10 @@ public class UserService {
     private void checkUserPassword(User user) throws BadRequestException {
         if (user.getPassword().length() < 8)
             throw new BadRequestException("checkUserPassword failed: password must be at least 8 characters");
+    }
+
+    private void checkUserType(User user, UserType userType) throws BadRequestException {
+        if (user.getUserType() == userType)
+            throw new BadRequestException("setUserType failed: user already has this type");
     }
 }

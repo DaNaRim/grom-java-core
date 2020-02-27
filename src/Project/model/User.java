@@ -1,5 +1,6 @@
 package Project.model;
 
+import Project.DAO.UserDAO;
 import Project.exception.NoAccessException;
 import Project.exception.NotLogInException;
 import Project.service.UserService;
@@ -12,6 +13,7 @@ public class User implements MainModel {
     private UserType userType = UserType.USER;
 
     private static UserService userService = new UserService();
+    private static UserDAO userDAO = new UserDAO();
 
     public User(String userName, String password, String country) {
         this.userName = userName;
@@ -52,8 +54,7 @@ public class User implements MainModel {
         this.id = id;
     }
 
-    public void setUserType(UserType userType) throws NotLogInException, NoAccessException {
-        userService.checkRights();
+    public void setUserType(UserType userType) {
         this.userType = userType;
     }
 
