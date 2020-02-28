@@ -24,11 +24,11 @@ public class RoomDAO extends DAOTools<Room> {
     }
 
     public Room addRoom(Room room) throws InternalServerException {
-        return addToFile(room);
+        return addObjectToDAO(room);
     }
 
     public void deleteRoom(long roomId) throws InternalServerException {
-        deleteFromFile(roomId);
+        deleteObjectFromDAO(roomId);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class RoomDAO extends DAOTools<Room> {
 
     private LinkedList<Room> findRoomsByFilter(Filter filter) throws InternalServerException {
         LinkedList<Room> rooms = new LinkedList<>();
-        for (Room room : getFromFile()) {
+        for (Room room : getObjectsFromDAO()) {
             if (checkRoomByFilter(room, filter)) rooms.add(room);
         }
         return rooms;

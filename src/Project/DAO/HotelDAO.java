@@ -16,7 +16,7 @@ public class HotelDAO extends DAOTools<Hotel> {
     public LinkedList<Hotel> findHotelByName(String name) throws InternalServerException, BadRequestException {
         LinkedList<Hotel> hotels = new LinkedList<>();
 
-        for (Hotel hotel : getFromFile()) {
+        for (Hotel hotel : getObjectsFromDAO()) {
             if (hotel.getName().equals(name)) hotels.add(hotel);
         }
         checkSize(hotels);
@@ -26,7 +26,7 @@ public class HotelDAO extends DAOTools<Hotel> {
     public LinkedList<Hotel> findHotelByCity(String city) throws InternalServerException, BadRequestException {
         LinkedList<Hotel> hotels = new LinkedList<>();
 
-        for (Hotel hotel : getFromFile()) {
+        for (Hotel hotel : getObjectsFromDAO()) {
             if (hotel.getCity().equals(city)) hotels.add(hotel);
         }
         checkSize(hotels);
@@ -34,13 +34,13 @@ public class HotelDAO extends DAOTools<Hotel> {
     }
 
     public Hotel addHotel(Hotel hotel) throws InternalServerException {
-        return addToFile(hotel);
+        return addObjectToDAO(hotel);
     }
 
     public void deleteHotel(long hotelId) throws InternalServerException {
-        for (Hotel hotel : getFromFile()) {
+        for (Hotel hotel : getObjectsFromDAO()) {
             if (hotel.getId().equals(hotelId))
-                deleteFromFile(hotel.getId());
+                deleteObjectFromDAO(hotel.getId());
         }
     }
 

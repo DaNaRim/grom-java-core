@@ -49,7 +49,7 @@ public class OrderService {
 
         Date busyTimeRoomFrom;
         Date busyTimeRoomTo;
-        for (Order order : orderDAO.getFromFile()) {
+        for (Order order : orderDAO.getObjectsFromDAO()) {
             busyTimeRoomFrom = order.getDateFrom();
             busyTimeRoomTo = order.getDateTo();
             if (order.getDateTo().after(new Date()) &&
@@ -66,7 +66,7 @@ public class OrderService {
     }
 
     private void isBooked(long roomId, long userId) throws InternalServerException, BadRequestException {
-        for (Order order : orderDAO.getFromFile()) {
+        for (Order order : orderDAO.getObjectsFromDAO()) {
             if (order.getRoom().getId() == roomId && order.getUser().getId() == userId)
                 throw new BadRequestException("isBooked failed: user: " + userId + " already booked room: "
                         + roomId + " in order: " + order.getId());
@@ -92,11 +92,11 @@ public class OrderService {
 
         Date busyTimeRoomTo;
         Date RoomDateAvailableFrom = room.getDateAvailableFrom();
-        for (Order order : orderDAO.getFromFile()) {
+        for (Order order : orderDAO.getObjectsFromDAO()) {
             if ((busyTimeRoomTo = order.getDateTo()).after(RoomDateAvailableFrom) &&
                     order.getDateFrom().before(RoomDateAvailableFrom))
                 room.setDateAvailableFrom(busyTimeRoomTo);
         }
-        roomDAO.updateInFile(id, room);
+        roomDAO.updateObjectInDAO(id, room);
     }
 }

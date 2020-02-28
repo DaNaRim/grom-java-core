@@ -35,7 +35,7 @@ public class UserService {
 
         checkUserType(user, userType);
         user.setUserType(userType);
-        userDAO.updateInFile(id, user);
+        userDAO.updateObjectInDAO(id, user);
     }
 
     public void checkLogin() throws NotLogInException {
@@ -61,7 +61,7 @@ public class UserService {
             throw new BadRequestException("validateLogin failed: another user is logged in now");
         }
 
-        for (User user : userDAO.getFromFile()) {
+        for (User user : userDAO.getObjectsFromDAO()) {
             if (user.getUserName().equals(userName)) {
                 return checkPassword(user, password);
             }
@@ -84,7 +84,7 @@ public class UserService {
     }
 
     private void checkUserName(User user) throws InternalServerException, BadRequestException {
-        for (User user1 : userDAO.getFromFile()) {
+        for (User user1 : userDAO.getObjectsFromDAO()) {
             if (user1.getUserName().equals(user.getUserName()))
                 throw new BadRequestException("checkUserName failed: username is already taken");
         }

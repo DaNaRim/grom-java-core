@@ -19,11 +19,11 @@ public class OrderDAO extends DAOTools<Order> {
 
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo)
             throws InternalServerException, BadRequestException {
-        addToFile(createOrder(roomId, userId, dateFrom, dateTo));
+        addObjectToDAO(createOrder(roomId, userId, dateFrom, dateTo));
     }
 
     public void cancelReservation(long roomId, long userId) throws InternalServerException, BadRequestException {
-        deleteFromFile(findOrderByRoomAndUser(roomId, userId).getId());
+        deleteObjectFromDAO(findOrderByRoomAndUser(roomId, userId).getId());
         roomDAO.findById(roomId).setDateAvailableFrom(new Date());
     }
 
@@ -58,7 +58,7 @@ public class OrderDAO extends DAOTools<Order> {
     }
 
     private Order findOrderByRoomAndUser(long roomId, long userId) throws InternalServerException {
-        for (Order order : getFromFile()) {
+        for (Order order : getObjectsFromDAO()) {
             if (order.getRoom().getId() == roomId && order.getUser().getId() == userId) return order;
         }
         throw new InternalServerException("findOrderByRoomAndUser failed: Missing order");

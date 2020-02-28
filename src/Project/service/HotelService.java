@@ -55,7 +55,7 @@ public class HotelService {
     }
 
     private void isExist(Hotel hotel) throws InternalServerException, BadRequestException {
-        for (Hotel hotel1 : hotelDAO.getFromFile()) {
+        for (Hotel hotel1 : hotelDAO.getObjectsFromDAO()) {
             if (hotel1.equals(hotel))
                 throw new BadRequestException("isExist failed: the hotel is already exist: " + hotel1.getId());
         }

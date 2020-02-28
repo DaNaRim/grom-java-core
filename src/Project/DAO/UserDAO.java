@@ -12,7 +12,7 @@ public class UserDAO extends DAOTools<User> {
     }
 
     public User registerUser(User user) throws InternalServerException {
-        return addToFile(user);
+        return addObjectToDAO(user);
     }
 
     @Override
