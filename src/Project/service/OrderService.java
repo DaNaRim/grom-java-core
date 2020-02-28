@@ -35,15 +35,14 @@ public class OrderService {
 
         userService.checkUserForOperation(userId);
 
-        checkPossibleCancellation(roomId);
+        checkPossibleCancellation(roomId, userId);
         orderDAO.cancelReservation(roomId, userId);
     }
 
     private void checkRoomForBusy(long roomId, Date dateFrom, Date dateTo)
             throws InternalServerException, BadRequestException {
-        updateRoomDateAvailFrom(roomId);
+        Date dateAvailableFrom = updateRoomDateAvailFrom(roomId).getDateAvailableFrom();
 
-        Date dateAvailableFrom = roomDAO.findById(roomId).getDateAvailableFrom();
         if (dateAvailableFrom.after(dateFrom))
             throw new BadRequestException("checkRoomForBusy failed: the room is busy until " + dateAvailableFrom);
 
@@ -60,8 +59,11 @@ public class OrderService {
         }
     }
 
-    private void checkPossibleCancellation(long roomId) throws InternalServerException, BadRequestException {
-        if (roomDAO.findById(roomId).getDateAvailableFrom().before(new Date()))
+    private void checkPossibleCancellation(long roomId, long userId)
+            throws InternalServerException, BadRequestException {
+        Date orderDateFrom = orderDAO.findOrderByRoomAndUser(roomId, userId).getDateFrom();
+
+        if (orderDateFrom.before(new Date()))
             throw new BadRequestException("checkPossibleCancellation failed: possible cancellation has expired");
     }
 
@@ -79,7 +81,8 @@ public class OrderService {
         if (dateFrom == null || dateTo == null)
             throw new BadRequestException("checkOrder failed: not all fields are filled correctly");
 
-        if (dateTo.before(dateFrom)) throw new BadRequestException("checkOrder failed: date is incorrect");
+        if (dateTo.before(dateFrom) || dateTo.equals(dateFrom))
+            throw new BadRequestException("checkOrder failed: date is incorrect");
     }
 
     private void checkRoomAndUser(long roomId, long userId) throws InternalServerException, BadRequestException {
@@ -87,7 +90,7 @@ public class OrderService {
         userDAO.findById(userId);
     }
 
-    private void updateRoomDateAvailFrom(Long id) throws InternalServerException, BadRequestException {
+    private Room updateRoomDateAvailFrom(Long id) throws InternalServerException, BadRequestException {
         Room room = roomDAO.findById(id);
 
         Date busyTimeRoomTo;
@@ -98,5 +101,6 @@ public class OrderService {
                 room.setDateAvailableFrom(busyTimeRoomTo);
         }
         roomDAO.updateObjectInDAO(id, room);
+        return room;
     }
 }

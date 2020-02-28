@@ -34,8 +34,12 @@ public class UserService {
         User user = userDAO.findById(id);
 
         checkUserType(user, userType);
-        user.setUserType(userType);
-        userDAO.updateObjectInDAO(id, user);
+        try {
+            user.setUserType(userType);
+            userDAO.updateObjectInDAO(id, user);
+        } catch (InternalServerException e) {
+            throw new InternalServerException("setUserType failed: " + e.getMessage());
+        }
     }
 
     public void checkLogin() throws NotLogInException {

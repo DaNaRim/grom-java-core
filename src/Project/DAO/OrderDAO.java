@@ -22,9 +22,8 @@ public class OrderDAO extends DAOTools<Order> {
         addObjectToDAO(createOrder(roomId, userId, dateFrom, dateTo));
     }
 
-    public void cancelReservation(long roomId, long userId) throws InternalServerException, BadRequestException {
+    public void cancelReservation(long roomId, long userId) throws InternalServerException {
         deleteObjectFromDAO(findOrderByRoomAndUser(roomId, userId).getId());
-        roomDAO.findById(roomId).setDateAvailableFrom(new Date());
     }
 
     @Override
@@ -32,7 +31,7 @@ public class OrderDAO extends DAOTools<Order> {
         try {
             String[] fields = line.split(", ");
             if (fields.length > 6)
-                throw new BrokenFileException("broken line: to many elements");
+                throw new BrokenFileException("to many elements");
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy kk:00");
             return new Order(
@@ -43,8 +42,15 @@ public class OrderDAO extends DAOTools<Order> {
                     simpleDateFormat.parse(fields[4]),
                     Double.parseDouble(fields[5]));
         } catch (InternalServerException | ParseException | NumberFormatException | BadRequestException e) {
-            throw new BrokenFileException("map failed: broken line");
+            throw new BrokenFileException(e.getMessage());
         }
+    }
+
+    public Order findOrderByRoomAndUser(long roomId, long userId) throws InternalServerException {
+        for (Order order : getObjectsFromDAO()) {
+            if (order.getRoom().getId() == roomId && order.getUser().getId() == userId) return order;
+        }
+        throw new InternalServerException("findOrderByRoomAndUser failed: Missing order");
     }
 
     private Order createOrder(long roomId, long userId, Date dateFrom, Date dateTo)
@@ -55,12 +61,5 @@ public class OrderDAO extends DAOTools<Order> {
                 dateFrom,
                 dateTo,
                 roomDAO.findById(roomId).getPrice());
-    }
-
-    private Order findOrderByRoomAndUser(long roomId, long userId) throws InternalServerException {
-        for (Order order : getObjectsFromDAO()) {
-            if (order.getRoom().getId() == roomId && order.getUser().getId() == userId) return order;
-        }
-        throw new InternalServerException("findOrderByRoomAndUser failed: Missing order");
     }
 }

@@ -36,7 +36,7 @@ public class RoomDAO extends DAOTools<Room> {
         try {
             String[] fields = line.split(", ");
             if (fields.length > 7)
-                throw new BrokenFileException("broken line: to many elements");
+                throw new BrokenFileException("to many elements");
 
             return new Room(
                     Long.parseLong(fields[0]),
@@ -47,7 +47,7 @@ public class RoomDAO extends DAOTools<Room> {
                     new SimpleDateFormat("dd.MM.yyyy kk:00").parse(fields[5]),
                     hotelDAO.findById(Long.parseLong(fields[6])));
         } catch (ParseException | NumberFormatException | InternalServerException | BadRequestException e) {
-            throw new BrokenFileException("map failed: broken line");
+            throw new BrokenFileException(e.getMessage());
         }
     }
 
@@ -71,7 +71,6 @@ public class RoomDAO extends DAOTools<Room> {
                         filter.getBreakfastIncluded() == room.getBreakfastIncluded()) &&
                 (filter.getPetsAllowed() == null || filter.getPetsAllowed() == room.getPetsAllowed()) &&
                 (filter.getDateAvailableFrom() == null ||
-                        filter.getDateAvailableFrom().equals(room.getDateAvailableFrom()) ||
                         filter.getDateAvailableFrom().after(room.getDateAvailableFrom())) &&
                 (filter.getCountry() == null || filter.getCountry().equals(room.getHotel().getCountry())) &&
                 (filter.getCity() == null || filter.getCity().equals(room.getHotel().getCity())));

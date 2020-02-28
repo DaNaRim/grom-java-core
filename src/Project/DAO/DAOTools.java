@@ -40,7 +40,8 @@ public abstract class DAOTools<T extends MainModel> {
         } catch (IOException e) {
             throw new InternalServerException("getFromFile failed: reading from file: " + path + " failed");
         } catch (BrokenFileException e) {
-            throw new InternalServerException("getFromFile failed: broken line: " + lineIndex + " in file: " + path);
+            throw new InternalServerException("getFromFile failed: broken line: " + lineIndex + " in file: " + path +
+                    " : " + e.getMessage());
         }
     }
 
