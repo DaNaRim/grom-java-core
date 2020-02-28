@@ -1,6 +1,6 @@
 package Project.model;
 
-public class User implements MainModel {
+public class User implements MainModel, Comparable<User> {
     private Long id;
     private String userName;
     private String password;
@@ -57,7 +57,7 @@ public class User implements MainModel {
     }
 
     @Override
-    public int compareTo(MainModel mainModel) {
-        return this.userType == UserType.ADMIN ? 1 : -1;
+    public int compareTo(User user) {
+        return user.getUserType() == UserType.ADMIN ? 1 : -1;
     }
 }

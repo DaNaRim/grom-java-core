@@ -1,6 +1,6 @@
 package Project.model;
 
-public interface MainModel extends Comparable<MainModel> {
+public interface MainModel {
 
     Long getId();
 

@@ -3,7 +3,7 @@ package Project.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Room implements MainModel {
+public class Room implements MainModel, Comparable<Room> {
     private Long id;
     private Integer numberOfGuests;
     private Double price;
@@ -81,7 +81,7 @@ public class Room implements MainModel {
     }
 
     @Override
-    public int compareTo(MainModel mainModel) {
-        return this.dateAvailableFrom.before(dateAvailableFrom) ? 1 : -1;
+    public int compareTo(Room room) {
+        return this.dateAvailableFrom.before(room.getDateAvailableFrom()) ? 1 : -1;
     }
 }

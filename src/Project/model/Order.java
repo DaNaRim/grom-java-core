@@ -3,7 +3,7 @@ package Project.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Order implements MainModel {
+public class Order implements MainModel, Comparable<Order> {
     private Long id;
     private User user;
     private Room room;
@@ -67,7 +67,7 @@ public class Order implements MainModel {
     }
 
     @Override
-    public int compareTo(MainModel mainModel) {
-        return this.dateFrom.before(dateFrom) ? 1 : -1;
+    public int compareTo(Order order) {
+        return this.dateFrom.before(order.getDateFrom()) ? 1 : -1;
     }
 }
