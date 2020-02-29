@@ -14,7 +14,7 @@ public class UserService {
 
     public User registerUser(User user) throws InternalServerException, BadRequestException {
         checkUser(user);
-        checkUserName(user);
+        userDAO.checkUserName(user);
         checkUserPassword(user);
         return userDAO.registerUser(user);
     }
@@ -64,19 +64,7 @@ public class UserService {
                 throw new BadRequestException("validateLogin failed: user already log in");
             throw new BadRequestException("validateLogin failed: another user is logged in now");
         }
-
-        for (User user : userDAO.getObjectsFromDAO()) {
-            if (user.getUserName().equals(userName)) {
-                return checkPassword(user, password);
-            }
-        }
-        throw new BadRequestException("validateLogin failed: wrong username or user not registered");
-    }
-
-    private User checkPassword(User user, String password) throws BadRequestException {
-        if (user.getPassword().equals(password))
-            return user;
-        throw new BadRequestException("validateLogin failed: wrong password");
+        return userDAO.validateLogin(userName, password);
     }
 
     private void checkUser(User user) throws BadRequestException {
@@ -85,13 +73,6 @@ public class UserService {
 
         if (user.getUserName() == null || user.getPassword() == null || user.getCountry() == null)
             throw new BadRequestException("checkUser failed: not all fields are filled");
-    }
-
-    private void checkUserName(User user) throws InternalServerException, BadRequestException {
-        for (User user1 : userDAO.getObjectsFromDAO()) {
-            if (user1.getUserName().equals(user.getUserName()))
-                throw new BadRequestException("checkUserName failed: username is already taken");
-        }
     }
 
     private void checkUserPassword(User user) throws BadRequestException {

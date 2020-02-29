@@ -51,6 +51,14 @@ public class RoomDAO extends DAOTools<Room> {
         }
     }
 
+    public void checkHotelRooms(long hotelId) throws InternalServerException, BadRequestException {
+        for (Room room : getObjectsFromDAO()) {
+            if (room.getHotel().getId().equals(hotelId))
+                throw new BadRequestException("checkHotelRooms failed: This hotel has a room that is in use: " +
+                        room.getId());
+        }
+    }
+
     private void checkResultSize(LinkedList<Room> rooms) throws BadRequestException {
         if (rooms.size() == 0)
             throw new BadRequestException("checkResultSize failed: there is no room with this filter parameters");

@@ -4,6 +4,7 @@ import Project.exception.BadRequestException;
 import Project.exception.BrokenFileException;
 import Project.exception.InternalServerException;
 import Project.model.Order;
+import Project.model.Room;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,6 +54,34 @@ public class OrderDAO extends DAOTools<Order> {
         throw new InternalServerException("findOrderByRoomAndUser failed: Missing order");
     }
 
+    public void checkRoomForBusy(long roomId, Date dateFrom, Date dateTo)
+            throws InternalServerException, BadRequestException {
+        Date dateAvailableFrom = updateRoomDateAvailFrom(roomId).getDateAvailableFrom();
+
+        if (dateAvailableFrom.after(dateFrom))
+            throw new BadRequestException("checkRoomForBusy failed: the room is busy until " + dateAvailableFrom);
+
+        Date busyTimeRoomFrom;
+        Date busyTimeRoomTo;
+        for (Order order : getObjectsFromDAO()) {
+            busyTimeRoomFrom = order.getDateFrom();
+            busyTimeRoomTo = order.getDateTo();
+            if (order.getDateTo().after(new Date()) &&
+                    !(busyTimeRoomTo.before(dateFrom) || busyTimeRoomFrom.after(dateTo))) {
+                throw new BadRequestException("checkRoomForBusy failed: the room is busy from " +
+                        busyTimeRoomFrom + " to " + busyTimeRoomTo);
+            }
+        }
+    }
+
+    public void isBooked(long roomId, long userId) throws InternalServerException, BadRequestException {
+        for (Order order : getObjectsFromDAO()) {
+            if (order.getRoom().getId() == roomId && order.getUser().getId() == userId)
+                throw new BadRequestException("isBooked failed: user: " + userId + " already booked room: "
+                        + roomId + " in order: " + order.getId());
+        }
+    }
+
     private Order createOrder(long roomId, long userId, Date dateFrom, Date dateTo)
             throws InternalServerException, BadRequestException {
         return new Order(
@@ -61,5 +90,19 @@ public class OrderDAO extends DAOTools<Order> {
                 dateFrom,
                 dateTo,
                 roomDAO.findById(roomId).getPrice());
+    }
+
+    private Room updateRoomDateAvailFrom(Long id) throws InternalServerException, BadRequestException {
+        Room room = roomDAO.findById(id);
+
+        Date busyTimeRoomTo;
+        Date RoomDateAvailableFrom = room.getDateAvailableFrom();
+        for (Order order : getObjectsFromDAO()) {
+            if ((busyTimeRoomTo = order.getDateTo()).after(RoomDateAvailableFrom) &&
+                    order.getDateFrom().before(RoomDateAvailableFrom))
+                room.setDateAvailableFrom(busyTimeRoomTo);
+        }
+        roomDAO.updateObjectInDAO(id, room);
+        return room;
     }
 }

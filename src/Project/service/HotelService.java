@@ -6,7 +6,6 @@ import Project.exception.BadRequestException;
 import Project.exception.InternalServerException;
 import Project.exception.NoAccessException;
 import Project.model.Hotel;
-import Project.model.Room;
 
 import java.util.LinkedList;
 
@@ -28,14 +27,14 @@ public class HotelService {
     public Hotel addHotel(Hotel hotel) throws NoAccessException, BadRequestException, InternalServerException {
         userService.checkAccess();
         checkHotel(hotel);
-        isExist(hotel);
+        hotelDAO.isExist(hotel);
         return hotelDAO.addHotel(hotel);
     }
 
     public void deleteHotel(long hotelId) throws NoAccessException, BadRequestException, InternalServerException {
         userService.checkAccess();
         hotelDAO.findById(hotelId);
-        checkHotelRooms(hotelId);
+        roomDAO.checkHotelRooms(hotelId);
         hotelDAO.deleteHotel(hotelId);
     }
 
@@ -56,20 +55,5 @@ public class HotelService {
         if (hotel.getName() == null || hotel.getCity() == null ||
                 hotel.getCountry() == null || hotel.getStreet() == null)
             throw new BadRequestException("checkHotel failed: not all fields are filled");
-    }
-
-    private void isExist(Hotel hotel) throws InternalServerException, BadRequestException {
-        for (Hotel hotel1 : hotelDAO.getObjectsFromDAO()) {
-            if (hotel1.equals(hotel))
-                throw new BadRequestException("isExist failed: the hotel is already exist: " + hotel1.getId());
-        }
-    }
-
-    private void checkHotelRooms(long hotelId) throws InternalServerException, BadRequestException {
-        for (Room room : roomDAO.getObjectsFromDAO()) {
-            if (room.getHotel().getId().equals(hotelId))
-                throw new BadRequestException("checkHotelRooms failed: This hotel has a room that is in use: " +
-                        room.getId());
-        }
     }
 }
