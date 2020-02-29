@@ -1,16 +1,19 @@
 package Project.service;
 
 import Project.DAO.HotelDAO;
+import Project.DAO.RoomDAO;
 import Project.exception.BadRequestException;
 import Project.exception.InternalServerException;
 import Project.exception.NoAccessException;
 import Project.model.Hotel;
+import Project.model.Room;
 
 import java.util.LinkedList;
 
 public class HotelService {
     private static HotelDAO hotelDAO = new HotelDAO();
     private static UserService userService = new UserService();
+    private static RoomDAO roomDAO = new RoomDAO();
 
     public LinkedList<Hotel> findHotelByName(String name) throws BadRequestException, InternalServerException {
         checkName(name);
@@ -32,6 +35,7 @@ public class HotelService {
     public void deleteHotel(long hotelId) throws NoAccessException, BadRequestException, InternalServerException {
         userService.checkAccess();
         hotelDAO.findById(hotelId);
+        checkHotelRooms(hotelId);
         hotelDAO.deleteHotel(hotelId);
     }
 
@@ -58,6 +62,14 @@ public class HotelService {
         for (Hotel hotel1 : hotelDAO.getObjectsFromDAO()) {
             if (hotel1.equals(hotel))
                 throw new BadRequestException("isExist failed: the hotel is already exist: " + hotel1.getId());
+        }
+    }
+
+    private void checkHotelRooms(long hotelId) throws InternalServerException, BadRequestException {
+        for (Room room : roomDAO.getObjectsFromDAO()) {
+            if (room.getHotel().getId().equals(hotelId))
+                throw new BadRequestException("checkHotelRooms failed: This hotel has a room that is in use: " +
+                        room.getId());
         }
     }
 }
