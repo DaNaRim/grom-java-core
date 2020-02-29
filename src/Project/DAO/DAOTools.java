@@ -30,13 +30,13 @@ public abstract class DAOTools<T extends MainModel> {
 
         int lineIndex = 1;
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            LinkedList<T> t = new LinkedList<>();
+            LinkedList<T> objects = new LinkedList<>();
             String line;
             while ((line = br.readLine()) != null) {
-                t.add(map(line));
+                objects.add(map(line));
                 lineIndex++;
             }
-            return t;
+            return objects;
         } catch (IOException e) {
             throw new InternalServerException("getObjectsFromDAO failed: reading from file: " + path + " failed");
         } catch (BrokenFileException e) {
@@ -105,6 +105,7 @@ public abstract class DAOTools<T extends MainModel> {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
             for (T object : objects) {
                 bw.append(object.toString());
+                bw.append("\r\n");
             }
         } catch (IOException e) {
             throw new InternalServerException("writing to file: " + path + " failed");
