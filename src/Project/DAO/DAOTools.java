@@ -38,52 +38,51 @@ public abstract class DAOTools<T extends MainModel> {
             }
             return t;
         } catch (IOException e) {
-            throw new InternalServerException("getFromFile failed: reading from file: " + path + " failed");
+            throw new InternalServerException("getObjectsFromDAO failed: reading from file: " + path + " failed");
         } catch (BrokenFileException e) {
-            throw new InternalServerException("getFromFile failed: broken line: " + lineIndex + " in file: " + path +
-                    " : " + e.getMessage());
+            throw new InternalServerException("getObjectsFromDAO failed: broken line: " + lineIndex + " in file: " +
+                    path + " : " + e.getMessage());
         }
     }
 
     public final T addObjectToDAO(T t) throws InternalServerException {
         validateDAO(path);
 
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
+        try {
             t.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
 
             LinkedList<T> objects = getObjectsFromDAO();
             objects.add(t);
 
             deleteDAOContent();
-            for (T object : objects) {
-                bw.append(object.toString());
-            }
+            writeObjectsToDAO(objects);
             return t;
-        } catch (IOException e) {
-            throw new InternalServerException("addToFile failed: writing to file: " + path + " failed");
         } catch (InternalServerException e) {
             throw new InternalServerException("addToFile failed: " + e.getMessage());
         }
     }
 
-    public final void deleteObjectFromDAO(Long id) throws InternalServerException {
+    public final void deleteObjectFromDAO(T deletableObject) throws InternalServerException {
         validateDAO(path);
 
         try {
-            LinkedList<T> newObjectsToWrite = getNewDAOContent(id);
+            LinkedList<T> objects = getObjectsFromDAO();
+            objects.remove(deletableObject);
+
             deleteDAOContent();
-            writeNewDAOContent(newObjectsToWrite);
+            writeObjectsToDAO(objects);
         } catch (InternalServerException e) {
             throw new InternalServerException("deleteObjectFromDAO failed: " + e.getMessage());
         }
     }
 
-    public final void updateObjectInDAO(Long id, T updateObject) throws InternalServerException {
+    public final T updateObjectInDAO(T updatableObject) throws InternalServerException {
         validateDAO(path);
 
         try {
-            deleteObjectFromDAO(id);
-            addObjectToDAO(updateObject);
+            deleteObjectFromDAO(updatableObject);
+            addObjectToDAO(updatableObject);
+            return updatableObject;
         } catch (InternalServerException e) {
             throw new InternalServerException("updateObjectInDAO failed: " + e.getMessage());
         }
@@ -102,26 +101,21 @@ public abstract class DAOTools<T extends MainModel> {
             throw new InternalServerException("validate failed: file " + path + " does not have permissions to write");
     }
 
+    private void writeObjectsToDAO(LinkedList<T> objects) throws InternalServerException {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
+            for (T object : objects) {
+                bw.append(object.toString());
+            }
+        } catch (IOException e) {
+            throw new InternalServerException("writing to file: " + path + " failed");
+        }
+    }
+
     private void deleteDAOContent() throws InternalServerException {
         try (BufferedWriter br = new BufferedWriter(new FileWriter(path))) {
             br.write("");
         } catch (IOException e) {
-            throw new InternalServerException("deleteFileContent failed: delete from file: " + path + " failed");
-        }
-    }
-
-    private LinkedList<T> getNewDAOContent(Long id) throws InternalServerException {
-        LinkedList<T> newToWrite = new LinkedList<>();
-
-        for (T t1 : getObjectsFromDAO()) {
-            if (!t1.getId().equals(id)) newToWrite.add(t1);
-        }
-        return newToWrite;
-    }
-
-    private void writeNewDAOContent(LinkedList<T> newToWrite) throws InternalServerException {
-        for (T t1 : newToWrite) {
-            addObjectToDAO(t1);
+            throw new InternalServerException("delete from file: " + path + " failed");
         }
     }
 }

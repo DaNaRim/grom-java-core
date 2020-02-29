@@ -33,17 +33,6 @@ public class HotelDAO extends DAOTools<Hotel> {
         return resultHotels;
     }
 
-    public Hotel addHotel(Hotel hotel) throws InternalServerException {
-        return addObjectToDAO(hotel);
-    }
-
-    public void deleteHotel(long hotelId) throws InternalServerException {
-        for (Hotel hotel : getObjectsFromDAO()) {
-            if (hotel.getId().equals(hotelId))
-                deleteObjectFromDAO(hotel.getId());
-        }
-    }
-
     @Override
     public Hotel map(String line) throws BrokenFileException {
         try {
@@ -57,7 +46,7 @@ public class HotelDAO extends DAOTools<Hotel> {
         }
     }
 
-    public void isExist(Hotel hotel) throws InternalServerException, BadRequestException {
+    public void doesTheHotelExist(Hotel hotel) throws InternalServerException, BadRequestException {
         for (Hotel hotel1 : getObjectsFromDAO()) {
             if (hotel1.equals(hotel))
                 throw new BadRequestException("isExist failed: the hotel is already exist: " + hotel1.getId());
@@ -66,6 +55,6 @@ public class HotelDAO extends DAOTools<Hotel> {
 
     private void checkSize(LinkedList<Hotel> hotels) throws BadRequestException {
         if (hotels.size() == 0)
-            throw new BadRequestException("checkSize failed: there is no hotels with parameters");
+            throw new BadRequestException("checkSize failed: there is no hotels with this parameters");
     }
 }

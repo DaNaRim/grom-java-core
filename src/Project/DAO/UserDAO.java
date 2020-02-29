@@ -12,10 +12,6 @@ public class UserDAO extends DAOTools<User> {
         super(FileLocations.getUserFileLocation());
     }
 
-    public User registerUser(User user) throws InternalServerException {
-        return addObjectToDAO(user);
-    }
-
     @Override
     public User map(String line) throws BrokenFileException {
         try {
@@ -29,25 +25,25 @@ public class UserDAO extends DAOTools<User> {
         }
     }
 
-    public User validateLogin(String userName, String password) throws InternalServerException, BadRequestException {
+    public User logIn(String userName, String password) throws InternalServerException, BadRequestException {
         for (User user : getObjectsFromDAO()) {
             if (user.getUserName().equals(userName)) {
                 return checkPassword(user, password);
             }
         }
-        throw new BadRequestException("validateLogin failed: wrong username or user not registered");
+        throw new BadRequestException("logIn failed: wrong username or user not registered");
     }
 
-    public void checkUserName(User user) throws InternalServerException, BadRequestException {
+    public void usernameCheckForUniqueness(String userName) throws InternalServerException, BadRequestException {
         for (User user1 : getObjectsFromDAO()) {
-            if (user1.getUserName().equals(user.getUserName()))
-                throw new BadRequestException("checkUserName failed: username is already taken");
+            if (user1.getUserName().equals(userName))
+                throw new BadRequestException("usernameCheckForUniqueness failed: username is already taken");
         }
     }
 
     private User checkPassword(User user, String password) throws BadRequestException {
         if (user.getPassword().equals(password))
             return user;
-        throw new BadRequestException("validateLogin failed: wrong password");
+        throw new BadRequestException("checkPassword failed: wrong password");
     }
 }

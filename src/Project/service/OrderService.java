@@ -6,6 +6,7 @@ import Project.DAO.UserDAO;
 import Project.exception.BadRequestException;
 import Project.exception.InternalServerException;
 import Project.exception.NoAccessException;
+import Project.model.Order;
 
 import java.util.Date;
 
@@ -17,50 +18,45 @@ public class OrderService {
 
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo)
             throws InternalServerException, NoAccessException, BadRequestException {
-        checkOrder(roomId, userId, dateFrom, dateTo);
-
+        validateRoomAndUser(roomId, userId);
         userService.checkUserForOperation(userId);
+        validateOrder(roomId, userId, dateFrom, dateTo);
 
-        orderDAO.isBooked(roomId, userId);
-        checkRoomForBusy(roomId, dateFrom, dateTo);
-
-        orderDAO.bookRoom(roomId, userId, dateFrom, dateTo);
+        Order order = orderDAO.createOrder(roomId, userId, dateFrom, dateTo);
+        orderDAO.addObjectToDAO(order);
     }
 
     public void cancelReservation(long roomId, long userId)
             throws InternalServerException, NoAccessException, BadRequestException {
-        checkRoomAndUser(roomId, userId);
-
+        validateRoomAndUser(roomId, userId);
         userService.checkUserForOperation(userId);
+        validateCancellation(roomId, userId);
 
-        checkPossibleCancellation(roomId, userId);
-        orderDAO.cancelReservation(roomId, userId);
+        Order order = orderDAO.findOrderByRoomAndUser(roomId, userId);
+        orderDAO.deleteObjectFromDAO(order);
     }
 
-    private void checkRoomForBusy(long roomId, Date dateFrom, Date dateTo)
-            throws BadRequestException, InternalServerException {
-        orderDAO.checkRoomForBusy(roomId, dateFrom, dateTo);
-    }
-
-    private void checkPossibleCancellation(long roomId, long userId)
+    private void validateCancellation(long roomId, long userId)
             throws InternalServerException, BadRequestException {
         Date orderDateFrom = orderDAO.findOrderByRoomAndUser(roomId, userId).getDateFrom();
 
         if (orderDateFrom.before(new Date()))
-            throw new BadRequestException("checkPossibleCancellation failed: possible cancellation has expired");
+            throw new BadRequestException("validateCancellation failed: possible cancellation has expired");
     }
 
-    private void checkOrder(long roomId, long userId, Date dateFrom, Date dateTo)
+    private void validateOrder(long roomId, long userId, Date dateFrom, Date dateTo)
             throws InternalServerException, BadRequestException {
-        checkRoomAndUser(roomId, userId);
         if (dateFrom == null || dateTo == null)
-            throw new BadRequestException("checkOrder failed: not all fields are filled correctly");
+            throw new BadRequestException("validateOrder failed: not all fields are filled correctly");
 
         if (dateTo.before(dateFrom) || dateTo.equals(dateFrom))
-            throw new BadRequestException("checkOrder failed: date is incorrect");
+            throw new BadRequestException("validateOrder failed: date filled is incorrect");
+
+        orderDAO.isBooked(roomId, userId);
+        orderDAO.checkRoomForBusy(roomId, dateFrom, dateTo);
     }
 
-    private void checkRoomAndUser(long roomId, long userId) throws InternalServerException, BadRequestException {
+    private void validateRoomAndUser(long roomId, long userId) throws InternalServerException, BadRequestException {
         roomDAO.findById(roomId);
         userDAO.findById(userId);
     }

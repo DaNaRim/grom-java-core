@@ -23,14 +23,6 @@ public class RoomDAO extends DAOTools<Room> {
         return rooms;
     }
 
-    public Room addRoom(Room room) throws InternalServerException {
-        return addObjectToDAO(room);
-    }
-
-    public void deleteRoom(long roomId) throws InternalServerException {
-        deleteObjectFromDAO(roomId);
-    }
-
     @Override
     public Room map(String line) throws BrokenFileException {
         try {

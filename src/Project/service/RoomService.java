@@ -22,32 +22,35 @@ public class RoomService {
 
     public Room addRoom(Room room) throws InternalServerException, BadRequestException, NoAccessException {
         userService.checkAccess();
-        checkRoom(room);
-        return roomDAO.addRoom(room);
+        validateRoom(room);
+        return roomDAO.addObjectToDAO(room);
     }
 
     public void deleteRoom(long roomId) throws InternalServerException, NoAccessException, BadRequestException {
         userService.checkAccess();
-        roomDAO.findById(roomId);
-        roomDAO.deleteRoom(roomId);
+        Room room = roomDAO.findById(roomId);
+        roomDAO.deleteObjectFromDAO(room);
     }
 
     private void validateFilter(Filter filter) throws BadRequestException {
         if (filter == null ||
-                (filter.getNumberOfGuests() <= 0 && filter.getPrice() <= 0 &&
+                (filter.getNumberOfGuests() == 0 && filter.getPrice() == 0 &&
                         filter.getBreakfastIncluded() == null && filter.getPetsAllowed() == null &&
                         filter.getDateAvailableFrom() == null && filter.getCountry() == null &&
                         filter.getCity() == null))
+            throw new BadRequestException("validateFilter failed: you have not selected any options for filtering");
+
+        if (filter.getNumberOfGuests() < 0 && filter.getPrice() < 0)
             throw new BadRequestException("validateFilter failed: you have not selected correct options for filtering");
     }
 
-    private void checkRoom(Room room) throws InternalServerException, BadRequestException {
+    private void validateRoom(Room room) throws InternalServerException, BadRequestException {
         if (room == null)
-            throw new BadRequestException("checkUser failed: impossible to process null room");
+            throw new BadRequestException("validateRoom failed: impossible to process null room");
 
         if (room.getNumberOfGuests() <= 0 || room.getPrice() <= 0.0 || room.getBreakfastIncluded() == null ||
                 room.getPetsAllowed() == null || room.getDateAvailableFrom() == null || room.getHotel() == null)
-            throw new BadRequestException("checkRoom failed: not all fields are filled correctly");
+            throw new BadRequestException("validateRoom failed: not all fields are filled correctly");
         hotelDAO.findById(room.getHotel().getId());
     }
 }

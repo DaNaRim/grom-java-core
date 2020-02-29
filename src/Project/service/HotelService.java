@@ -15,45 +15,47 @@ public class HotelService {
     private static RoomDAO roomDAO = new RoomDAO();
 
     public LinkedList<Hotel> findHotelByName(String name) throws BadRequestException, InternalServerException {
-        checkName(name);
+        validateName(name);
         return hotelDAO.findHotelByName(name);
     }
 
     public LinkedList<Hotel> findHotelByCity(String city) throws BadRequestException, InternalServerException {
-        checkCity(city);
+        validateCity(city);
         return hotelDAO.findHotelByCity(city);
     }
 
     public Hotel addHotel(Hotel hotel) throws NoAccessException, BadRequestException, InternalServerException {
         userService.checkAccess();
-        checkHotel(hotel);
-        hotelDAO.isExist(hotel);
-        return hotelDAO.addHotel(hotel);
+        validateHotel(hotel);
+        hotelDAO.doesTheHotelExist(hotel);
+        return hotelDAO.addObjectToDAO(hotel);
     }
 
     public void deleteHotel(long hotelId) throws NoAccessException, BadRequestException, InternalServerException {
         userService.checkAccess();
-        hotelDAO.findById(hotelId);
+        Hotel hotel = hotelDAO.findById(hotelId);
         roomDAO.checkHotelRooms(hotelId);
-        hotelDAO.deleteHotel(hotelId);
+        hotelDAO.deleteObjectFromDAO(hotel);
     }
 
-    private void checkName(String name) throws BadRequestException {
+    private void validateName(String name) throws BadRequestException {
         if (name == null)
-            throw new BadRequestException("checkName failed: the field is not filled");
+            throw new BadRequestException("validateName failed: the field is not filled");
     }
 
-    private void checkCity(String city) throws BadRequestException {
+    private void validateCity(String city) throws BadRequestException {
         if (city == null)
-            throw new BadRequestException("checkCity failed: the field is not filled");
+            throw new BadRequestException("validateCity failed: the field is not filled");
     }
 
-    private void checkHotel(Hotel hotel) throws BadRequestException {
+    private void validateHotel(Hotel hotel) throws BadRequestException, InternalServerException {
         if (hotel == null)
-            throw new BadRequestException("checkUser failed: impossible to process null hotel");
+            throw new BadRequestException("validateHotel failed: impossible to process null hotel");
 
         if (hotel.getName() == null || hotel.getCity() == null ||
                 hotel.getCountry() == null || hotel.getStreet() == null)
-            throw new BadRequestException("checkHotel failed: not all fields are filled");
+            throw new BadRequestException("validateHotel failed: not all fields are filled");
+
+        hotelDAO.doesTheHotelExist(hotel);
     }
 }
