@@ -12,7 +12,8 @@ public class Room implements MainModel, Comparable<Room> {
     private Date dateAvailableFrom;
     private Hotel hotel;
 
-    public Room(Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed, Date dateAvailableFrom, Hotel hotel) {
+    public Room(Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed,
+                Date dateAvailableFrom, Hotel hotel) {
         this.numberOfGuests = numberOfGuests;
         this.price = price;
         this.breakfastIncluded = breakfastIncluded;
@@ -21,7 +22,8 @@ public class Room implements MainModel, Comparable<Room> {
         this.hotel = hotel;
     }
 
-    public Room(Long id, Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed, Date dateAvailableFrom, Hotel hotel) {
+    public Room(Long id, Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed,
+                Date dateAvailableFrom, Hotel hotel) {
         this.id = id;
         this.numberOfGuests = numberOfGuests;
         this.price = price;

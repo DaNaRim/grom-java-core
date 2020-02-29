@@ -58,6 +58,12 @@ public class User implements MainModel, Comparable<User> {
 
     @Override
     public int compareTo(User user) {
-        return user.getUserType() == UserType.ADMIN ? 1 : -1;
+        if (this.userType != user.getUserType())
+            return user.getUserType() == UserType.ADMIN ? 1 : -1;
+
+        if (this.country.compareTo(user.getCountry()) != 0)
+            return this.country.compareTo(user.getCountry());
+
+        return this.userName.compareTo(user.getUserName());
     }
 }
