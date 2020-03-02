@@ -3,13 +3,13 @@ package Project.DAO;
 import Project.exception.BadRequestException;
 import Project.exception.BrokenFileException;
 import Project.exception.InternalServerException;
-import Project.model.MainModel;
+import Project.model.BaseModel;
 
 import java.io.*;
 import java.util.LinkedList;
 import java.util.UUID;
 
-public abstract class DAOTools<T extends MainModel> {
+public abstract class DAOTools<T extends BaseModel> {
     private String path;
 
     public DAOTools(String path) {
@@ -19,8 +19,8 @@ public abstract class DAOTools<T extends MainModel> {
     public abstract T map(String line) throws BrokenFileException;
 
     public final T findById(long id) throws InternalServerException, BadRequestException {
-        for (T t : getObjectsFromDAO()) {
-            if (t.getId() == id) return t;
+        for (T object : getObjectsFromDAO()) {
+            if (object.getId() == id) return object;
         }
         throw new BadRequestException("findById failed: missing object with id: " + id);
     }
@@ -45,18 +45,18 @@ public abstract class DAOTools<T extends MainModel> {
         }
     }
 
-    public final T addObjectToDAO(T t) throws InternalServerException {
+    public final T addObjectToDAO(T object) throws InternalServerException {
         validateDAO(path);
 
         try {
-            t.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
+            object.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
 
             LinkedList<T> objects = getObjectsFromDAO();
-            objects.add(t);
+            objects.add(object);
 
             deleteDAOContent();
             writeObjectsToDAO(objects);
-            return t;
+            return object;
         } catch (InternalServerException e) {
             throw new InternalServerException("addToFile failed: " + e.getMessage());
         }

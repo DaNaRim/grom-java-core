@@ -3,7 +3,7 @@ package Project.model;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Room implements MainModel, Comparable<Room> {
+public class Room extends BaseModel implements Comparable<Room> {
     private Long id;
     private Integer numberOfGuests;
     private Double price;
