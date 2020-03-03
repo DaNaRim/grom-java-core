@@ -84,6 +84,6 @@ public class Room extends BaseModel implements Comparable<Room> {
 
     @Override
     public int compareTo(Room room) {
-        return this.dateAvailableFrom.before(room.getDateAvailableFrom()) ? 1 : -1;
+        return this.dateAvailableFrom.after(room.getDateAvailableFrom()) ? 1 : -1;
     }
 }

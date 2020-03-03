@@ -13,14 +13,16 @@ public class DemoUser {
     public static void main(String[] args)
             throws InternalServerException, NoAccessException, BadRequestException {
 
-        User user1 = new User("Nikita", "SuperPassword", "Sweden");
+        User user1 = new User("h h h", "SuperPassword", "Sweden");
 
         userController.registerUser(user1);
 
         userController.login("Nikita", "SuperPassword");
 
-        userController.setUserType(7734607807666275015L, UserType.ADMIN);
-
         userController.logout();
+
+        userController.login("DaNaRim", "f5urhg%89aohfol347hgfv93");
+
+        userController.setUserType(3916769799713539086L, UserType.USER);
     }
 }

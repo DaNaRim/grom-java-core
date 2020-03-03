@@ -49,7 +49,7 @@ public class OrderService {
         if (dateFrom == null || dateTo == null)
             throw new BadRequestException("validateOrder failed: not all fields are filled correctly");
 
-        if (dateTo.before(dateFrom) || dateTo.equals(dateFrom))
+        if (dateTo.before(dateFrom) || dateTo.equals(dateFrom) || dateFrom.before(new Date()))
             throw new BadRequestException("validateOrder failed: date filled is incorrect");
 
         orderDAO.isBooked(roomId, userId);

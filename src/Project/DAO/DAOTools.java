@@ -6,7 +6,7 @@ import Project.exception.InternalServerException;
 import Project.model.BaseModel;
 
 import java.io.*;
-import java.util.LinkedList;
+import java.util.TreeSet;
 import java.util.UUID;
 
 public abstract class DAOTools<T extends BaseModel> {
@@ -25,12 +25,12 @@ public abstract class DAOTools<T extends BaseModel> {
         throw new BadRequestException("findById failed: missing object with id: " + id);
     }
 
-    public final LinkedList<T> getObjectsFromDAO() throws InternalServerException {
+    public final TreeSet<T> getObjectsFromDAO() throws InternalServerException {
         validateDAO(path);
 
         int lineIndex = 1;
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            LinkedList<T> objects = new LinkedList<>();
+            TreeSet<T> objects = new TreeSet<>();
             String line;
             while ((line = br.readLine()) != null) {
                 objects.add(map(line));
@@ -49,9 +49,10 @@ public abstract class DAOTools<T extends BaseModel> {
         validateDAO(path);
 
         try {
-            object.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
+            if (object.getId() == null)
+                object.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
 
-            LinkedList<T> objects = getObjectsFromDAO();
+            TreeSet<T> objects = getObjectsFromDAO();
             objects.add(object);
 
             deleteDAOContent();
@@ -66,8 +67,11 @@ public abstract class DAOTools<T extends BaseModel> {
         validateDAO(path);
 
         try {
-            LinkedList<T> objects = getObjectsFromDAO();
-            objects.remove(deletableObject);
+            TreeSet<T> objects = new TreeSet<>();
+            for (T object : getObjectsFromDAO()) {
+                if (!object.getId().equals(deletableObject.getId()))
+                    objects.add(object);
+            }
 
             deleteDAOContent();
             writeObjectsToDAO(objects);
@@ -101,7 +105,7 @@ public abstract class DAOTools<T extends BaseModel> {
             throw new InternalServerException("validate failed: file " + path + " does not have permissions to write");
     }
 
-    private void writeObjectsToDAO(LinkedList<T> objects) throws InternalServerException {
+    private void writeObjectsToDAO(TreeSet<T> objects) throws InternalServerException {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
             for (T object : objects) {
                 bw.append(object.toString());

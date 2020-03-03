@@ -55,12 +55,16 @@ public class OrderDAO extends DAOTools<Order> {
         Date busyTimeRoomFrom;
         Date busyTimeRoomTo;
         for (Order order : getObjectsFromDAO()) {
+
             busyTimeRoomFrom = order.getDateFrom();
             busyTimeRoomTo = order.getDateTo();
+
             if (order.getDateTo().after(new Date()) &&
                     !(busyTimeRoomTo.before(dateFrom) || busyTimeRoomFrom.after(dateTo))) {
-                throw new BadRequestException("checkRoomForBusy failed: the room is busy from " + busyTimeRoomFrom +
-                        " to " + busyTimeRoomTo);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy kk:00");
+
+                throw new BadRequestException("checkRoomForBusy failed: the room is busy from " +
+                        simpleDateFormat.format(busyTimeRoomFrom) + " to " + simpleDateFormat.format(busyTimeRoomTo));
             }
         }
     }

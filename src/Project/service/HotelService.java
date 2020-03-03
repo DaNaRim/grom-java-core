@@ -28,6 +28,7 @@ public class HotelService {
         userService.checkAccess();
         validateHotel(hotel);
         hotelDAO.doesTheHotelExist(hotel);
+
         return hotelDAO.addObjectToDAO(hotel);
     }
 
@@ -35,16 +36,17 @@ public class HotelService {
         userService.checkAccess();
         Hotel hotel = hotelDAO.findById(hotelId);
         roomDAO.checkHotelRooms(hotelId);
+
         hotelDAO.deleteObjectFromDAO(hotel);
     }
 
     private void validateName(String name) throws BadRequestException {
-        if (name == null)
+        if (name == null || name.equals("") || !name.equals(name.trim()))
             throw new BadRequestException("validateName failed: the field is not filled");
     }
 
     private void validateCity(String city) throws BadRequestException {
-        if (city == null)
+        if (city == null || city.equals("") || !city.equals(city.trim()))
             throw new BadRequestException("validateCity failed: the field is not filled");
     }
 
@@ -53,8 +55,16 @@ public class HotelService {
             throw new BadRequestException("validateHotel failed: impossible to process null hotel");
 
         if (hotel.getName() == null || hotel.getCity() == null ||
-                hotel.getCountry() == null || hotel.getStreet() == null)
+                hotel.getCountry() == null || hotel.getStreet() == null ||
+                hotel.getName().equals("") || hotel.getCity().equals("") ||
+                hotel.getCountry().equals("") || hotel.getStreet().equals(""))
             throw new BadRequestException("validateHotel failed: not all fields are filled");
+
+        if (!hotel.getName().equals(hotel.getName().trim()) ||
+                !hotel.getCountry().equals(hotel.getCountry().trim()) ||
+                !hotel.getCity().equals(hotel.getCity().trim()) ||
+                !hotel.getStreet().equals(hotel.getStreet().trim()))
+            throw new BadRequestException("validateUser failed: fields must not begin and end with spaces");
 
         hotelDAO.doesTheHotelExist(hotel);
     }

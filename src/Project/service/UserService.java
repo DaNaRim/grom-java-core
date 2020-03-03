@@ -70,13 +70,22 @@ public class UserService {
         if (user == null)
             throw new BadRequestException("validateUser failed: impossible to process null user");
 
-        if (user.getUserName() == null || user.getPassword() == null || user.getCountry() == null)
+        if (user.getUserName() == null || user.getPassword() == null || user.getCountry() == null ||
+                user.getUserName().equals("") || user.getPassword().equals("") || user.getCountry().equals(""))
             throw new BadRequestException("validateUser failed: not all fields are filled");
 
         userDAO.usernameCheckForUniqueness(user.getUserName());
 
         if (user.getPassword().length() < 8)
             throw new BadRequestException("validateUser failed: password must be at least 8 characters");
+
+        if (user.getUserName().length() > 25)
+            throw new BadRequestException("validateUser failed: username must be no more than 25 characters");
+
+        if (!user.getUserName().equals(user.getUserName().trim()) ||
+                !user.getPassword().equals(user.getPassword().trim()) ||
+                !user.getCountry().equals(user.getCountry().trim()))
+            throw new BadRequestException("validateUser failed: fields must not begin and end with spaces");
     }
 
     private void validateUserType(User user, UserType userType) throws BadRequestException {
