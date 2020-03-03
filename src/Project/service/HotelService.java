@@ -42,12 +42,12 @@ public class HotelService {
 
     private void validateName(String name) throws BadRequestException {
         if (name == null || name.equals("") || !name.equals(name.trim()))
-            throw new BadRequestException("validateName failed: the field is not filled");
+            throw new BadRequestException("validateName failed: the field is not filled correctly");
     }
 
     private void validateCity(String city) throws BadRequestException {
         if (city == null || city.equals("") || !city.equals(city.trim()))
-            throw new BadRequestException("validateCity failed: the field is not filled");
+            throw new BadRequestException("validateCity failed: the field is not filled correctly");
     }
 
     private void validateHotel(Hotel hotel) throws BadRequestException, InternalServerException {
@@ -64,7 +64,11 @@ public class HotelService {
                 !hotel.getCountry().equals(hotel.getCountry().trim()) ||
                 !hotel.getCity().equals(hotel.getCity().trim()) ||
                 !hotel.getStreet().equals(hotel.getStreet().trim()))
-            throw new BadRequestException("validateUser failed: fields must not begin and end with spaces");
+            throw new BadRequestException("validateHotel failed: fields must not begin and end with spaces");
+
+        if (hotel.getName().contains(", ") || hotel.getCountry().contains(", ") ||
+                hotel.getCity().contains(", ") || hotel.getStreet().contains(", "))
+            throw new BadRequestException("validateHotel failed: fields must not have ', '");
 
         hotelDAO.doesTheHotelExist(hotel);
     }

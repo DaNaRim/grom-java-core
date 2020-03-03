@@ -13,7 +13,7 @@ public class DemoUser {
     public static void main(String[] args)
             throws InternalServerException, NoAccessException, BadRequestException {
 
-        User user1 = new User("h h h", "SuperPassword", "Sweden");
+        User user1 = new User("h h, h", "SuperPassword", "Sweden");
 
         userController.registerUser(user1);
 

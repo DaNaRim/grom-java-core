@@ -86,6 +86,9 @@ public class UserService {
                 !user.getPassword().equals(user.getPassword().trim()) ||
                 !user.getCountry().equals(user.getCountry().trim()))
             throw new BadRequestException("validateUser failed: fields must not begin and end with spaces");
+
+        if (user.getUserName().contains(", ") || user.getPassword().contains(", ") || user.getCountry().contains(", "))
+            throw new BadRequestException("validateUser failed: fields must not have ', '");
     }
 
     private void validateUserType(User user, UserType userType) throws BadRequestException {
