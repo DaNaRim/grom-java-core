@@ -27,7 +27,6 @@ public class HotelService {
     public Hotel addHotel(Hotel hotel) throws NoAccessException, BadRequestException, InternalServerException {
         userService.checkAccess();
         validateHotel(hotel);
-        hotelDAO.doesTheHotelExist(hotel);
 
         return hotelDAO.addObjectToDAO(hotel);
     }
