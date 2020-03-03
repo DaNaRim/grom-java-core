@@ -1,4 +1,4 @@
-package gromcode.main.lesson30.homework;
+package gromcode.main.lesson30.homework.Model;
 
 public class Customer {
     private String name;

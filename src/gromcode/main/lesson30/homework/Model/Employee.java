@@ -1,4 +1,6 @@
-package gromcode.main.lesson30.homework;
+package gromcode.main.lesson30.homework.Model;
+
+import gromcode.main.lesson30.homework.DAO.ProjectDAO;
 
 import java.util.Date;
 
