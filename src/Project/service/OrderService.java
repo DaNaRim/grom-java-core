@@ -20,7 +20,7 @@ public class OrderService {
             throws InternalServerException, NoAccessException, BadRequestException {
         validateRoomAndUser(roomId, userId);
         userService.checkUserForOperation(userId);
-        validateOrder(roomId, userId, dateFrom, dateTo);
+        validateOrder(roomId, dateFrom, dateTo);
 
         Order order = orderDAO.createOrder(roomId, userId, dateFrom, dateTo);
         orderDAO.addObjectToDAO(order);
@@ -44,7 +44,7 @@ public class OrderService {
             throw new BadRequestException("validateCancellation failed: possible cancellation has expired");
     }
 
-    private void validateOrder(long roomId, long userId, Date dateFrom, Date dateTo)
+    private void validateOrder(long roomId, Date dateFrom, Date dateTo)
             throws InternalServerException, BadRequestException {
         if (dateFrom == null || dateTo == null)
             throw new BadRequestException("validateOrder failed: not all fields are filled correctly");
@@ -52,7 +52,6 @@ public class OrderService {
         if (dateTo.before(dateFrom) || dateTo.equals(dateFrom) || dateFrom.before(new Date()))
             throw new BadRequestException("validateOrder failed: date filled is incorrect");
 
-        orderDAO.isBooked(roomId, userId);
         orderDAO.checkRoomForBusy(roomId, dateFrom, dateTo);
     }
 

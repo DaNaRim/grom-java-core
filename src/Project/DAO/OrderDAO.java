@@ -69,14 +69,6 @@ public class OrderDAO extends DAOTools<Order> {
         }
     }
 
-    public void isBooked(long roomId, long userId) throws InternalServerException, BadRequestException {
-        for (Order order : getObjectsFromDAO()) {
-            if (order.getRoom().getId() == roomId && order.getUser().getId() == userId)
-                throw new BadRequestException("isBooked failed: user: " + userId + " already booked room: "
-                        + roomId + " in order: " + order.getId());
-        }
-    }
-
     public Order createOrder(long roomId, long userId, Date dateFrom, Date dateTo)
             throws InternalServerException, BadRequestException {
         return new Order(
