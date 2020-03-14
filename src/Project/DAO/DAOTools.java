@@ -81,8 +81,6 @@ public abstract class DAOTools<T extends BaseModel> {
     }
 
     public final T updateObjectInDAO(T updatableObject) throws InternalServerException {
-        validateDAO(path);
-
         try {
             deleteObjectFromDAO(updatableObject);
             addObjectToDAO(updatableObject);
