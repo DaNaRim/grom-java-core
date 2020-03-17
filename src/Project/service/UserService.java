@@ -2,6 +2,7 @@ package Project.service;
 
 import Project.DAO.UserDAO;
 import Project.exception.BadRequestException;
+import Project.exception.BrokenFileException;
 import Project.exception.InternalServerException;
 import Project.exception.NoAccessException;
 import Project.exception.NotLogInException;
@@ -9,8 +10,16 @@ import Project.model.User;
 import Project.model.UserType;
 
 public class UserService {
-    private static UserDAO userDAO = new UserDAO();
+    private static UserDAO userDAO;
     private static User loggedUser = null;
+
+    static {
+        try {
+            userDAO = new UserDAO();
+        } catch (BrokenFileException e) {
+            e.printStackTrace();
+        }
+    }
 
     public User registerUser(User user) throws InternalServerException, BadRequestException {
         validateUser(user);

@@ -9,8 +9,24 @@ import java.util.LinkedList;
 
 public class HotelDAO extends DAOTools<Hotel> {
 
-    public HotelDAO() {
+    public HotelDAO() throws BrokenFileException {
         super(FileLocations.getHotelFileLocation());
+        int lineIndex = 1;
+        try {
+            for (String line : readFromDAO()) {
+                String[] fields = line.split(", ");
+                if (fields.length > 5)
+                    throw new BrokenFileException("to many elements");
+                if (fields.length < 5)
+                    throw new BrokenFileException("not enough elements");
+
+                new Hotel(Long.parseLong(fields[0]), fields[1], fields[2], fields[3], fields[4]);
+                lineIndex++;
+            }
+        } catch (Exception e) {
+            throw new BrokenFileException("HotelDAO failed: broken line: " + lineIndex + " in OrderDAO: "
+                    + e.getMessage());
+        }
     }
 
     public LinkedList<Hotel> findHotelByName(String name) throws InternalServerException, BadRequestException {
@@ -34,16 +50,10 @@ public class HotelDAO extends DAOTools<Hotel> {
     }
 
     @Override
-    public Hotel map(String line) throws BrokenFileException {
-        try {
-            String[] fields = line.split(", ");
-            if (fields.length > 5)
-                throw new BrokenFileException("to many elements");
+    public Hotel map(String line) {
+        String[] fields = line.split(", ");
 
-            return new Hotel(Long.parseLong(fields[0]), fields[1], fields[2], fields[3], fields[4]);
-        } catch (NumberFormatException | BrokenFileException e) {
-            throw new BrokenFileException(e.getMessage());
-        }
+        return new Hotel(Long.parseLong(fields[0]), fields[1], fields[2], fields[3], fields[4]);
     }
 
     public void doesTheHotelExist(Hotel hotel) throws InternalServerException, BadRequestException {

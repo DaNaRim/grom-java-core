@@ -1,11 +1,11 @@
 package Project.DAO;
 
 import Project.exception.BadRequestException;
-import Project.exception.BrokenFileException;
 import Project.exception.InternalServerException;
 import Project.model.BaseModel;
 
 import java.io.*;
+import java.util.HashSet;
 import java.util.TreeSet;
 import java.util.UUID;
 
@@ -16,7 +16,7 @@ public abstract class DAOTools<T extends BaseModel> {
         this.path = path;
     }
 
-    public abstract T map(String line) throws BrokenFileException;
+    public abstract T map(String line);
 
     public final T findById(long id) throws InternalServerException, BadRequestException {
         for (T object : getObjectsFromDAO()) {
@@ -27,22 +27,7 @@ public abstract class DAOTools<T extends BaseModel> {
 
     public final TreeSet<T> getObjectsFromDAO() throws InternalServerException {
         validateDAO(path);
-
-        int lineIndex = 1;
-        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            TreeSet<T> objects = new TreeSet<>();
-            String line;
-            while ((line = br.readLine()) != null) {
-                objects.add(map(line));
-                lineIndex++;
-            }
-            return objects;
-        } catch (IOException e) {
-            throw new InternalServerException("getObjectsFromDAO failed: reading from file: " + path + " failed");
-        } catch (BrokenFileException e) {
-            throw new InternalServerException("getObjectsFromDAO failed: broken line: " + lineIndex + " in file: " +
-                    path + " : " + e.getMessage());
-        }
+        return mappingData(readFromDAO());
     }
 
     public final T addObjectToDAO(T object) throws InternalServerException {
@@ -101,6 +86,27 @@ public abstract class DAOTools<T extends BaseModel> {
 
         if (!file.canWrite())
             throw new InternalServerException("validate failed: file " + path + " does not have permissions to write");
+    }
+
+    protected HashSet<String> readFromDAO() throws InternalServerException {
+        try (BufferedReader br = new BufferedReader(new FileReader(path))) {
+            HashSet<String> stringObjects = new HashSet<>();
+            String line;
+            while ((line = br.readLine()) != null) {
+                stringObjects.add(line);
+            }
+            return stringObjects;
+        } catch (IOException e) {
+            throw new InternalServerException("getObjectsFromDAO failed: reading from file: " + path + " failed");
+        }
+    }
+
+    private TreeSet<T> mappingData(HashSet<String> stringObjects) {
+        TreeSet<T> objects = new TreeSet<>();
+        for (String str : stringObjects) {
+            objects.add(map(str));
+        }
+        return objects;
     }
 
     private void writeObjectsToDAO(TreeSet<T> objects) throws InternalServerException {

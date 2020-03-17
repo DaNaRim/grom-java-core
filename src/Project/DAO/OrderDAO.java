@@ -11,19 +11,48 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class OrderDAO extends DAOTools<Order> {
-    private static UserDAO userDAO = new UserDAO();
-    private static RoomDAO roomDAO = new RoomDAO();
+    private static UserDAO userDAO;
+    private static RoomDAO roomDAO;
 
-    public OrderDAO() {
+    static {
+        try {
+            userDAO = new UserDAO();
+            roomDAO = new RoomDAO();
+        } catch (BrokenFileException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public OrderDAO() throws BrokenFileException {
         super(FileLocations.getOrderFileLocation());
+        int lineIndex = 1;
+        try {
+            for (String line : readFromDAO()) {
+                String[] fields = line.split(", ");
+                if (fields.length > 6)
+                    throw new BrokenFileException("to many elements");
+                if (fields.length < 6)
+                    throw new BrokenFileException("not enough elements");
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy kk:00");
+                new Order(Long.parseLong(fields[0]),
+                        userDAO.findById(Long.parseLong(fields[1])),
+                        roomDAO.findById(Long.parseLong(fields[2])),
+                        simpleDateFormat.parse(fields[3]),
+                        simpleDateFormat.parse(fields[4]),
+                        Double.parseDouble(fields[5]));
+                lineIndex++;
+            }
+        } catch (Exception e) {
+            throw new BrokenFileException("OrderDAO failed: broken line: " + lineIndex + " in OrderDAO: "
+                    + e.getMessage());
+        }
     }
 
     @Override
-    public Order map(String line) throws BrokenFileException {
+    public Order map(String line) {
         try {
             String[] fields = line.split(", ");
-            if (fields.length > 6)
-                throw new BrokenFileException("to many elements");
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy kk:00");
             return new Order(
@@ -33,9 +62,10 @@ public class OrderDAO extends DAOTools<Order> {
                     simpleDateFormat.parse(fields[3]),
                     simpleDateFormat.parse(fields[4]),
                     Double.parseDouble(fields[5]));
-        } catch (InternalServerException | ParseException | NumberFormatException | BadRequestException e) {
-            throw new BrokenFileException(e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Something went wrong");
         }
+        return null;
     }
 
     public Order findOrderByRoomAndUser(long roomId, long userId) throws InternalServerException, BadRequestException {

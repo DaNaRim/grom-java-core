@@ -11,10 +11,40 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 
 public class RoomDAO extends DAOTools<Room> {
-    private static HotelDAO hotelDAO = new HotelDAO();
+    private static HotelDAO hotelDAO;
 
-    public RoomDAO() {
+    static {
+        try {
+            hotelDAO = new HotelDAO();
+        } catch (BrokenFileException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public RoomDAO() throws BrokenFileException {
         super(FileLocations.getRoomFileLocation());
+        int lineIndex = 1;
+        try {
+            for (String line : readFromDAO()) {
+                String[] fields = line.split(", ");
+                if (fields.length > 7)
+                    throw new BrokenFileException("to many elements");
+                if (fields.length < 7)
+                    throw new BrokenFileException("not enough elements");
+
+                new Room(Long.parseLong(fields[0]),
+                        Integer.parseInt(fields[1]),
+                        Double.parseDouble(fields[2]),
+                        Boolean.parseBoolean(fields[3]),
+                        Boolean.parseBoolean(fields[4]),
+                        new SimpleDateFormat("dd.MM.yyyy kk:00").parse(fields[5]),
+                        hotelDAO.findById(Long.parseLong(fields[6])));
+                lineIndex++;
+            }
+        } catch (Exception e) {
+            throw new BrokenFileException("RoomDAO failed: broken line: " + lineIndex + " in RoomDAO: "
+                    + e.getMessage());
+        }
     }
 
     public LinkedList<Room> findRooms(Filter filter) throws InternalServerException, BadRequestException {
@@ -24,11 +54,9 @@ public class RoomDAO extends DAOTools<Room> {
     }
 
     @Override
-    public Room map(String line) throws BrokenFileException {
+    public Room map(String line) {
         try {
             String[] fields = line.split(", ");
-            if (fields.length > 7)
-                throw new BrokenFileException("to many elements");
 
             return new Room(
                     Long.parseLong(fields[0]),
@@ -38,9 +66,10 @@ public class RoomDAO extends DAOTools<Room> {
                     Boolean.parseBoolean(fields[4]),
                     new SimpleDateFormat("dd.MM.yyyy kk:00").parse(fields[5]),
                     hotelDAO.findById(Long.parseLong(fields[6])));
-        } catch (ParseException | NumberFormatException | InternalServerException | BadRequestException e) {
-            throw new BrokenFileException(e.getMessage());
+        } catch (Exception e) {
+            System.err.println("Something went wrong");
         }
+        return null;
     }
 
     public void checkHotelRooms(long hotelId) throws InternalServerException, BadRequestException {
