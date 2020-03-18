@@ -1,7 +1,6 @@
 package Project.DAO;
 
 import Project.exception.BadRequestException;
-import Project.exception.BrokenFileException;
 import Project.exception.InternalServerException;
 import Project.model.Hotel;
 
@@ -9,24 +8,8 @@ import java.util.LinkedList;
 
 public class HotelDAO extends DAOTools<Hotel> {
 
-    public HotelDAO() throws BrokenFileException {
+    public HotelDAO() {
         super(FileLocations.getHotelFileLocation());
-        int lineIndex = 1;
-        try {
-            for (String line : readFromDAO()) {
-                String[] fields = line.split(", ");
-                if (fields.length > 5)
-                    throw new BrokenFileException("to many elements");
-                if (fields.length < 5)
-                    throw new BrokenFileException("not enough elements");
-
-                new Hotel(Long.parseLong(fields[0]), fields[1], fields[2], fields[3], fields[4]);
-                lineIndex++;
-            }
-        } catch (Exception e) {
-            throw new BrokenFileException("HotelDAO failed: broken line: " + lineIndex + " in OrderDAO: "
-                    + e.getMessage());
-        }
     }
 
     public LinkedList<Hotel> findHotelByName(String name) throws InternalServerException, BadRequestException {

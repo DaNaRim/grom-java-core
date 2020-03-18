@@ -1,50 +1,18 @@
 package Project.DAO;
 
 import Project.exception.BadRequestException;
-import Project.exception.BrokenFileException;
 import Project.exception.InternalServerException;
 import Project.model.Filter;
 import Project.model.Room;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 
 public class RoomDAO extends DAOTools<Room> {
-    private static HotelDAO hotelDAO;
+    private static HotelDAO hotelDAO = new HotelDAO();
 
-    static {
-        try {
-            hotelDAO = new HotelDAO();
-        } catch (BrokenFileException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public RoomDAO() throws BrokenFileException {
+    public RoomDAO() {
         super(FileLocations.getRoomFileLocation());
-        int lineIndex = 1;
-        try {
-            for (String line : readFromDAO()) {
-                String[] fields = line.split(", ");
-                if (fields.length > 7)
-                    throw new BrokenFileException("to many elements");
-                if (fields.length < 7)
-                    throw new BrokenFileException("not enough elements");
-
-                new Room(Long.parseLong(fields[0]),
-                        Integer.parseInt(fields[1]),
-                        Double.parseDouble(fields[2]),
-                        Boolean.parseBoolean(fields[3]),
-                        Boolean.parseBoolean(fields[4]),
-                        new SimpleDateFormat("dd.MM.yyyy kk:00").parse(fields[5]),
-                        hotelDAO.findById(Long.parseLong(fields[6])));
-                lineIndex++;
-            }
-        } catch (Exception e) {
-            throw new BrokenFileException("RoomDAO failed: broken line: " + lineIndex + " in RoomDAO: "
-                    + e.getMessage());
-        }
     }
 
     public LinkedList<Room> findRooms(Filter filter) throws InternalServerException, BadRequestException {

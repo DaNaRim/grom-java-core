@@ -3,7 +3,6 @@ package Project.service;
 import Project.DAO.HotelDAO;
 import Project.DAO.RoomDAO;
 import Project.exception.BadRequestException;
-import Project.exception.BrokenFileException;
 import Project.exception.InternalServerException;
 import Project.exception.NoAccessException;
 import Project.model.Filter;
@@ -12,18 +11,9 @@ import Project.model.Room;
 import java.util.LinkedList;
 
 public class RoomService {
-    private static RoomDAO roomDAO;
+    private static RoomDAO roomDAO = new RoomDAO();
     private static UserService userService = new UserService();
-    private static HotelDAO hotelDAO;
-
-    static {
-        try {
-            roomDAO = new RoomDAO();
-            hotelDAO = new HotelDAO();
-        } catch (BrokenFileException e) {
-            e.printStackTrace();
-        }
-    }
+    private static HotelDAO hotelDAO = new HotelDAO();
 
     public LinkedList<Room> findRooms(Filter filter) throws InternalServerException, BadRequestException {
         validateFilter(filter);

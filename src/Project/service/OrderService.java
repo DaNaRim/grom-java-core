@@ -4,7 +4,6 @@ import Project.DAO.OrderDAO;
 import Project.DAO.RoomDAO;
 import Project.DAO.UserDAO;
 import Project.exception.BadRequestException;
-import Project.exception.BrokenFileException;
 import Project.exception.InternalServerException;
 import Project.exception.NoAccessException;
 import Project.model.Order;
@@ -12,20 +11,10 @@ import Project.model.Order;
 import java.util.Date;
 
 public class OrderService {
-    private static OrderDAO orderDAO;
-    private static RoomDAO roomDAO;
-    private static UserDAO userDAO;
+    private static OrderDAO orderDAO = new OrderDAO();
+    private static RoomDAO roomDAO = new RoomDAO();
+    private static UserDAO userDAO = new UserDAO();
     private static UserService userService = new UserService();
-
-    static {
-        try {
-            orderDAO = new OrderDAO();
-            roomDAO = new RoomDAO();
-            userDAO = new UserDAO();
-        } catch (BrokenFileException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo)
             throws InternalServerException, NoAccessException, BadRequestException {
