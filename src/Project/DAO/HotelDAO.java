@@ -9,7 +9,7 @@ import java.util.LinkedList;
 public class HotelDAO extends DAOTools<Hotel> {
 
     public HotelDAO() {
-        super(FileLocations.getHotelFileLocation());
+        super("E:/Project/HotelDb.txt");
     }
 
     public LinkedList<Hotel> findHotelByName(String name) throws InternalServerException, BadRequestException {
@@ -18,7 +18,10 @@ public class HotelDAO extends DAOTools<Hotel> {
         for (Hotel hotel : getObjectsFromDAO()) {
             if (hotel.getName().equals(name)) resultHotels.add(hotel);
         }
-        checkSize(resultHotels);
+
+        if (resultHotels.size() == 0) {
+            throw new BadRequestException("checkSize failed: there is no hotels with this parameters");
+        }
         return resultHotels;
     }
 
@@ -28,7 +31,10 @@ public class HotelDAO extends DAOTools<Hotel> {
         for (Hotel hotel : getObjectsFromDAO()) {
             if (hotel.getCity().equals(city)) resultHotels.add(hotel);
         }
-        checkSize(resultHotels);
+
+        if (resultHotels.size() == 0) {
+            throw new BadRequestException("checkSize failed: there is no hotels with this parameters");
+        }
         return resultHotels;
     }
 
@@ -44,10 +50,5 @@ public class HotelDAO extends DAOTools<Hotel> {
             if (hotel1.equals(hotel))
                 throw new BadRequestException("isExist failed: the hotel is already exist: " + hotel1.getId());
         }
-    }
-
-    private void checkSize(LinkedList<Hotel> hotels) throws BadRequestException {
-        if (hotels.size() == 0)
-            throw new BadRequestException("checkSize failed: there is no hotels with this parameters");
     }
 }

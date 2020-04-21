@@ -58,12 +58,12 @@ public class User extends BaseModel implements Comparable<User> {
 
     @Override
     public int compareTo(User user) {
-        if (this.userType != user.getUserType())
+        if (this.userType != user.getUserType()) {
             return user.getUserType() == UserType.ADMIN ? 1 : -1;
-
-        if (this.country.compareTo(user.getCountry()) != 0)
+        }
+        if (this.country.compareTo(user.getCountry()) != 0) {
             return this.country.compareTo(user.getCountry());
-
+        }
         return this.userName.compareTo(user.getUserName());
     }
 }

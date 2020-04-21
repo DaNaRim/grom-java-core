@@ -40,18 +40,19 @@ public class OrderService {
             throws InternalServerException, BadRequestException {
         Date orderDateFrom = orderDAO.findOrderByRoomAndUser(roomId, userId).getDateFrom();
 
-        if (orderDateFrom.before(new Date()))
+        if (orderDateFrom.before(new Date())) {
             throw new BadRequestException("validateCancellation failed: possible cancellation has expired");
+        }
     }
 
     private void validateOrder(long roomId, Date dateFrom, Date dateTo)
             throws InternalServerException, BadRequestException {
-        if (dateFrom == null || dateTo == null)
+        if (dateFrom == null || dateTo == null) {
             throw new BadRequestException("validateOrder failed: not all fields are filled correctly");
-
-        if (dateTo.before(dateFrom) || dateTo.equals(dateFrom) || dateFrom.before(new Date()))
+        }
+        if (dateTo.before(dateFrom) || dateTo.equals(dateFrom) || dateFrom.before(new Date())) {
             throw new BadRequestException("validateOrder failed: date filled is incorrect");
-
+        }
         orderDAO.checkRoomForBusy(roomId, dateFrom, dateTo);
     }
 

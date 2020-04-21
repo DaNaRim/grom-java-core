@@ -43,8 +43,7 @@ public abstract class DAOTools<T extends BaseModel> {
         validateDAO(path);
 
         try {
-            if (object.getId() == null)
-                object.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
+            if (object.getId() == null) object.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
 
             TreeSet<T> objects = getObjectsFromDAO();
             objects.add(object);
@@ -63,8 +62,7 @@ public abstract class DAOTools<T extends BaseModel> {
         try {
             TreeSet<T> objects = new TreeSet<>();
             for (T object : getObjectsFromDAO()) {
-                if (!object.getId().equals(deletableObject.getId()))
-                    objects.add(object);
+                if (!object.getId().equals(deletableObject.getId())) objects.add(object);
             }
 
             deleteDAOContent();
@@ -87,14 +85,15 @@ public abstract class DAOTools<T extends BaseModel> {
     private void validateDAO(String path) throws InternalServerException {
         File file = new File(path);
 
-        if (!file.exists())
+        if (!file.exists()) {
             throw new InternalServerException("validate failed: file: " + path + " does not exist");
-
-        if (!file.canRead())
+        }
+        if (!file.canRead()) {
             throw new InternalServerException("validate failed: file " + path + " does not have permissions to read");
-
-        if (!file.canWrite())
+        }
+        if (!file.canWrite()) {
             throw new InternalServerException("validate failed: file " + path + " does not have permissions to write");
+        }
     }
 
     private void writeObjectsToDAO(TreeSet<T> objects) throws InternalServerException {

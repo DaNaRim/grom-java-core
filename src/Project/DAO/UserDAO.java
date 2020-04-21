@@ -8,7 +8,7 @@ import Project.model.UserType;
 public class UserDAO extends DAOTools<User> {
 
     public UserDAO() {
-        super(FileLocations.getUserFileLocation());
+        super("E:/Project/UserDb.txt");
     }
 
     @Override

@@ -13,7 +13,7 @@ public class OrderDAO extends DAOTools<Order> {
     private static RoomDAO roomDAO = new RoomDAO();
 
     public OrderDAO() {
-        super(FileLocations.getOrderFileLocation());
+        super("E:/Project/OrderDb.txt");
     }
 
     @Override

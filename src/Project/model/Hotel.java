@@ -77,15 +77,15 @@ public class Hotel extends BaseModel implements Comparable<Hotel> {
 
     @Override
     public int compareTo(Hotel hotel) {
-        if (this.country.compareTo(hotel.getCountry()) != 0)
+        if (this.country.compareTo(hotel.getCountry()) != 0) {
             return this.country.compareTo(hotel.getCountry());
-
-        if (this.city.compareTo(hotel.getCity()) != 0)
+        }
+        if (this.city.compareTo(hotel.getCity()) != 0) {
             return this.city.compareTo(hotel.getCity());
-
-        if (this.street.compareTo(hotel.getStreet()) != 0)
+        }
+        if (this.street.compareTo(hotel.getStreet()) != 0) {
             return this.street.compareTo(hotel.getStreet());
-
+        }
         return this.name.compareTo(hotel.name);
     }
 }

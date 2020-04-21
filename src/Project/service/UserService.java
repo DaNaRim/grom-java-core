@@ -47,52 +47,58 @@ public class UserService {
 
     public void checkAccess() throws NoAccessException {
         checkLogIn();
-        if (loggedUser.getUserType() != UserType.ADMIN)
+        if (loggedUser.getUserType() != UserType.ADMIN) {
             throw new NoAccessException("checkAccess failed: user don`t have enough rights");
+        }
     }
 
     public void checkUserForOperation(Long id) throws NoAccessException {
         checkLogIn();
-        if (!loggedUser.getId().equals(id))
+        if (!loggedUser.getId().equals(id)) {
             throw new NoAccessException("checkUserForOperation failed: user cannot do this operation in the name of " +
                     "another user");
+        }
     }
 
     private void validateLogin(String userName) throws BadRequestException {
         if (loggedUser != null) {
-            if (loggedUser.getUserName().equals(userName))
+            if (loggedUser.getUserName().equals(userName)) {
                 throw new BadRequestException("validateLogin failed: user already log in");
+            }
             throw new BadRequestException("validateLogin failed: another user is logged in now");
         }
     }
 
     private void validateUser(User user) throws BadRequestException, InternalServerException {
-        if (user == null)
+        if (user == null) {
             throw new BadRequestException("validateUser failed: impossible to process null user");
-
+        }
         if (user.getUserName() == null || user.getPassword() == null || user.getCountry() == null ||
-                user.getUserName().equals("") || user.getPassword().equals("") || user.getCountry().equals(""))
+                user.getUserName().equals("") || user.getPassword().equals("") || user.getCountry().equals("")) {
             throw new BadRequestException("validateUser failed: not all fields are filled");
+        }
 
         userDAO.usernameCheckForUniqueness(user.getUserName());
 
-        if (user.getPassword().length() < 8)
+        if (user.getPassword().length() < 8) {
             throw new BadRequestException("validateUser failed: password must be at least 8 characters");
-
-        if (user.getUserName().length() > 25)
+        }
+        if (user.getUserName().length() > 25) {
             throw new BadRequestException("validateUser failed: username must be no more than 25 characters");
-
+        }
         if (!user.getUserName().equals(user.getUserName().trim()) ||
                 !user.getPassword().equals(user.getPassword().trim()) ||
-                !user.getCountry().equals(user.getCountry().trim()))
+                !user.getCountry().equals(user.getCountry().trim())) {
             throw new BadRequestException("validateUser failed: fields must not begin and end with spaces");
-
-        if (user.getUserName().contains(", ") || user.getPassword().contains(", ") || user.getCountry().contains(", "))
+        }
+        if (user.getUserName().contains(", ") || user.getPassword().contains(", ") || user.getCountry().contains(", ")) {
             throw new BadRequestException("validateUser failed: fields must not have ', '");
+        }
     }
 
     private void validateUserType(User user, UserType userType) throws BadRequestException {
-        if (user.getUserType() == userType)
+        if (user.getUserType() == userType) {
             throw new BadRequestException("validateUserType failed: user already has this type");
+        }
     }
 }

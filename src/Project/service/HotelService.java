@@ -40,35 +40,37 @@ public class HotelService {
     }
 
     private void validateName(String name) throws BadRequestException {
-        if (name == null || name.equals("") || !name.equals(name.trim()))
+        if (name == null || name.equals("") || !name.equals(name.trim())) {
             throw new BadRequestException("validateName failed: the field is not filled correctly");
+        }
     }
 
     private void validateCity(String city) throws BadRequestException {
-        if (city == null || city.equals("") || !city.equals(city.trim()))
+        if (city == null || city.equals("") || !city.equals(city.trim())) {
             throw new BadRequestException("validateCity failed: the field is not filled correctly");
+        }
     }
 
     private void validateHotel(Hotel hotel) throws BadRequestException, InternalServerException {
-        if (hotel == null)
+        if (hotel == null) {
             throw new BadRequestException("validateHotel failed: impossible to process null hotel");
-
+        }
         if (hotel.getName() == null || hotel.getCity() == null ||
                 hotel.getCountry() == null || hotel.getStreet() == null ||
                 hotel.getName().equals("") || hotel.getCity().equals("") ||
-                hotel.getCountry().equals("") || hotel.getStreet().equals(""))
+                hotel.getCountry().equals("") || hotel.getStreet().equals("")) {
             throw new BadRequestException("validateHotel failed: not all fields are filled");
-
+        }
         if (!hotel.getName().equals(hotel.getName().trim()) ||
                 !hotel.getCountry().equals(hotel.getCountry().trim()) ||
                 !hotel.getCity().equals(hotel.getCity().trim()) ||
-                !hotel.getStreet().equals(hotel.getStreet().trim()))
+                !hotel.getStreet().equals(hotel.getStreet().trim())) {
             throw new BadRequestException("validateHotel failed: fields must not begin and end with spaces");
-
+        }
         if (hotel.getName().contains(", ") || hotel.getCountry().contains(", ") ||
-                hotel.getCity().contains(", ") || hotel.getStreet().contains(", "))
+                hotel.getCity().contains(", ") || hotel.getStreet().contains(", ")) {
             throw new BadRequestException("validateHotel failed: fields must not have ', '");
-
+        }
         hotelDAO.doesTheHotelExist(hotel);
     }
 }

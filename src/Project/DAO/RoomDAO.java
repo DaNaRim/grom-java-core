@@ -12,7 +12,7 @@ public class RoomDAO extends DAOTools<Room> {
     private static HotelDAO hotelDAO = new HotelDAO();
 
     public RoomDAO() {
-        super(FileLocations.getRoomFileLocation());
+        super("E:/Project/RoomDb.txt");
     }
 
     public LinkedList<Room> findRooms(Filter filter) throws InternalServerException, BadRequestException {
