@@ -2,9 +2,7 @@ package gromcode.main.lesson18;
 
 public class Definition {
 
-
     private void notifyUser(String[] userEmails) {
-
 
         for (String email : userEmails) {
 

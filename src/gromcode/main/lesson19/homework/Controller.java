@@ -10,7 +10,6 @@ public class Controller {
         } catch (Exception e) {
             throw new Exception("Cannot put file " + file.getId() + " in storage " + storage.getId() + ": " + e.getMessage());
         }
-
         putFile(storage, file);
     }
 
@@ -20,7 +19,6 @@ public class Controller {
         } catch (Exception e) {
             throw new Exception("Cannot delete file " + file.getId() + " from storage " + storage.getId() + ": " + e.getMessage());
         }
-
         deleteFile(storage, file);
     }
 
@@ -32,7 +30,6 @@ public class Controller {
         } catch (Exception e) {
             throw new Exception("Cannot transfer files from storage " + storageFrom.getId() + " to storage " + storageTo.getId() + ": " + e.getMessage());
         }
-
         transferAllFiles(storageFrom, storageTo);
     }
 
@@ -47,7 +44,6 @@ public class Controller {
         } catch (Exception e) {
             throw new Exception("Cannot transfer file " + id + " from storage " + storageFrom.getId() + " to storage " + storageTo.getId() + ": " + e.getMessage());
         }
-
         putFile(storageTo, file);
         deleteFile(storageFrom, file);
     }
@@ -61,8 +57,7 @@ public class Controller {
 
     private static void checkFilesFormat(Storage storageFrom, Storage storageTo) throws Exception {
         for (File file : storageFrom.getFiles()) {
-            if (file != null)
-                checkFileFormat(storageTo, file);
+            if (file != null) checkFileFormat(storageTo, file);
         }
     }
 
@@ -71,8 +66,7 @@ public class Controller {
         for (File fl : storage.getFiles()) {
             if (fl != null) storageFilesSize += fl.getSize();
         }
-        if (storage.getStorageSize() < storageFilesSize + file.getSize())
-            throw new Exception("No storage space");
+        if (storage.getStorageSize() < storageFilesSize + file.getSize()) throw new Exception("No storage space");
     }
 
     private static void checkSize(Storage storageFrom, Storage storageTo) throws Exception {
@@ -86,14 +80,14 @@ public class Controller {
             if (fl != null) storageToFilesSize += fl.getSize();
         }
 
-        if (storageTo.getStorageSize() < storageFromFilesSize + storageToFilesSize)
+        if (storageTo.getStorageSize() < storageFromFilesSize + storageToFilesSize) {
             throw new Exception("No storage space");
+        }
     }
 
     private static void checkFile(Storage storage, File file) throws Exception {
         for (File file1 : storage.getFiles()) {
-            if (file1 != null && file.getId() == file1.getId())
-                throw new Exception("File already exists");
+            if (file1 != null && file.getId() == file1.getId()) throw new Exception("File already exists");
         }
     }
 

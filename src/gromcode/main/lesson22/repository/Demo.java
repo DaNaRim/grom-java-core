@@ -3,8 +3,7 @@ package gromcode.main.lesson22.repository;
 import java.util.Arrays;
 
 public class Demo {
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws Exception {
         User user1 = new User(1001, "Daniil", "32434234sdsfuuuuo");
         UserRepository.save(user1);
 
@@ -21,6 +20,5 @@ public class Demo {
         System.out.println(Arrays.deepToString(UserRepository.getUsers()));
 
         System.out.println(Arrays.deepToString(UserRepository.getUsers()));
-
     }
 }

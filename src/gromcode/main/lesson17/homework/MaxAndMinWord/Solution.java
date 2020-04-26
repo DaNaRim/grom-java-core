@@ -6,11 +6,8 @@ public class Solution {
         if (input == null) return null;
 
         String resultWord = "";
-
         for (String str : input.trim().split(" ")) {
-            if (!str.equals("") && checkWord(str)) {
-                if (resultWord.length() < str.length()) resultWord = str;
-            }
+            if (!str.equals("") && checkWord(str) && resultWord.length() < str.length()) resultWord = str;
         }
         return resultWord.isEmpty() ? null : resultWord;
     }
@@ -22,11 +19,9 @@ public class Solution {
         int minLength = Integer.MAX_VALUE;
 
         for (String str : input.trim().split(" ")) {
-            if (!str.equals("") && checkWord(str)) {
-                if (minLength > str.length()){
-                    resultWord = str;
-                    minLength = str.length();
-                }
+            if (!str.equals("") && checkWord(str) && minLength > str.length()) {
+                resultWord = str;
+                minLength = str.length();
             }
         }
         return resultWord;

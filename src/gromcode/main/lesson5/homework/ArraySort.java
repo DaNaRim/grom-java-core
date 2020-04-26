@@ -9,44 +9,53 @@ public class ArraySort {
         System.out.println(Arrays.toString(sortDescending(sp)));
     }
 
+//    static int[] sortAscending(int[] array) {
+//        //Bubble sort
+//        if (array == null) return null;
+//
+//        boolean sorted = false;
+//        int temp;
+//        while (!sorted) {
+//            sorted = true;
+//            for (int i = 0; i < array.length - 1; i++) {
+//                if (array[i] > array[i + 1]) {
+//                    temp = array[i];
+//                    array[i] = array[i + 1];
+//                    array[i + 1] = temp;
+//                    sorted = false;
+//                }
+//            }
+//        }
+//        return array;
+//    }
+
     static int[] sortAscending(int[] array) {
+        //Insertion Sort
         if (array == null) return null;
 
-        int per;
-        int a = 1;
-
-        while (a > 0) {
-            a = 0;
-
-            for (int i = 1; i < array.length; i++) {
-                if (array[i] < array[i - 1]) {
-                    per = array[i];
-                    array[i] = array[i - 1];
-                    array[i - 1] = per;
-                    a++;
-                }
+        for (int i = 1; i < array.length; i++) {
+            int current = array[i];
+            int j = i - 1;
+            while (j >= 0 && current < array[j]) {
+                array[j + 1] = array[j];
+                j--;
             }
+            array[j + 1] = current;
         }
-        return array; 
+        return array;
     }
 
     static int[] sortDescending(int[] array) {
         if (array == null) return null;
 
-        int per;
-        int a = 1;
-
-        while (a > 0) {
-            a = 0;
-
-            for (int i = 1; i < array.length; i++) {
-                if (array[i] > array[i - 1]) {
-                    per = array[i];
-                    array[i] = array[i - 1];
-                    array[i - 1] = per;
-                    a++;
-                }
+        for (int i = 1; i < array.length; i++) {
+            int current = array[i];
+            int j = i - 1;
+            while (j >= 0 && current > array[j]) {
+                array[j + 1] = array[j];
+                j--;
             }
+            array[j + 1] = current;
         }
         return array;
     }

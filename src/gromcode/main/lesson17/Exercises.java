@@ -19,7 +19,6 @@ public class Exercises {
         System.out.println(replace(str, "To", "PPPP"));
         System.out.println(replace(str, "lo", "X"));
 
-
     }
 
     //delete replacing worlds
@@ -31,8 +30,7 @@ public class Exercises {
 
         for (int i = 0; i < words.length; i++) {
             for (int j = i + 1; j < words.length; j++) {
-                if (words[i].equals(words[j]))
-                    words[j] = "";
+                if (words[i].equals(words[j])) words[j] = "";
             }
         }
 
@@ -41,8 +39,7 @@ public class Exercises {
         for (String word : words) {
             res += word;
 
-            if (!word.isEmpty())
-                res += " ";
+            if (!word.isEmpty()) res += " ";
         }
         return res;
     }
@@ -55,11 +52,9 @@ public class Exercises {
 
         for (String string : strings) {
             for (int i = 0; i < words.length; i++) {
-                if (string.equals(words[i]))
-                    res[i]++;
+                if (string.equals(words[i])) res[i]++;
             }
         }
-
         return res;
     }
 
@@ -70,18 +65,17 @@ public class Exercises {
 
         int[] indexes = findStartIndexes(input.toCharArray(), target.charAt(0));
 
-        if (indexes.length == 0)
-            return input;
+        if (indexes.length == 0) return input;
 
         for (int index : indexes) {
             if (checkReplace(input, target, index)) {
                 return replace(input, target, replacement, index);
             }
         }
-       return input;
+        return input;
     }
 
-    private  static String replace(String input, String target, String replacement, int index) {
+    private static String replace(String input, String target, String replacement, int index) {
         char[] res1 = new char[index];
 
         for (int i = 0; i < index; i++) {

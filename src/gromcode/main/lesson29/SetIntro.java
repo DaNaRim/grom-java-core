@@ -6,7 +6,6 @@ import java.util.Set;
 
 public class SetIntro {
     public static void main(String[] args) {
-
         Set<String> set = new LinkedHashSet<>();
         set.add("testStr");
         set.add("111");
@@ -30,15 +29,5 @@ public class SetIntro {
         files.add(file3);
 
         System.out.println(files);
-
-
-
-
-
-
-
-
-
-
     }
 }

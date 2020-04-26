@@ -13,27 +13,15 @@ public class TripAdvisorAPI implements API {
 
     @Override
     public Room[] findRooms(int price, int persons, String city, String hotel) {
-        int numberOfRooms = 0;
-        for (Room room : rooms) {
-            if (room != null) {
-                if (room.getPrice() == price && room.getCityName() == city && room.getHotelName() == hotel) {
-                    if (room.getPersons() >= (persons - 1 > 1 ? persons : 1) && room.getPersons() <= persons + 1)
-                        numberOfRooms++;
-                }
-            }
-        }
+        Room[] result = new Room[countRooms(price, persons, city, hotel)];
 
-        Room[] result = new Room[numberOfRooms];
-        int i = 0;
-
+        int index = 0;
         for (Room room : rooms) {
-            if (room != null) {
-                if (room.getPrice() == price && room.getCityName() == city && room.getHotelName() == hotel) {
-                    if (room.getPersons() >= (persons - 1 > 1 ? persons : 1) && room.getPersons() <= persons + 1) {
-                        result[i] = room;
-                        i++;
-                    }
-                }
+            if (room != null && room.getPrice() == price && room.getCityName().equals(city) &&
+                    room.getHotelName().equals(hotel) && room.getPersons() >= (persons - 1 > 1 ? persons : 1) &&
+                    room.getPersons() <= persons + 1) {
+                result[index] = room;
+                index++;
             }
         }
         return result;
@@ -42,5 +30,17 @@ public class TripAdvisorAPI implements API {
     @Override
     public Room[] getAll() {
         return rooms;
+    }
+
+    private int countRooms(int price, int persons, String city, String hotel) {
+        int numberOfRooms = 0;
+        for (Room room : rooms) {
+            if (room != null && room.getPrice() == price && room.getCityName().equals(city) &&
+                    room.getHotelName().equals(hotel) && room.getPersons() >= (persons - 1 > 1 ? persons : 1) &&
+                    room.getPersons() <= persons + 1) {
+                numberOfRooms++;
+            }
+        }
+        return numberOfRooms;
     }
 }

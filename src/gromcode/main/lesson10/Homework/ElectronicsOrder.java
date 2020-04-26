@@ -12,6 +12,23 @@ public class ElectronicsOrder extends Order {
 
     @Override
     public void validateOrder() {
+        /* Bad Solution
+        boolean checkOperation = true;
+        if (getShipFromCity() == "Киев" || getShipFromCity() == "Одесса" ||
+                getShipFromCity() == "Днепр" || getShipFromCity() == "Харьков") {
+            if (getShipToCity() == "Киев" || getShipToCity() == "Одесса" ||
+                    getShipToCity() == "Днепр" || getShipToCity() == "Харьков") {
+                if (getBasePrice() >= 100 && getCustomerOwned().getGender() == "Женский") {
+                    setDateConfirmed(new Date());
+                    checkOperation = false;
+                    System.out.println("ValidateOrder is done");
+                }
+            }
+        }
+        if (checkOperation)
+            System.out.println("ValidateOrder is wrong");
+         */
+
         String[] orderFromCities = {"Киев", "Одесса", "Днепр", "Харьков"};
         String[] orderToCities = {"Киев", "Одесса", "Днепр", "Харьков"};
 
@@ -25,9 +42,9 @@ public class ElectronicsOrder extends Order {
                         System.out.println("ValidateOrder is done");
                     }
                 }
-                if (checkOperation) System.out.println("ValidateOrder is wrong");
             }
         }
+        if (checkOperation) System.out.println("ValidateOrder is wrong");
     }
 
     @Override
@@ -43,6 +60,8 @@ public class ElectronicsOrder extends Order {
         if (getBasePrice() > 1000) {
             setTotalPrice(getTotalPrice() * 0.95);
             System.out.println(" and discount 95%");
-        } else System.out.println();
+        } else {
+            System.out.println();
+        }
     }
 }

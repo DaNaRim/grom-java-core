@@ -12,43 +12,31 @@ public class UserRepository {
     }
 
     public User save(User user) {
-        if (user == null || findById(user.getId()) != null) {
-            return null;
-        }
+        if (user == null || findById(user.getId()) != null) return null;
 
         int countPlaced = 0;
         for (User us : users) {
-            if (us != null)
-                countPlaced++;
+            if (us != null) countPlaced++;
         }
-
-        if (countPlaced > 9)
-            return null;
+        if (countPlaced > 9) return null;
 
         int index = 0;
         for (User us : users) {
-            if (us == null) {
-                users[index] = user;
-                break;
-            }
+            if (us == null) return users[index] = user;
             index++;
         }
-        return user;
+        return null;
     }
 
     public User update(User user) {
-        if (user == null || findById(user.getId()) == null)
-            return null;
+        if (user == null || findById(user.getId()) == null) return null;
 
         int index = 0;
         for (User us : users) {
-            if (us != null && us.getId() == findById(user.getId()).getId()) {
-                users[index] = user;
-                break;
-            }
+            if (us != null && us.getId() == findById(user.getId()).getId()) return users[index] = user;
             index++;
         }
-        return user;
+        return null;
     }
 
     public void delete(long id) {
@@ -64,11 +52,8 @@ public class UserRepository {
 
     private User findById(long id) {
         for (User user : users) {
-            if (user != null && id == user.getId())
-                return user;
+            if (user != null && id == user.getId()) return user;
         }
         return null;
     }
 }
-
-

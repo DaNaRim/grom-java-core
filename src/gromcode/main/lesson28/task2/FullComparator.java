@@ -5,12 +5,12 @@ import java.util.Comparator;
 public class FullComparator implements Comparator<Capability> {
     @Override
     public int compare(Capability capability, Capability t1) {
-        if (compareValues(capability.getChanelName(), t1.getChanelName()) != 0)
+        if (compareValues(capability.getChanelName(), t1.getChanelName()) != 0) {
             return compareValues(capability.getChanelName(), t1.getChanelName());
-
-        if (compareValues(capability.getFingerPrint(), t1.getFingerPrint()) != 0)
+        }
+        if (compareValues(capability.getFingerPrint(), t1.getFingerPrint()) != 0) {
             return compareValues(capability.getFingerPrint(), t1.getFingerPrint());
-
+        }
         return compareValues(capability.getDateCreated(), t1.getDateCreated());
     }
 

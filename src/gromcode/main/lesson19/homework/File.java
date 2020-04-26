@@ -9,11 +9,9 @@ public class File {
     private long size;
 
     public File(long id, String name, String format, long size) throws Exception {
+        if (name.length() > 10) throw new Exception("Name length > 10");
         this.id = id;
-        if (name.length() > 10)
-            throw new Exception("Name length > 10");
-        else
-            this.name = name;
+        this.name = name;
         this.format = format;
         this.size = size;
     }

@@ -8,10 +8,7 @@ public class GeneralDAO<T> {
         validate(t);
         int index = 0;
         for (T el : database) {
-            if (el == null) {
-                database[index] = t;
-                return database[index];
-            }
+            if (el == null) return database[index] = t;
             index++;
         }
         return null;

@@ -1,6 +1,6 @@
 package gromcode.main.lesson8.ads;
 
-public class CarAd extends Ad{
+public class CarAd extends Ad {
     int yearOfManufacturing;
     String color;
     String ownerName;
@@ -11,7 +11,7 @@ public class CarAd extends Ad{
         super(id, prise);
     }
 
-    void confirmAd(){
+    void confirmAd() {
         // someLogic
     }
 }

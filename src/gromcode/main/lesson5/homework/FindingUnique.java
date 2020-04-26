@@ -10,13 +10,12 @@ public class FindingUnique {
         if (array == null) return 0;
 
         ArraySort.sortAscending(array);
-
         int count = 1;
-        int prev = array[0];
 
-        for (int element : array) {
-            if (element != prev) {
-                prev = element;
+        int currentUnique = array[0];
+        for (int el : array) {
+            if (el != currentUnique) {
+                currentUnique = el;
                 count++;
             }
         }

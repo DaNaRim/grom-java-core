@@ -18,7 +18,6 @@ public class Car {
     }
 
     //3 methods
-
     void startRun() {
          System.out.println("I am running....");
     }

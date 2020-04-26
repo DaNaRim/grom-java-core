@@ -12,8 +12,7 @@ public class UserRepository {
     }
 
     public User save(User user) throws Exception {
-        if (user == null)
-            throw new BadRequestException("Can`t save null user");
+        if (user == null) throw new BadRequestException("Can`t save null user");
 
         try {
             findById(user.getId());
@@ -24,10 +23,7 @@ public class UserRepository {
 
         int index = 0;
         for (User us : users) {
-            if (us == null) {
-                users[index] = user;
-                return users[index];
-            }
+            if (us == null) return users[index] = user;
             index++;
         }
         throw new InternalServerException("Not enough space to save user with id: " + user.getId());
@@ -35,17 +31,12 @@ public class UserRepository {
 
 
     public User update(User user) throws Exception {
-        if (user == null)
-            throw new BadRequestException("Can`t update null user");
-
+        if (user == null) throw new BadRequestException("Can`t update null user");
         findById(user.getId());
 
         int index = 0;
         for (User us : users) {
-            if (us != null && us.getId() == user.getId() && !us.equals(user)) {
-                users[index] = user;
-                return users[index];
-            }
+            if (us != null && us.getId() == user.getId() && !us.equals(user)) return users[index] = user;
             index++;
         }
         throw new InternalServerException("Unexpected error");
@@ -65,10 +56,9 @@ public class UserRepository {
     }
 
     public User findById(long id) throws UserNotFoundException {
-
-        for (User user : users)
+        for (User user : users) {
             if (user != null && user.getId() == id) return user;
-
+        }
         throw new UserNotFoundException("User with id: " + id + " not found");
     }
 }

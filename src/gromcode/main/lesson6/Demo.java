@@ -22,7 +22,5 @@ public class Demo {
 
         Car carObject2 = null;
         System.out.println(carObject2);
-
-
     }
 }

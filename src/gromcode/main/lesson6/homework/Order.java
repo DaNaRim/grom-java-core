@@ -3,7 +3,6 @@ package gromcode.main.lesson6.homework;
 import java.util.Date;
 
 public class Order {
-
     long id;
     int price;
     Date dateCreated;
@@ -32,10 +31,10 @@ public class Order {
     }
 
     boolean checkPrice() {
-        return price > 1000 ? true : false;
+        return price > 1000;
     }
 
     boolean isValidType() {
-        return type == "Buy" || type == "Sale" ? true : false;
+        return type == "Buy" || type == "Sale";
     }
 }

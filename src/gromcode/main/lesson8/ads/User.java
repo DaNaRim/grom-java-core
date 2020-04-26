@@ -1,6 +1,6 @@
 package gromcode.main.lesson8.ads;
 
-public class User extends BaseEntity{
+public class User extends BaseEntity {
     String userName;
     String location;
 

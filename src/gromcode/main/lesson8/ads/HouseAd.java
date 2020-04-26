@@ -18,10 +18,8 @@ public class HouseAd extends Ad {
         Owners owners = new Owners();
 
         for (String owner : owners.owners) {
-            if (ownerName == owner)
-                return true;
+            if (ownerName == owner) return true;
         }
         return false;
     }
-
 }

@@ -11,23 +11,14 @@ public class GoogleAPI implements API {
 
     @Override
     public Room[] findRooms(int price, int persons, String city, String hotel) {
-        int numberOfRooms = 0;
-        for (Room room : rooms) {
-            if (room != null) {
-                if (room.getPrice() == price && room.getPersons() == persons && room.getCityName() == city && room.getHotelName() == hotel)
-                    numberOfRooms++;
-            }
-        }
+        Room[] result = new Room[countRooms(price, persons, city, hotel)];
 
-        Room[] result = new Room[numberOfRooms];
-        int i = 0;
-
+        int index = 0;
         for (Room room : rooms) {
-            if (room != null) {
-                if (room.getPrice() == price && room.getPersons() == persons && room.getCityName() == city && room.getHotelName() == hotel) {
-                    result[i] = room;
-                    i++;
-                }
+            if (room != null && room.getPrice() == price && room.getPersons() == persons &&
+                    room.getCityName().equals(city) && room.getHotelName().equals(hotel)) {
+                result[index] = room;
+                index++;
             }
         }
         return result;
@@ -36,5 +27,16 @@ public class GoogleAPI implements API {
     @Override
     public Room[] getAll() {
         return rooms;
+    }
+
+    private int countRooms(int price, int persons, String city, String hotel) {
+        int numberOfRooms = 0;
+        for (Room room : rooms) {
+            if (room != null && room.getPrice() == price && room.getPersons() == persons &&
+                    room.getCityName().equals(city) && room.getHotelName().equals(hotel)) {
+                numberOfRooms++;
+            }
+        }
+        return numberOfRooms;
     }
 }

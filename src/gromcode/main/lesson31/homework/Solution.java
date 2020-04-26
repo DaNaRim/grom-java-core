@@ -8,8 +8,9 @@ public class Solution {
         HashMap<Character, Integer> countSymbols = new HashMap<>();
 
         for (char ch : text.toCharArray()) {
-            if (Character.isLetter(ch))
+            if (Character.isLetter(ch)) {
                 countSymbols.put(ch, countSymbols.get(ch) == null ? 1 : countSymbols.get(ch) + 1);
+            }
         }
         return countSymbols;
     }
@@ -18,8 +19,9 @@ public class Solution {
         HashMap<String, Integer> countWords = new HashMap<>();
 
         for (String word : text.split(" ")) {
-            if (validate(word) && word.length() > 2)
+            if (validate(word) && word.length() > 2) {
                 countWords.put(word, countWords.get(word) == null ? 1 : countWords.get(word) + 1);
+            }
         }
         return countWords;
     }

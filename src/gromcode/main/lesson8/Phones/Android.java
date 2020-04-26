@@ -1,10 +1,8 @@
 package gromcode.main.lesson8.Phones;
 
 public class Android extends Phone {
-
     String androidVersion;
     int screenSize;
-
     String secretDeviceCode;
 
     public Android(int price, double weight, String countryProduced, String androidVersion, int screenSize, String secretDeviceCode) {
@@ -15,7 +13,6 @@ public class Android extends Phone {
 
         //this - reference to the current class object
         //this - reference to the parent class object
-
 
         this.androidVersion = androidVersion;
         this.screenSize = screenSize;

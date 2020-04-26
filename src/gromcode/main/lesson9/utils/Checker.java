@@ -6,12 +6,10 @@ public class Checker {
     //default (package-private)
     //protected
 
-
     //private
     //default (package-private)
     //protected
     //public
-
 
     int companyNamesValidatedCount = 0;
 
@@ -25,6 +23,4 @@ public class Checker {
         companyNamesValidatedCount++;
         return companyName != "Google" || companyName != "Amazon";
     }
-
-
 }

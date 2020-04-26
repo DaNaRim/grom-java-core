@@ -1,5 +1,9 @@
 package gromcode.main.lesson22.repository;
 
+import gromcode.main.lesson22.repository.exception.BadRequestException;
+import gromcode.main.lesson22.repository.exception.InternalServerException;
+import gromcode.main.lesson22.repository.exception.UserNotFoundException;
+
 public class UserRepository {
     private static User[] users = new User[10];
 
@@ -7,68 +11,54 @@ public class UserRepository {
         return users;
     }
 
-    public static User save(User user) {
-        if (users == null || user == null || findById(user.getId()) != null) {
-            return null;
-        }
+    public static User save(User user) throws Exception {
+        if (user == null) throw new BadRequestException("Can`t save null user");
 
-        if (countUsers() == users.length) return null;
+        try {
+            findById(user.getId());
+            throw new BadRequestException("User with id: " + user.getId() + " already exist");
+        } catch (UserNotFoundException e) {
+            System.out.println("User with id: " + user.getId() + " not found. Will be saved");
+        }
 
         int index = 0;
         for (User us : users) {
-            if (us == null) {
-                users[index] = user;
+            if (us == null) return users[index] = user;
+            index++;
+        }
+        throw new InternalServerException("Not enough space to save user with id: " + user.getId());
+    }
+
+
+    public static User update(User user) throws Exception {
+        if (user == null) throw new BadRequestException("Can`t update null user");
+        findById(user.getId());
+
+        int index = 0;
+        for (User us : users) {
+            if (us != null && us.getId() == user.getId() && !us.equals(user)) return users[index] = user;
+            index++;
+        }
+        throw new InternalServerException("Unexpected error");
+    }
+
+    public static void delete(long id) throws Exception {
+        findById(id);
+
+        int index = 0;
+        for (User us : users) {
+            if (us != null && us.getId() == id) {
+                users[index] = null;
                 break;
             }
             index++;
         }
-        return user;
     }
 
-    public static User update(User user) {
-        if (users == null || user == null || findById(user.getId()) == null) return null;
-
-        int index = 0;
-        for (User us : users) {
-            if (us != null && us.getId() == findById(user.getId()).getId()) {
-                users[index] = user;
-                break;
-            }
-            index++;
-        }
-        return user;
-    }
-
-    public static void delete(long id) {
-        if (users != null) {
-            int index = 0;
-            for (User us : users) {
-                if (us != null && us == findById(id)) {
-                    users[index] = null;
-                    break;
-                }
-                index++;
-            }
-        }
-    }
-
-    public static User findById(long id) {
-        if (users == null) return null;
-
-        for (User user : users)
-            if (user != null && id == user.getId()) return user;
-        return null;
-    }
-
-    private static int countUsers() {
-        if (users == null) return 0;
-
-        int countUsers = 0;
+    public static User findById(long id) throws UserNotFoundException {
         for (User user : users) {
-            if (user != null) countUsers++;
+            if (user != null && user.getId() == id) return user;
         }
-        return countUsers;
+        throw new UserNotFoundException("User with id: " + id + " not found");
     }
 }
-
-

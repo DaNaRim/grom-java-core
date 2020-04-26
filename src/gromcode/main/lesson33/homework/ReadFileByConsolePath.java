@@ -15,7 +15,6 @@ public class ReadFileByConsolePath {
             readFile(br.readLine());
         } catch (IOException e) {
             System.err.println("File does not exist");
-            return;
         } finally {
             IOUtils.closeQuietly(streamReader);
             IOUtils.closeQuietly(br);

@@ -31,7 +31,6 @@ public abstract class Bank {
         return numberOfEmployees * avrSalaryOfEmployee;
     }
 
-
     public long getId() {
         return id;
     }

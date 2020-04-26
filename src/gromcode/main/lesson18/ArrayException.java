@@ -10,9 +10,7 @@ public class ArrayException {
             System.err.println("element was not found");
         }
 
-
         System.out.println("Cool.... ");
-
         System.out.println("Cool2.... ");
     }
 }

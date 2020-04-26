@@ -26,7 +26,6 @@ public class DemoComparator {
 
         System.out.println(capabilities);
 
-
         Comparator<Capability> comparator = new Comparator<Capability>() {
             @Override
             public int compare(Capability capability, Capability t1) {

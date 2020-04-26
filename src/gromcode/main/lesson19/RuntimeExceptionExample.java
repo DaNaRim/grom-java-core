@@ -10,7 +10,6 @@ public class RuntimeExceptionExample {
         } catch (ArithmeticException e) {
             System.out.println("something wrong");
         }
-
         npe(new Object());
         npe(null);
     }

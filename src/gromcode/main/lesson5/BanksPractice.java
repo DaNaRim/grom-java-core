@@ -86,8 +86,5 @@ public class BanksPractice {
         } else {
             return -1;
         }
-
-
     }
-
 }

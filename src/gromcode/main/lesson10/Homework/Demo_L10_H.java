@@ -88,7 +88,5 @@ public class Demo_L10_H {
 
         electronicsOrder2 = new ElectronicsOrder("Чайник", new Date(), "Одесса", "Харьков", 200, customer1, 12);
         electronicsOrder2.calculatePrice();
-
-
     }
 }

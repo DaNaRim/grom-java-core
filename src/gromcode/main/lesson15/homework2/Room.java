@@ -53,25 +53,25 @@ public class Room {
     }
 
     @Override
-    public String toString() {
-        return "Room{" +
-                "id=" + id +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Room room = (Room) o;
         return price == room.price &&
                 persons == room.persons &&
-                Objects.equals(hotelName, room.hotelName) &&
-                Objects.equals(cityName, room.cityName);
+                hotelName.equals(room.hotelName) &&
+                cityName.equals(room.cityName);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(price, persons, hotelName, cityName);
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "id=" + id +
+                '}';
     }
 }

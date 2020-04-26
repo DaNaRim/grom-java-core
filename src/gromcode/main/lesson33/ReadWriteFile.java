@@ -5,7 +5,7 @@ import org.apache.commons.io.IOUtils;
 import java.io.*;
 
 public class ReadWriteFile {
-    public static void main(String[] args)  throws InterruptedException{
+    public static void main(String[] args) throws InterruptedException {
         readFile("");
 
         writeFile("");
@@ -35,7 +35,7 @@ public class ReadWriteFile {
         }
     }
 
-    private static void writeFile(String path) throws InterruptedException{
+    private static void writeFile(String path) throws InterruptedException {
         FileWriter writer = null;
         BufferedWriter bufferedWriter = null;
 

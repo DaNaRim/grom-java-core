@@ -2,7 +2,7 @@ package gromcode.main.lesson30.task1;
 
 import java.util.Date;
 
-public class Transaction implements Comparable<Transaction>{
+public class Transaction implements Comparable<Transaction> {
     private long id;
     private Date dateCreated;
     private Date dateConfirmed;

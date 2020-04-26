@@ -16,6 +16,5 @@ public class TreeSetIntro {
         files.add(file3);
 
         System.out.println(files);
-
     }
 }

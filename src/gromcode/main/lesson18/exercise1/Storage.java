@@ -1,7 +1,6 @@
 package gromcode.main.lesson18.exercise1;
 
 public abstract class Storage {
-
     String[] files;
 
     public String[] getFiles() {

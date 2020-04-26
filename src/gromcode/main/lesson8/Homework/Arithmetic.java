@@ -6,51 +6,21 @@ public class Arithmetic {
         if (array == null) return false;
 
         sortAscending(array);
-        int a = array[0];
-        sortDescending(array);
-        int b = array[0];
-
-        return a + b > 100 ? true : false;
+        return array[0] + array[array.length - 1] > 100;
     }
 
     static int[] sortAscending(int[] array) {
+        //Insertion Sort
         if (array == null) return null;
 
-        int per;
-        int a = 1;
-
-        while (a > 0) {
-            a = 0;
-
-            for (int i = 1; i < array.length; i++) {
-                if (array[i] < array[i - 1]) {
-                    per = array[i];
-                    array[i] = array[i - 1];
-                    array[i - 1] = per;
-                    a++;
-                }
+        for (int i = 1; i < array.length; i++) {
+            int current = array[i];
+            int j = i - 1;
+            while (j >= 0 && current < array[j]) {
+                array[j + 1] = array[j];
+                j--;
             }
-        }
-        return array;
-    }
-
-    static int[] sortDescending(int[] array) {
-        if (array == null) return null;
-
-        int per;
-        int a = 1;
-
-        while (a > 0) {
-            a = 0;
-
-            for (int i = 1; i < array.length; i++) {
-                if (array[i] > array[i - 1]) {
-                    per = array[i];
-                    array[i] = array[i - 1];
-                    array[i - 1] = per;
-                    a++;
-                }
-            }
+            array[j + 1] = current;
         }
         return array;
     }

@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class File {
     private int size;
-    private String  path;
+    private String path;
     private String extension;
 
     public File(int size, String path, String extension) {

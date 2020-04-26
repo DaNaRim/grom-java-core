@@ -1,4 +1,5 @@
 package gromcode.main.lesson24.firstExample;
 
-public class FirstOrder extends AbstractOrder{
+public class FirstOrder extends AbstractOrder {
+
 }

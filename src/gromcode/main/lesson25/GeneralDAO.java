@@ -7,16 +7,10 @@ public class GeneralDAO {
     }
 
     public <T extends IdEntity> void validate(T t) throws Exception {
-        if (t.getId() <= 0)
-            throw new Exception("id can`t be negative");
-
+        if (t.getId() <= 0) throw new Exception("id can`t be negative");
     }
 
     public <K> void validate(K k) {
-        if (k.equals(100))
-            System.out.println("true");
-        else
-            System.out.println("false");
+        System.out.println(k.equals(100));
     }
-
 }

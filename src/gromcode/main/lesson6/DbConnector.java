@@ -9,5 +9,4 @@ public class DbConnector {
     void connect() {
         //logic
     }
-
 }

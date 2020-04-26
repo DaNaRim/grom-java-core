@@ -7,15 +7,12 @@ public class ThrowExample {
         //test();
 
         useOfTestMethod();
-
     }
 
     private static void test() {
         for (String element : array) {
-            if (element == null)
-                throw new RuntimeException("null id detected");
+            if (element == null) throw new RuntimeException("null id detected");
         }
-
         System.out.println("done");
     }
 

@@ -1,7 +1,6 @@
 package gromcode.main.lesson24.firstExample;
 
 public class Main {
-
     private static void demo() {
 
         User user = new User(11);

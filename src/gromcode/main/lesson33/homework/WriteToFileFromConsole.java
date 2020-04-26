@@ -11,7 +11,6 @@ public class WriteToFileFromConsole {
 
         try {
             bw = new BufferedWriter(new FileWriter(path, true));
-
         } catch (IOException e) {
             System.err.println("File with path " + path + " not found");
             return;

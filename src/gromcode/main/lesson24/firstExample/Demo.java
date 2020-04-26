@@ -1,6 +1,6 @@
 package gromcode.main.lesson24.firstExample;
 
-public class Demo <T> {
+public class Demo<T> {
 
 //    private printUser(User user) {
 //        //print
@@ -29,8 +29,5 @@ public class Demo <T> {
     public static void main(String[] args) {
         calculatePrice(new FirstOrder());
         calculatePrice(new SecondOrder());
-
-
-
     }
 }

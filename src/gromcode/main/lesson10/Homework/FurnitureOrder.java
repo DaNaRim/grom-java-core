@@ -31,8 +31,7 @@ public class FurnitureOrder extends Order {
         if (getBasePrice() < 5000) {
             setTotalPrice(getBasePrice() + getBasePrice() * 0.05);
             System.out.println("calculatePrice id done with shipping cost 5%");
-        }
-        else {
+        } else {
             setTotalPrice(getBasePrice() + getBasePrice() * 0.02);
             System.out.println("calculatePrice id done with shipping cost 2%");
         }

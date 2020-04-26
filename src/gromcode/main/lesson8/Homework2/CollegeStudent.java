@@ -1,6 +1,6 @@
 package gromcode.main.lesson8.Homework2;
 
-public class CollegeStudent extends Student{
+public class CollegeStudent extends Student {
     String collegeName;
     int rating;
     long id;

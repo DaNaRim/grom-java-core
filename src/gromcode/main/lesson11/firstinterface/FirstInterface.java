@@ -5,7 +5,4 @@ public interface FirstInterface {
     void send();
 
     String receive();
-
-
-
 }

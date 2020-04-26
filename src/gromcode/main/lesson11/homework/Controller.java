@@ -10,27 +10,15 @@ public class Controller {
     public Room[] requestRooms(int price, int persons, String city, String hotel) {
         //находит комнаты по заданным параметрам по всем АПИ
 
-        int numberOfRooms = 0;
+        Room[] result = new Room[countRooms(price, persons, city, hotel)];
 
+        int index = 0;
         for (API api : apis) {
-            if (api == null)
-                continue;
+            if (api == null) continue;
 
             for (Room room : api.findRooms(price, persons, city, hotel)) {
-                    numberOfRooms++;
-            }
-        }
-
-        Room[] result = new Room[numberOfRooms];
-        int i = 0;
-
-        for (API api : apis) {
-            if (api == null)
-                continue;
-
-            for (Room room : api.findRooms(price, persons, city, hotel)) {
-                    result[i] = room;
-                    i++;
+                result[index] = room;
+                index++;
             }
         }
         return result;
@@ -45,30 +33,18 @@ public class Controller {
         //Зробити масив кімнат api2
         //Проганти другий масив у прогині першого й знайти спільні кімнати
 
-        int numberOfRooms = 0;
-        for (Room room1 : api1.getAll()) {
-            if (room1 == null || api1 == null || api2 == null) continue;
+        if (api1 == null || api2 == null) return null;
+
+        Room[] result = new Room[countRooms(api1, api2)];
+
+        int index = 0;
+        for (Room room : api1.getAll()) {
+            if (room == null) continue;
 
             for (Room room2 : api2.getAll()) {
-                if (room2 == null) continue;
-
-                if (room1.getPrice() == room2.getPrice() && room1.getPersons() == room2.getPersons() && room1.getHotelName() == room2.getHotelName() && room1.getCityName() == room2.getCityName())
-                    numberOfRooms++;
-            }
-        }
-
-        Room[] result = new Room[numberOfRooms];
-        int i = 0;
-
-        for (Room room1 : api1.getAll()) {
-            if (room1 == null || api1 == null || api2 == null) continue;
-
-            for (Room room2 : api2.getAll()) {
-                if (room2 == null) continue;
-
-                if (room1.getPrice() == room2.getPrice() && room1.getPersons() == room2.getPersons() && room1.getHotelName() == room2.getHotelName() && room1.getCityName() == room2.getCityName()) {
-                    result[i] = room1;
-                    i++;
+                if (room.equals(room2)) {
+                    result[index] = room;
+                    index++;
                 }
             }
         }
@@ -78,19 +54,35 @@ public class Controller {
     public Room cheapestRoom() {
         //Находит самую дешевую комнаты среди всех комнат доступных в АПИ
 
-        API cheapAPI = apis[0];
-        Room cheapRoom = cheapAPI.getAll()[0];
+        Room cheapRoom = apis[0].getAll()[0];
         for (API api : apis) {
-            if(api == null) continue;
+            if (api == null) continue;
 
             for (Room room : api.getAll()) {
-                if (room == null)
-                    continue;
-                if (cheapRoom.getPrice() < room.getPrice())
-                    cheapRoom = room;
+                if (room != null && cheapRoom.getPrice() > room.getPrice()) cheapRoom = room;
             }
         }
         return cheapRoom;
     }
 
+    private int countRooms(int price, int persons, String city, String hotel) {
+        int numberOfRooms = 0;
+
+        for (API api : apis) {
+            if (api != null) numberOfRooms += api.findRooms(price, persons, city, hotel).length;
+        }
+        return numberOfRooms;
+    }
+
+    private int countRooms(API api1, API api2) {
+        int numberOfRooms = 0;
+        for (Room room1 : api1.getAll()) {
+            if (room1 == null) continue;
+
+            for (Room room2 : api2.getAll()) {
+                if (room1.equals(room2)) numberOfRooms++;
+            }
+        }
+        return numberOfRooms;
+    }
 }

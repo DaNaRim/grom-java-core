@@ -13,6 +13,4 @@ public class CheckingAccount extends Account {
             return;
         moneyAmount -= amount;
     }
-
-
 }

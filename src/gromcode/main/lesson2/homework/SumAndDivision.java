@@ -2,14 +2,12 @@ package gromcode.main.lesson2.homework;
 
 public class SumAndDivision {
     public static void main(String[] args) {
-        int n = 0;
-        long sum = 1;
-        while (n <= 1000) {
-            sum += n;
-            n++;
-        }
-        n = 1234;
 
-        System.out.println(sum % n > sum / n);
+        long sum = 0;
+        for (int i = 1; i < 1000; i++) {
+            sum += i;
+        }
+
+        System.out.println(sum % 1234 > sum / 1234);
     }
 }

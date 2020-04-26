@@ -6,22 +6,19 @@ import gromcode.main.lesson27.homework2.exception.UserNotFoundException;
 import java.util.ArrayList;
 
 public class UserRepository {
-    private static ArrayList<User> users;
+    private static ArrayList<User> users = new ArrayList<>();
 
     public static ArrayList<User> getUsers() {
         return users;
     }
 
     public static User findUser(User user) throws Exception {
-        if (user == null)
-            throw new BadRequestException("Can`t found null user");
-
+        if (user == null) throw new BadRequestException("Can`t found null user");
         return findById(user.getId());
     }
 
     public static User save(User user) throws Exception {
-        if (user == null)
-            throw new BadRequestException("Can`t save null user");
+        if (user == null) throw new BadRequestException("Can`t save null user");
 
         try {
             findById(user.getId());
@@ -36,9 +33,7 @@ public class UserRepository {
 
 
     public static User update(User user) throws Exception {
-        if (user == null)
-            throw new BadRequestException("Can`t update null user");
-
+        if (user == null) throw new BadRequestException("Can`t update null user");
         findById(user.getId());
 
         int index = getUserIndex(user);
@@ -51,17 +46,16 @@ public class UserRepository {
     }
 
     public static User findById(long id) throws UserNotFoundException {
-        for (User user : users)
+        for (User user : users) {
             if (user != null && user.getId() == id) return user;
-
+        }
         throw new UserNotFoundException("User with id: " + id + " not found");
     }
 
     private static int getUserIndex(User user) throws Exception {
         int index = 0;
         for (User us : users) {
-            if (us.getId() == user.getId() && !us.equals(user))
-                return index;
+            if (us.getId() == user.getId() && !us.equals(user)) return index;
             index++;
         }
         throw new BadRequestException("There is nothing to update in the user with id: " + user.getId());

@@ -16,18 +16,16 @@ public class TransactionDAO {
 
         int index = 0;
         for (Transaction tr : transactions) {
-            if (tr == null) {
-                transactions[index] = transaction;
-                break;
-            }
+            if (tr == null) return transactions[index] = transaction;
             index++;
         }
-        return transactions[index];
+        return null;
     }
 
     private void validate(Transaction transaction) throws Exception {
-        if (transaction.getAmount() > utils.getLimitSimpleTransactionAmount())
+        if (transaction.getAmount() > utils.getLimitSimpleTransactionAmount()) {
             throw new LimitExceeded("Transaction limit exceed " + transaction.getId() + ". Can`t be saved");
+        }
 
         int sum = transaction.getAmount();
         int count = 1;
@@ -36,34 +34,34 @@ public class TransactionDAO {
             count++;
         }
 
-        if (sum > utils.getLimitTransactionsPerDayAmount())
+        if (sum > utils.getLimitTransactionsPerDayAmount()) {
             throw new LimitExceeded("Transaction limit per day amount exceed " + transaction.getId() + ". Can`t be saved");
-
-        if (count > utils.getLimitTransactionsPerDayCount())
+        }
+        if (count > utils.getLimitTransactionsPerDayCount()) {
             throw new LimitExceeded("Transaction limit per day count exceed " + transaction.getId() + ". Can`t be saved");
-
-        if (!checkCity(transaction))
+        }
+        if (!checkCity(transaction)) {
             throw new BadRequestException("Forbidden City " + transaction.getId() + ". Can`t be saved ");
-
+        }
         for (Transaction tr : transactions) {
-            if (transaction.equals(tr))
+            if (transaction.equals(tr)) {
                 throw new BadRequestException("Transaction already exists " + transaction.getId() + ". Can`t be saved");
+            }
         }
 
         count = 0;
         for (Transaction tr : transactions) {
-            if (tr != null)
-                count++;
+            if (tr != null) count++;
         }
-        if (count == transactions.length)
+        if (count == transactions.length) {
             throw new InternalServerException("No transaction space available" + transaction.getId() + ". Can`t be saved");
+        }
     }
 
     Transaction[] transactionList() {
         int countTransaction = 0;
         for (Transaction tr : transactions) {
-            if (tr != null)
-                countTransaction++;
+            if (tr != null) countTransaction++;
         }
 
         Transaction[] result = new Transaction[countTransaction];
@@ -75,15 +73,13 @@ public class TransactionDAO {
                 index++;
             }
         }
-
         return result;
     }
 
     Transaction[] transactionList(String city) {
         int countTransaction = 0;
         for (Transaction tr : transactions) {
-            if (tr != null && tr.getCity().equals(city))
-                countTransaction++;
+            if (tr != null && tr.getCity().equals(city)) countTransaction++;
         }
 
         Transaction[] result = new Transaction[countTransaction];
@@ -95,15 +91,13 @@ public class TransactionDAO {
                 index++;
             }
         }
-
         return result;
     }
 
     Transaction[] transactionList(int amount) {
         int countTransaction = 0;
         for (Transaction tr : transactions) {
-            if (tr != null && tr.getAmount() == amount)
-                countTransaction++;
+            if (tr != null && tr.getAmount() == amount) countTransaction++;
         }
 
         Transaction[] result = new Transaction[countTransaction];
@@ -115,7 +109,6 @@ public class TransactionDAO {
                 index++;
             }
         }
-
         return result;
     }
 
@@ -140,8 +133,7 @@ public class TransactionDAO {
                 int trMonth = calendar.get(Calendar.MONTH);
                 int trDay = calendar.get(Calendar.DAY_OF_MONTH);
 
-                if (trMonth == month && trDay == day)
-                    count++;
+                if (trMonth == month && trDay == day) count++;
             }
         }
 

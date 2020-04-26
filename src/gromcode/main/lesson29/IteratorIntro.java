@@ -24,6 +24,5 @@ public class IteratorIntro {
         for (File file : files) {
             System.out.println(file.getFileName());
         }
-
     }
 }

@@ -26,8 +26,7 @@ public class Solution {
                 res.append(line);
                 res.append("\r\n");
             }
-            if (res.length() > 1)
-                res.replace(res.length() - 1, res.length(), "");
+            if (res.length() > 1) res.replace(res.length() - 1, res.length(), "");
         } catch (IOException e) {
             System.err.println("Reading from file " + path + "failed");
         }
@@ -36,8 +35,7 @@ public class Solution {
 
     private static void writeToFile(String path, StringBuffer contentToWriter) {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true))) {
-            if (!readFromFile(path).toString().equals(""))
-                bw.append("\r\n");
+            if (!readFromFile(path).toString().equals("")) bw.append("\r\n");
             bw.append(contentToWriter);
         } catch (IOException e) {
             System.err.println("Writing to file " + path + " failed");
@@ -51,20 +49,23 @@ public class Solution {
         checkFile(fileFrom);
         checkFile(fileTo);
 
-        if (!fileFrom.canRead())
+        if (!fileFrom.canRead()) {
             throw new Exception("File " + fileFrom + " does not have permissions to read");
+        }
 
         checkToWrite(fileFrom);
         checkToWrite(fileTo);
     }
 
     private static void checkFile(File file) throws FileNotFoundException {
-        if (!file.exists())
+        if (!file.exists()) {
             throw new FileNotFoundException("File " + file + " does not exist");
+        }
     }
 
     private static void checkToWrite(File file) throws Exception {
-        if (!file.canWrite())
+        if (!file.canWrite()) {
             throw new Exception("File " + file + " does not have permissions to written");
+        }
     }
 }

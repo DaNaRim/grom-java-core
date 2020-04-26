@@ -12,7 +12,6 @@ public class Converter {
 
         System.out.println(intToString(111231));
         System.out.println(stringToInt("11"));
-
     }
 
     public static String intToString(int input) {

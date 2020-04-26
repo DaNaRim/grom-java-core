@@ -23,11 +23,12 @@ public class File implements Comparable<File> {
     public int compareTo(File file) {
         int res = 0;
 
-        if (file.getSizeInBytes() > this.sizeInBytes)
+        if (file.getSizeInBytes() > this.sizeInBytes) {
             res = -1;
-        else if (file.getSizeInBytes() < this.sizeInBytes)
+        }
+        else if (file.getSizeInBytes() < this.sizeInBytes) {
             res = 1;
-
+        }
         return res;
     }
 

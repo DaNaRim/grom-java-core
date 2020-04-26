@@ -24,5 +24,4 @@ public class Account {
     void changeOwnerName(String newOwnerName) {
         ownerName = newOwnerName;
     }
-
 }

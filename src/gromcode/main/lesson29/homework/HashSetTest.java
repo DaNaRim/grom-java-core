@@ -37,4 +37,3 @@ public class HashSetTest {
         return testSet;
     }
 }
-

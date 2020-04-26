@@ -1,6 +1,7 @@
 package gromcode.main.lesson11.homework;
 
 import java.util.Date;
+import java.util.Objects;
 
 public class Room {
     private long id;
@@ -49,6 +50,22 @@ public class Room {
 
     public void setDateAvailableFrom(Date dateAvailableFrom) {
         this.dateAvailableFrom = dateAvailableFrom;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Room room = (Room) o;
+        return price == room.price &&
+                persons == room.persons &&
+                hotelName.equals(room.hotelName) &&
+                cityName.equals(room.cityName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(price, persons, hotelName, cityName);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package gromcode.main.lesson10.polyexample;
 
-public class User extends Human{
+public class User extends Human {
 
     public User(String name) {
         super(name);

@@ -26,7 +26,5 @@ public class Task {
         //solution 2
         //HW
 
-
-
     }
 }

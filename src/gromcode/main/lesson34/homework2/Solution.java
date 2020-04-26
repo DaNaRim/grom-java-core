@@ -32,8 +32,7 @@ public class Solution {
 
     private static void writeToFile(String path, StringBuffer contentToWriter) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path, true))) {
-            if (readFromFile(path).toString().equals(""))
-                bufferedWriter.append("\n");
+            if (readFromFile(path).toString().equals("")) bufferedWriter.append("\n");
             bufferedWriter.append(contentToWriter);
         } catch (IOException e) {
             System.err.println("Writing to file " + path + " failed");
@@ -77,15 +76,17 @@ public class Solution {
         checkFile(fileFrom);
         checkFile(fileTo);
 
-        if (!fileFrom.canRead())
+        if (!fileFrom.canRead()) {
             throw new Exception("File " + fileFrom + " does not have permissions to read");
-
-        if (!fileFrom.canWrite())
+        }
+        if (!fileFrom.canWrite()) {
             throw new Exception("File " + fileFrom + " does not have permissions to written");
+        }
     }
 
-    private static void checkFile(File file) throws FileNotFoundException{
-        if (!file.exists())
+    private static void checkFile(File file) throws FileNotFoundException {
+        if (!file.exists()) {
             throw new FileNotFoundException("File " + file + " does not exist");
+        }
     }
 }

@@ -37,6 +37,7 @@ public class Demo_L11_H {
         //когда rooms = null +
 
         TripAdvisorAPI tripAdvisorAPI = new TripAdvisorAPI(notNullRooms);
+        /*
         for (Room room : tripAdvisorAPI.findRooms(1000, 8, "Cherkassy", "Orange"))
             System.out.println(room.getId());
         System.out.println("////");
@@ -70,7 +71,7 @@ public class Demo_L11_H {
         for (Room room : tripAdvisorAPI.findRooms(150, 3, "Cherkassy", "Orange"))
             System.out.println(room.getId());
         System.out.println("////");
-
+*/
         //test "findRooms" BookingComAPI class
 
         //точний поиск комнат +
@@ -83,6 +84,7 @@ public class Demo_L11_H {
         //когда rooms = null +
 
         BookingComAPI bookingComAPI = new BookingComAPI(notNullRooms);
+        /*
         for (Room room : bookingComAPI.findRooms(1000, 8, "Cherkassy", "Orange"))
             System.out.println(room.getId());
         System.out.println("////");
@@ -116,7 +118,7 @@ public class Demo_L11_H {
         for (Room room : bookingComAPI.findRooms(150, 3, "Cherkassy", "Orange"))
             System.out.println(room.getId());
         System.out.println("////");
-
+*/
         //test "findRooms" GoogleAPI class
 
         //точний поиск комнат +
@@ -128,6 +130,7 @@ public class Demo_L11_H {
         //когда rooms = null +
 
         GoogleAPI googleAPI = new GoogleAPI(notNullRooms);
+        /*
         for (Room room : googleAPI.findRooms(1000, 8, "Cherkassy", "Orange"))
             System.out.println(room.getId());
         System.out.println("////");
@@ -161,13 +164,13 @@ public class Demo_L11_H {
         for (Room room : googleAPI.findRooms(150, 3, "Cherkassy", "Orange"))
             System.out.println(room.getId());
         System.out.println("////");
-
+*/
         //test "requestRooms" Controller class
 
         //находит комнаты по заданным параметрам по всем АПИ
         //когда API null
         //когда room налл
-
+/*
         tripAdvisorAPI = new TripAdvisorAPI(notNullRooms);
         bookingComAPI = new BookingComAPI(notNullRooms);
         googleAPI = new GoogleAPI(notNullRooms);
@@ -188,13 +191,13 @@ public class Demo_L11_H {
 
         System.out.println(Arrays.toString(controller.requestRooms(150, 6, "Cherkassy", "Orange")));
         System.out.println("//////////////");
-
+*/
         //test "check" Controller class
 
         //находит общие комнаты
         //когда API null
         //когда room налл
-
+/*
         tripAdvisorAPI = new TripAdvisorAPI(notNullRooms);
         bookingComAPI = new BookingComAPI(notNullRooms);
         googleAPI = new GoogleAPI(notNullRooms);
@@ -214,13 +217,13 @@ public class Demo_L11_H {
         controller2 = new Controller(api2);
 
         System.out.println(Arrays.toString(controller2.check(googleAPI, bookingComAPI)));
-
+*/
         //test "cheapestRoom" Controller class
 
         //Находит самую дешевую комнаты
         //когда API null
         //когда room налл
-
+/*
         tripAdvisorAPI = new TripAdvisorAPI(notNullRooms);
         bookingComAPI = new BookingComAPI(notNullRooms);
         googleAPI = new GoogleAPI(notNullRooms);
@@ -240,6 +243,6 @@ public class Demo_L11_H {
         controller3 = new Controller(api3);
 
         System.out.println(controller3.cheapestRoom());
-
+ */
     }
 }

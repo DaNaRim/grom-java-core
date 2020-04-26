@@ -15,7 +15,6 @@ public class ArrayUtils {
         for (int el : array) {
             count = el == n ? count + 1 : count;
         }
-
         return count;
     }
 
@@ -47,7 +46,6 @@ public class ArrayUtils {
 
         while (a > 0) {
             a = 0;
-
             for (int i = 1; i < array.length; i++) {
                 if (array[i] > array[i - 1]) {
                     per = array[i];
@@ -59,8 +57,4 @@ public class ArrayUtils {
         }
         return array;
     }
-
-
-
-
 }

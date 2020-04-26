@@ -10,7 +10,7 @@ public class FindOdd {
             }
         }
 
-        if (sum * 5 >= 5000) {
+        if (sum * 5 > 5000) {
             System.out.println("Bigger");
         } else {
             System.out.println("Smaller or equal");

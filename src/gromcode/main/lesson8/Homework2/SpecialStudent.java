@@ -1,6 +1,6 @@
 package gromcode.main.lesson8.Homework2;
 
-public class SpecialStudent extends CollegeStudent{
+public class SpecialStudent extends CollegeStudent {
     long secretKey;
     String email;
 

@@ -28,7 +28,7 @@ public class Demo_L9_H {
         //когда нет места в массиве +
         //когда сохраняем null +
         //когда users null +
-/*
+
         System.out.println(userRepository.save(user5));
         System.out.println(Arrays.deepToString(userRepository.getUsers()));
         System.out.println();
@@ -45,10 +45,10 @@ public class Demo_L9_H {
         System.out.println(Arrays.deepToString(userRepository.getUsers()));
         System.out.println();
 
-        System.out.println(nullUserRepository.save(user5));
-        System.out.println(Arrays.deepToString(nullUserRepository.getUsers()));
-        System.out.println();
-*/
+//        System.out.println(nullUserRepository.save(user5));
+//        System.out.println(Arrays.deepToString(nullUserRepository.getUsers()));
+//        System.out.println();
+
         //test "update"
 
         //обновление юзера +
@@ -86,7 +86,7 @@ public class Demo_L9_H {
         //когда нет юзера на удаление +
         //когда user null
         //когда users null +
-
+/*
         notNullUserRepository.delete(1001);
         System.out.println(Arrays.deepToString(notNullUserRepository.getUsers()));
         System.out.println();
@@ -102,7 +102,7 @@ public class Demo_L9_H {
         nullUserRepository.delete(1001);
         System.out.println(Arrays.deepToString(nullUserRepository.getUsers()));
         System.out.println();
-
+*/
         //test "countUsers"
 
         //подсчет юзеров

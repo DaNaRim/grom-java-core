@@ -4,9 +4,7 @@ abstract public class Employee {
     private String name;
     private int age;
     private int yearsOfExperience;
-
     private String curPosition;
-
     private int salaryPerMonth;
     private BankAccount bankAccount;
     private Company[] companiesWorked = new Company[10];
@@ -15,8 +13,6 @@ abstract public class Employee {
     abstract void paySalary();
 
     void changePosition(String newPosition) {
-
-
         savePositionToHistory();
         curPosition = newPosition;
     }
