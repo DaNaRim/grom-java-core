@@ -3,6 +3,7 @@ package Project.model;
 import java.util.Date;
 
 public class Filter {
+
     private Integer numberOfGuests;
     private Double price;
     private Boolean breakfastIncluded;
@@ -11,8 +12,13 @@ public class Filter {
     private String country;
     private String city;
 
-    public Filter(Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed,
-                  Date dateAvailableFrom, String country, String city) {
+    public Filter(Integer numberOfGuests,
+                  Double price,
+                  Boolean breakfastIncluded,
+                  Boolean petsAllowed,
+                  Date dateAvailableFrom,
+                  String country,
+                  String city) {
         this.numberOfGuests = numberOfGuests;
         this.price = price;
         this.breakfastIncluded = breakfastIncluded;

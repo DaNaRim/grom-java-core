@@ -1,6 +1,7 @@
 package Project.model;
 
 public class User extends BaseModel implements Comparable<User> {
+
     private Long id;
     private String userName;
     private String password;

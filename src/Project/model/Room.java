@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Room extends BaseModel implements Comparable<Room> {
+
     private Long id;
     private Integer numberOfGuests;
     private Double price;
@@ -12,8 +13,12 @@ public class Room extends BaseModel implements Comparable<Room> {
     private Date dateAvailableFrom;
     private Hotel hotel;
 
-    public Room(Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed,
-                Date dateAvailableFrom, Hotel hotel) {
+    public Room(Integer numberOfGuests,
+                Double price,
+                Boolean breakfastIncluded,
+                Boolean petsAllowed,
+                Date dateAvailableFrom,
+                Hotel hotel) {
         this.numberOfGuests = numberOfGuests;
         this.price = price;
         this.breakfastIncluded = breakfastIncluded;
@@ -22,8 +27,13 @@ public class Room extends BaseModel implements Comparable<Room> {
         this.hotel = hotel;
     }
 
-    public Room(Long id, Integer numberOfGuests, Double price, Boolean breakfastIncluded, Boolean petsAllowed,
-                Date dateAvailableFrom, Hotel hotel) {
+    public Room(Long id,
+                Integer numberOfGuests,
+                Double price,
+                Boolean breakfastIncluded,
+                Boolean petsAllowed,
+                Date dateAvailableFrom,
+                Hotel hotel) {
         this.id = id;
         this.numberOfGuests = numberOfGuests;
         this.price = price;

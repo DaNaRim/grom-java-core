@@ -3,6 +3,7 @@ package Project.model;
 import java.util.Objects;
 
 public class Hotel extends BaseModel implements Comparable<Hotel> {
+
     private Long id;
     private String name;
     private String country;

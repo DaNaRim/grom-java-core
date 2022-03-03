@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Order extends BaseModel implements Comparable<Order> {
+
     private Long id;
     private User user;
     private Room room;
