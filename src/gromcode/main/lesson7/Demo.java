@@ -5,6 +5,7 @@ import gromcode.main.lesson6.DbConnector;
 import gromcode.main.lesson6.User;
 
 public class Demo {
+
     public static void main(String[] args) {
         // two options to create object
         //class name (type) object name = new class name ();
