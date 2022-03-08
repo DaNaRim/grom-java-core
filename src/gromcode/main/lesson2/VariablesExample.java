@@ -1,6 +1,7 @@
 package gromcode.main.lesson2;
 
 public class VariablesExample {
+
     public static void main(String[] args) {
         byte a;
         short b;
@@ -10,7 +11,7 @@ public class VariablesExample {
         float e1;
         char ch;
         char ch1;
-        boolean trueBul;
-        boolean falceBul;
+        boolean trueBool;
+        boolean falseBool;
     }
 }
