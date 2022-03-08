@@ -1,29 +1,29 @@
 package gromcode.main.lesson13;
 
 public class UserRepository {
+
     private User[] users = new User[10];
 
     public User[] getUsers() {
         return users;
     }
 
-    public User getFindById(long id) {
-        return findById(id);
+    public User save(User user) {
+        if (user == null
+                || findById(user.getId()) != null
+                || !hasNullSell()) return null;
+
+        for (int i = 0; i < users.length; i++) {
+            if (users[i] != null) continue;
+            users[i] = user;
+            break;
+        }
+        return user;
     }
 
-    public User save(User user) {
-        if (user == null || findById(user.getId()) != null) return null;
-
-        int countPlaced = 0;
-        for (User us : users) {
-            if (us != null) countPlaced++;
-        }
-        if (countPlaced > 9) return null;
-
-        int index = 0;
-        for (User us : users) {
-            if (us == null) return users[index] = user;
-            index++;
+    public User findById(long id) {
+        for (User user : users) {
+            if (user != null && user.getId() == id) return user;
         }
         return null;
     }
@@ -31,29 +31,26 @@ public class UserRepository {
     public User update(User user) {
         if (user == null || findById(user.getId()) == null) return null;
 
-        int index = 0;
-        for (User us : users) {
-            if (us != null && us.getId() == findById(user.getId()).getId()) return users[index] = user;
-            index++;
+        for (int i = 0; i < users.length; i++) {
+            if (users[i] == null || users[i].getId() != user.getId()) continue;
+            users[i] = user;
+            break;
         }
-        return null;
+        return user;
     }
 
     public void delete(long id) {
-        int index = 0;
-        for (User us : users) {
-            if (us != null && us == findById(id)) {
-                users[index] = null;
-                break;
-            }
-            index++;
+        for (int i = 0; i < users.length; i++) {
+            if (users[i] == null || users[i].getId() != id) continue;
+            users[i] = null;
+            break;
         }
     }
 
-    private User findById(long id) {
+    private boolean hasNullSell() {
         for (User user : users) {
-            if (user != null && id == user.getId()) return user;
+            if (user == null) return true;
         }
-        return null;
+        return false;
     }
 }

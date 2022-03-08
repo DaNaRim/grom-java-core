@@ -3,16 +3,16 @@ package gromcode.main.lesson13;
 import java.util.Arrays;
 
 public class Demo {
+
     public static void main(String[] args) {
         UserRepository userRepository = new UserRepository();
 
         User user = new User(1001, "Ann", "1w21212");
-        userRepository.save(user);
 
+        userRepository.save(user);
         System.out.println(Arrays.deepToString(userRepository.getUsers()));
 
         userRepository.save(user);
-
         System.out.println(Arrays.deepToString(userRepository.getUsers()));
 
         //сохранение юзера +
@@ -20,18 +20,14 @@ public class Demo {
         //когда нет места в массиве +
         //когда сохраняем null +
 
-        int n = 15;
-        while (n > 0) {
-            User user1 = new User(n, "Ann", "1w21212");
+        for (int i = 0; i < 12; i++) {
+            User user1 = new User(i, "Ann", "1w21212");
             System.out.println(userRepository.save(user1));
-            n--;
         }
-
         System.out.println(Arrays.deepToString(userRepository.getUsers()));
         userRepository.save(null);
 
         //test update
-
         //обновление юзера +
         //когда нет юзера на обновление +
         //когда обновляем null +
@@ -47,5 +43,10 @@ public class Demo {
 
         System.out.println(userRepository.update(null));
         System.out.println(Arrays.deepToString(userRepository.getUsers()));
+
+        userRepository.delete(3);
+        System.out.println(Arrays.deepToString(userRepository.getUsers()));
+
+        userRepository.save(user);
     }
 }
