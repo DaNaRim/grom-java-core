@@ -2,7 +2,13 @@ package gromcode.main.lesson12;
 
 public class ChinaBank extends Bank {
 
-    public ChinaBank(long id, String bankCountry, Currency currency, int numberOfEmployees, double avrSalaryOfEmployee, long rating, long totalCapital) {
+    public ChinaBank(long id,
+                     String bankCountry,
+                     Currency currency,
+                     int numberOfEmployees,
+                     double avrSalaryOfEmployee,
+                     long rating,
+                     long totalCapital) {
         super(id, bankCountry, currency, numberOfEmployees, avrSalaryOfEmployee, rating, totalCapital);
     }
 
@@ -23,9 +29,18 @@ public class ChinaBank extends Bank {
 
     @Override
     public double getCommission(int amount) {
-        if (getCurrency() == Currency.USD)
-            return amount <= 1000 ? 0.03 : 0.1;
-        else
-            return amount <= 1000 ? 0.1 : 0.11;
+//        if (getCurrency() == Currency.USD) {
+//            return amount <= 1000 ? 0.03 : 0.1;
+//        } else {
+//            return amount <= 1000 ? 0.1 : 0.11;
+//        }
+
+        if (getCurrency() == Currency.USD && amount <= 1000) {
+            return 0.03;
+        } else if (getCurrency() == Currency.USD || amount <= 1000) {
+            return 0.01;
+        } else {
+            return 0.11;
+        }
     }
 }

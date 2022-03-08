@@ -1,6 +1,7 @@
 package gromcode.main.lesson12;
 
 public class Main {
+
     public static void main(String[] args) {
         Bank euBank1 = new EUBank(0001, "Sweden", Currency.EUR, 100, 1400, 4, 444343434);
         Bank euBank2 = new EUBank(0002, "Poland", Currency.USD, 101, 1000, 5, 45743578);
@@ -56,7 +57,6 @@ public class Main {
         System.out.println(user6);
 */
         //test getLimitOfWithdrawal ChinaBank class
-
         //Якщо Currency = EUR
         //Якщо Currency = USD
 
@@ -65,7 +65,6 @@ public class Main {
         System.out.println();
 
         //test getLimitOfFunding ChinaBank class
-
         //Якщо Currency = EUR
         //Якщо Currency = USD
 
@@ -74,7 +73,6 @@ public class Main {
         System.out.println();
 
         //test getMonthlyRate ChinaBank class
-
         //Якщо Currency = EUR
         //Якщо Currency = USD
 
@@ -83,7 +81,6 @@ public class Main {
         System.out.println();
 
         //test getCommission ChinaBank class
-
         //Якщо Currency = EUR, amount <= 1000
         //Якщо Currency = EUR, amount > 1000
         //Якщо Currency = USD, amount <= 1000
@@ -96,7 +93,6 @@ public class Main {
         System.out.println();
 
         //test getLimitOfWithdrawal EUBank class
-
         //Якщо Currency = EUR
         //Якщо Currency = USD
 
@@ -105,7 +101,6 @@ public class Main {
         System.out.println();
 
         //test getLimitOfFunding EUBank class
-
         //Якщо Currency = EUR
         //Якщо Currency = USD
 
@@ -114,7 +109,6 @@ public class Main {
         System.out.println();
 
         //test getMonthlyRate EUBank class
-
         //Якщо Currency = EUR
         //Якщо Currency = USD
 
@@ -123,7 +117,6 @@ public class Main {
         System.out.println();
 
         //test getCommission EUBank class
-
         //Якщо Currency = EUR, amount <= 1000
         //Якщо Currency = EUR, amount > 1000
         //Якщо Currency = USD, amount <= 1000
@@ -136,7 +129,6 @@ public class Main {
         System.out.println();
 
         //test getLimitOfWithdrawal USBank class
-
         //Якщо Currency = EUR
         //Якщо Currency = USD
 
@@ -145,7 +137,6 @@ public class Main {
         System.out.println();
 
         //test getLimitOfFunding USBank class
-
         //Якщо Currency = EUR
         //Якщо Currency = USD
 
@@ -154,7 +145,6 @@ public class Main {
         System.out.println();
 
         //test getMonthlyRate USBank class
-
         //Якщо Currency = EUR
         //Якщо Currency = USD
 
@@ -163,7 +153,6 @@ public class Main {
         System.out.println();
 
         //test getCommission USBank class
-
         //Якщо Currency = EUR, amount <= 1000
         //Якщо Currency = EUR, amount > 1000
         //Якщо Currency = USD, amount <= 1000
@@ -176,7 +165,6 @@ public class Main {
         System.out.println();
 
         //test withdraw UkrainianBankSystem class
-
         //Зняття
         //Коли перевищена сума
         //Коли нема на балансі
@@ -195,7 +183,6 @@ public class Main {
         System.out.println();
 
         //test fund UkrainianBankSystem class
-
         //Поповнення
         //Коли перевищена сума
         //Якщо user = null
@@ -210,7 +197,6 @@ public class Main {
         System.out.println();
 
         //test transferMoney UkrainianBankSystem class
-
         //Переведення
         //Коли перевищена сума зняття
         //Коли перевищена сума поповнення
@@ -247,7 +233,6 @@ public class Main {
         System.out.println();
 
         //test paySalary UkrainianBankSystem class
-
         //поповнення
         //зарплата быльша ніж можнаXD
         //Якщо user = null
