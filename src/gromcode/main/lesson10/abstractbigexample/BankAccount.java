@@ -1,6 +1,7 @@
 package gromcode.main.lesson10.abstractbigexample;
 
 public class BankAccount {
+
     private Employee employee;
     private int balance;
 

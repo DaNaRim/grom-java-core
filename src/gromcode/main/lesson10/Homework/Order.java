@@ -2,7 +2,8 @@ package gromcode.main.lesson10.Homework;
 
 import java.util.Date;
 
-abstract public class Order {
+public abstract class Order {
+
     private String itemName;
     private Date dateCreated;
     private Date dateConfirmed;
@@ -13,7 +14,12 @@ abstract public class Order {
     private double totalPrice;
     private Customer customerOwned;
 
-    public Order(String itemName, Date dateCreated, String shipFromCity, String shipToCity, int basePrice, Customer customerOwned) {
+    public Order(String itemName,
+                 Date dateCreated,
+                 String shipFromCity,
+                 String shipToCity,
+                 int basePrice,
+                 Customer customerOwned) {
         this.itemName = itemName;
         this.dateCreated = dateCreated;
         this.shipFromCity = shipFromCity;

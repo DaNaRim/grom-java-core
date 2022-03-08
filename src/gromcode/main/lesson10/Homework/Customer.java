@@ -1,6 +1,7 @@
 package gromcode.main.lesson10.Homework;
 
 public class Customer {
+
     private String name;
     private String city;
     private String gender;

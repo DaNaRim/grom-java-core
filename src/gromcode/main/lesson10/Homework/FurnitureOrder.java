@@ -3,9 +3,16 @@ package gromcode.main.lesson10.Homework;
 import java.util.Date;
 
 public class FurnitureOrder extends Order {
+
     private String furnitureCode;
 
-    public FurnitureOrder(String itemName, Date dateCreated, String shipFromCity, String shipToCity, int basePrice, Customer customerOwned, String furnitureCode) {
+    public FurnitureOrder(String itemName,
+                          Date dateCreated,
+                          String shipFromCity,
+                          String shipToCity,
+                          int basePrice,
+                          Customer customerOwned,
+                          String furnitureCode) {
         super(itemName, dateCreated, shipFromCity, shipToCity, basePrice, customerOwned);
         this.furnitureCode = furnitureCode;
     }
@@ -14,16 +21,16 @@ public class FurnitureOrder extends Order {
     public void validateOrder() {
         String[] orderFromCities = {"Киев", "Львов"};
 
-        boolean checkOperation = true;
-        for (String sOFC : orderFromCities) {
-
-            if (getShipFromCity() == sOFC && getBasePrice() >= 500 && getCustomerOwned().getName() != "Тест") {
+        for (String ofc : orderFromCities) {
+            if (getShipFromCity() == ofc
+                    && getBasePrice() >= 500
+                    && getCustomerOwned().getName() != "Тест") {
                 setDateConfirmed(new Date());
-                checkOperation = false;
                 System.out.println("ValidateOrder id done");
+                return;
             }
         }
-        if (checkOperation) System.out.println("ValidateOrder is wrong");
+        System.out.println("ValidateOrder is wrong");
     }
 
     @Override

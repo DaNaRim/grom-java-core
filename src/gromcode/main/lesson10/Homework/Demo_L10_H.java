@@ -3,12 +3,12 @@ package gromcode.main.lesson10.Homework;
 import java.util.Date;
 
 public class Demo_L10_H {
+
     public static void main(String[] args) {
         Customer customer1 = new Customer("Ira", "Одесса", "Женский");
         Customer customer2 = new Customer("Тест", "Львов", "Мужской");
 
         //test "validateOrder" FurnitureOrder class
-
         //валидация
         //когда не подходящий город c которого заказивают
         //когда минимальная цена заказа < 500
@@ -29,7 +29,6 @@ public class Demo_L10_H {
         System.out.println();
 
         //test "calculatePrice" FurnitureOrder class
-
         //расчет цены если сумма < 5000
         //расчет цены если сумма = 5000
         //расчет цены если сумма > 5000
@@ -46,7 +45,6 @@ public class Demo_L10_H {
         System.out.println();
 
         //test "validateOrder" ElectronicsOrder class
-
         //валидация
         //когда не подходящий город c которого заказивают
         //когда не подходящий город в которий заказивают

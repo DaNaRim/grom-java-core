@@ -1,6 +1,7 @@
 package gromcode.main.lesson10.polyexample;
 
 public class Demo {
+
     public static void main(String[] args) {
         Human human = new Human("Test");
         run(human);

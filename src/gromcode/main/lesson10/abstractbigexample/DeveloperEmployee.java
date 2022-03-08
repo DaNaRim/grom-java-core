@@ -1,6 +1,7 @@
 package gromcode.main.lesson10.abstractbigexample;
 
 public class DeveloperEmployee extends Employee {
+
     private String[] frameworks = new String[10];
 
     @Override

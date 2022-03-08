@@ -1,6 +1,7 @@
 package gromcode.main.lesson10.abstractbigexample;
 
 public class EmployeeController {
+
     private Employee[] employees = new Employee[100];
 
     void paySalaryToEmployees() {
@@ -10,7 +11,7 @@ public class EmployeeController {
         }
     }
 
-   /* void paySalaryToEmployees() {
+    /*void paySalaryToEmployees() {
         for (Employee employee : employees) {
             if (employee instanceof DeveloperEmployee) {
                 int newBalance = employee.getBankAccount().getBalance() + employee.getSalaryPerMonth() + 1000;

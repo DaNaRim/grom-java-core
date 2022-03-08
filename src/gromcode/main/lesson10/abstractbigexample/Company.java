@@ -1,6 +1,7 @@
 package gromcode.main.lesson10.abstractbigexample;
 
 public class Company {
+
     private String name;
 
     public Company(String name) {

@@ -1,6 +1,7 @@
 package gromcode.main.lesson10.abstractbigexample;
 
 abstract public class Employee {
+
     private String name;
     private int age;
     private int yearsOfExperience;
