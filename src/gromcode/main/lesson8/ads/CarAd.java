@@ -1,6 +1,7 @@
 package gromcode.main.lesson8.ads;
 
 public class CarAd extends Ad {
+
     int yearOfManufacturing;
     String color;
     String ownerName;

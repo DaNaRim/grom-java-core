@@ -3,6 +3,7 @@ package gromcode.main.lesson8.Homework2;
 import java.util.Date;
 
 public class Course {
+
     Date startDate;
     String name;
     int hoursDuration;

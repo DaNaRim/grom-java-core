@@ -1,6 +1,7 @@
 package gromcode.main.lesson8.Phones;
 
 public class IPhone extends Phone {
+
     boolean fingerprint;
 
     public IPhone(int price, double weight, String countryProduced, boolean fingerprint) {

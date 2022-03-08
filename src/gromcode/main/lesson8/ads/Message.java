@@ -3,6 +3,7 @@ package gromcode.main.lesson8.ads;
 import java.util.Date;
 
 public class Message extends BaseEntity {
+
     User userFrom;
     User userTo;
     Date dateSent;
@@ -22,9 +23,6 @@ public class Message extends BaseEntity {
     }
 
     boolean isRead() {
-        //  if(dateRead = null)
-        //      return false;
-        //  return true;
         return dateRead == null;
     }
 }

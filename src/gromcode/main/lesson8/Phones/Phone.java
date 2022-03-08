@@ -1,6 +1,7 @@
 package gromcode.main.lesson8.Phones;
 
 public class Phone {
+
     int price;
     double weight;
     String countryProduced;

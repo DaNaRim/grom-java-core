@@ -1,6 +1,7 @@
 package gromcode.main.lesson8.accounts;
 
 public class Account {
+
     String bankName;
     String ownerName;
     int moneyAmount;

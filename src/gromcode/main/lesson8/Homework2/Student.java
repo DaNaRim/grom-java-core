@@ -1,6 +1,7 @@
 package gromcode.main.lesson8.Homework2;
 
 public class Student {
+
     String firstName;
     String lastName;
     int group;

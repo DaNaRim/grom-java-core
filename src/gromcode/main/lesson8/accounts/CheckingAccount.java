@@ -1,6 +1,7 @@
 package gromcode.main.lesson8.accounts;
 
 public class CheckingAccount extends Account {
+
     int limitOFExpense;
 
     public CheckingAccount(String bankName, String ownerName, int moneyAmount, int limitOFExpense) {
@@ -9,8 +10,7 @@ public class CheckingAccount extends Account {
     }
 
     void withdraw(int amount) {
-        if (amount > limitOFExpense)
-            return;
+        if (amount > limitOFExpense) return;
         moneyAmount -= amount;
     }
 }

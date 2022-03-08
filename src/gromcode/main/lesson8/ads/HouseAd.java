@@ -1,6 +1,7 @@
 package gromcode.main.lesson8.ads;
 
 public class HouseAd extends Ad {
+
     String ownerName;
     String address;
     double square;
