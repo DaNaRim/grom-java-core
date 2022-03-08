@@ -1,8 +1,9 @@
 package gromcode.main.lesson14;
 
-public class Test implements Cloneable{
+public class Test implements Cloneable {
+
     private int someNumber;
-    private  String name;
+    private String name;
 
     public Test(int someNumber, String name) {
         this.someNumber = someNumber;
@@ -14,7 +15,7 @@ public class Test implements Cloneable{
         return super.clone();
     }
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
         Test test = new Test(10000, "name");
         System.out.println(test);
         System.out.println(test.hashCode());
