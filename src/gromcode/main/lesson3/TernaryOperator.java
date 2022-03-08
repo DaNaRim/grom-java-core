@@ -1,6 +1,7 @@
 package gromcode.main.lesson3;
 
 public class TernaryOperator {
+
     public static void main(String[] args) {
         int a;
         byte b = 100;
