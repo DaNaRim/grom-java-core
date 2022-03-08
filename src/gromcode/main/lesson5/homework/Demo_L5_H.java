@@ -3,6 +3,7 @@ package gromcode.main.lesson5.homework;
 import java.util.Arrays;
 
 public class Demo_L5_H {
+
     public static void main(String[] args) {
         int[] array = {11, 12, 100, 5, 4, 42, 100, 4, 50, 2};
 
@@ -32,11 +33,9 @@ public class Demo_L5_H {
 
         //знаходження уныкальних
         //якщо array null
-        //
 
         System.out.println(FindingUnique.uniqueCount(array));
         System.out.println(FindingUnique.uniqueCount(null));
         System.out.println();
     }
 }
-

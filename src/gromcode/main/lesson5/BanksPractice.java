@@ -1,6 +1,7 @@
 package gromcode.main.lesson5;
 
 public class BanksPractice {
+
     public static void main(String[] args) {
         String[] names = {"Jack", "Ann", "Denis", "Andrey", "Nikolay", "Irina", "John"};
         int[] balances = {100, 500, 8432, -99, 1200, -54, 0};
@@ -14,7 +15,6 @@ public class BanksPractice {
     }
 
     static String[] findClientsByBalance(String[] clients, int[] balances, int n) {
-        //String[] result = new String[];
         int count = 0;
         for (int balance : balances) {
             count = balance >= n ? count + 1 : count;
@@ -33,7 +33,6 @@ public class BanksPractice {
     }
 
     static String[] findClientsWithNegativeBalance(String[] clients, int[] balances) {
-        //String[] result = new String[];
         int count = 0;
         for (int balance : balances) {
             count = balance < 0 ? count + 1 : count;
@@ -59,9 +58,7 @@ public class BanksPractice {
     static int findClientIndexByName(String[] clients, String client) {
         int clientIndex = 0;
         for (String cl : clients) {
-            if (cl == client) {
-                break;
-            }
+            if (cl == client) break;
             clientIndex++;
         }
         return clientIndex;
@@ -74,17 +71,14 @@ public class BanksPractice {
     static int withdraw(String[] clients, int[] balances, String client, int amount) {
         int clientIndex = 0;
         for (String cl : clients) {
-            if (cl == client) {
-                break;
-            }
+            if (cl == client) break;
             clientIndex++;
         }
 
         if (balances[clientIndex] > amount) {
             balances[clientIndex] -= amount;
             return balances[clientIndex];
-        } else {
-            return -1;
         }
+        return -1;
     }
 }

@@ -1,6 +1,7 @@
 package gromcode.main.lesson5;
 
 public class ArraysElement {
+
     public static void main(String[] args) {
         int[] array = {-10, 0, 234, 444, 665, 234};
         System.out.println(maxElement(array));
@@ -20,9 +21,6 @@ public class ArraysElement {
         for (int el : array) {
             count = el == n ? count + 1 : count;
         }
-
         return count;
     }
-
-
 }

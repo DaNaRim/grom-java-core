@@ -3,6 +3,7 @@ package gromcode.main.lesson5.homework;
 import java.util.Arrays;
 
 public class ArraySort {
+
     public static void main(String[] args) {
         int[] sp = {11, 12, 10, 5, 4, 42, 100, 44, 50, 2};
         System.out.println(Arrays.toString(sortAscending(sp)));
