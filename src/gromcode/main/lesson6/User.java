@@ -3,6 +3,7 @@ package gromcode.main.lesson6;
 import java.util.Date;
 
 public class User {
+
     String name;
     int age;
     String city;
@@ -24,15 +25,15 @@ public class User {
         this.name = name;
     }
 
-    void logIn(){
+    void logIn() {
         lastActiveDate = new Date();
     }
 
-   void isActive(boolean status){
+    void isActive(boolean status) {
         isActive = status;
-   }
+    }
 
-   void increaseAge(){
+    void increaseAge() {
         age++;
-   }
+    }
 }
