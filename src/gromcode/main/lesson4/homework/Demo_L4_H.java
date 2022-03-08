@@ -1,6 +1,7 @@
 package gromcode.main.lesson4.homework;
 
 public class Demo_L4_H {
+
     public static void main(String[] args) {
 
         //test sum ComparisonOfAmounts class
@@ -32,17 +33,10 @@ public class Demo_L4_H {
         //когда b > a
         //когда n = 0
 
-        short a = 1, b = 40;
-        System.out.println(MultiplesInTheInterval.findDivCount(a, b, 5));
-        a = 1;
-        b = 40;
-        System.out.println(MultiplesInTheInterval.findDivCount(a, b, 41));
-        a = 40;
-        b = 1;
-        System.out.println(MultiplesInTheInterval.findDivCount(a, b, 5));
-        a = 1;
-        b = 40;
-        System.out.println(MultiplesInTheInterval.findDivCount(a, b, 0));
+        System.out.println(MultiplesInTheInterval.findDivCount((short) 1, (short) 40, 5));
+        System.out.println(MultiplesInTheInterval.findDivCount((short) 1, (short) 40, 41));
+        System.out.println(MultiplesInTheInterval.findDivCount((short) 40, (short) 1, 5));
+        System.out.println(MultiplesInTheInterval.findDivCount((short) 1, (short) 40, 0));
         System.out.println();
 
         //test concat StringConcatenationMethod class

@@ -1,8 +1,10 @@
 package gromcode.main.lesson4.homework;
 
 public class MultiplesInTheInterval {
+
     public static void main(String[] args) {
-        short a = Short.MIN_VALUE, b = Short.MAX_VALUE;
+        short a = Short.MIN_VALUE;
+        short b = Short.MAX_VALUE;
 
         System.out.println(findDivCount(a, b, 0));
     }

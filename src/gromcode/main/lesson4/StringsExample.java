@@ -1,6 +1,7 @@
 package gromcode.main.lesson4;
 
 public class StringsExample {
+
     public static void main(String[] args) {
         String firstExample = "text or somothing else as string";
         String secondExample = ".......";

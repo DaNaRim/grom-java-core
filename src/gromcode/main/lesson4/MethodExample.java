@@ -1,11 +1,11 @@
 package gromcode.main.lesson4;
 
 public class MethodExample {
+
     public static void main(String[] args) {
         System.out.println(increaser(5, 20));
         System.out.println(min(increaser(10, 5), 11));
     }
-
 
     public static int increaser(int a, int index) {
         System.out.println("method invoked");
@@ -15,11 +15,6 @@ public class MethodExample {
     }
 
     public static int min(int a, int b) {
-        /*if ((a < b))
-            return  a;
-        else
-            return b;
-            */
         return a < b ? a : b;
     }
 }

@@ -1,6 +1,7 @@
 package gromcode.main.lesson4.homework;
 
 public class ComparisonOfAmounts {
+
     public static void main(String[] args) {
         System.out.println(compareSums(Integer.MIN_VALUE, Integer.MAX_VALUE, -200000, 0));
 
