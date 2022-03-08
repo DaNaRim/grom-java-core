@@ -1,6 +1,7 @@
 package gromcode.main.lesson11.bigInterfaceexample;
 
 public class File {
+
     private String name;
     private String path;
     private String extension;

@@ -1,6 +1,7 @@
 package gromcode.main.lesson11.homework;
 
 public class Controller {
+
     private API[] apis;
 
     public Controller(API[] apis) {
@@ -8,7 +9,6 @@ public class Controller {
     }
 
     public Room[] requestRooms(int price, int persons, String city, String hotel) {
-        //находит комнаты по заданным параметрам по всем АПИ
 
         Room[] result = new Room[countRooms(price, persons, city, hotel)];
 
@@ -25,14 +25,6 @@ public class Controller {
     }
 
     public Room[] check(API api1, API api2) {
-        //находит общие комнаты у двух API (в результирующий массив добавлять комнаты с api1).
-        // Комнаты будем считать равными, если у них одинаковые все поля кроме id и dateAvailableFrom.
-        // Гарантируется что id комнаты уникальный во всей системе
-
-        //Зробити масив кімнат api1
-        //Зробити масив кімнат api2
-        //Проганти другий масив у прогині першого й знайти спільні кімнати
-
         if (api1 == null || api2 == null) return null;
 
         Room[] result = new Room[countRooms(api1, api2)];
@@ -52,14 +44,15 @@ public class Controller {
     }
 
     public Room cheapestRoom() {
-        //Находит самую дешевую комнаты среди всех комнат доступных в АПИ
-
         Room cheapRoom = apis[0].getAll()[0];
+
         for (API api : apis) {
             if (api == null) continue;
 
             for (Room room : api.getAll()) {
-                if (room != null && cheapRoom.getPrice() > room.getPrice()) cheapRoom = room;
+                if (room != null && cheapRoom.getPrice() > room.getPrice()) {
+                    cheapRoom = room;
+                }
             }
         }
         return cheapRoom;
@@ -69,7 +62,9 @@ public class Controller {
         int numberOfRooms = 0;
 
         for (API api : apis) {
-            if (api != null) numberOfRooms += api.findRooms(price, persons, city, hotel).length;
+            if (api != null) {
+                numberOfRooms += api.findRooms(price, persons, city, hotel).length;
+            }
         }
         return numberOfRooms;
     }

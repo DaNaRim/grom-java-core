@@ -4,9 +4,6 @@ public class FileReader implements Readable {
 
     @Override
     public void readFileFromStorage(Storage storage) {
-        //найти файл макс размера
-        //вивести всю информацию о нем
-
         printFile(findMaxSizeFile(storage.getFiles()));
     }
 

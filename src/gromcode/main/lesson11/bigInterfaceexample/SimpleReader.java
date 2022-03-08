@@ -17,10 +17,11 @@ public class SimpleReader implements Readable {
     @Override
     public void readFileFromStorage(Storage storage) {
         for (File file : storage.getFiles()) {
-            if (file != null)
+            if (file != null) {
                 System.out.println(file.getName());
-            else
-                System.out.println(file);
+            } else {
+                System.out.println("null file");
+            }
         }
     }
 }
