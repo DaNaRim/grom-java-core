@@ -1,6 +1,7 @@
 package gromcode.main.lesson9.Homework;
 
 public class UserRepository {
+
     private User[] users;
 
     public UserRepository(User[] users) {
@@ -66,7 +67,11 @@ public class UserRepository {
     }
 
     public User save(User user) {
-        if (user == null || findById(user.getId()) != null || countUsers() == users.length) return null;
+        if (user == null
+                || findById(user.getId()) != null
+                || countUsers() == users.length) {
+            return null;
+        }
 
         int index = 0;
         for (User us : users) {
@@ -81,7 +86,9 @@ public class UserRepository {
 
         int index = 0;
         for (User us : users) {
-            if (us != null && us == findById(user.getId())) return users[index] = user;
+            if (us != null && us == findById(user.getId())) {
+                return users[index] = user;
+            }
             index++;
         }
         return null;

@@ -1,6 +1,7 @@
 package gromcode.main.lesson9;
 
 public class Employee {
+
     String name;
     Company company;
     int monthlySalary;
