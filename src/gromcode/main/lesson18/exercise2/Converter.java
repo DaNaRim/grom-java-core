@@ -1,6 +1,7 @@
 package gromcode.main.lesson18.exercise2;
 
 public class Converter {
+
     public static void main(String[] args) {
         System.out.println(intToString(111231));
         System.out.println(stringToInt("11"));

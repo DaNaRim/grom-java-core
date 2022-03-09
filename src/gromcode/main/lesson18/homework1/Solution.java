@@ -9,10 +9,10 @@ public class Solution {
         for (String string : text.split(" ")) {
             try {
                 res[i] = Integer.parseInt(string);
+                i++;
             } catch (Exception e) {
                 System.out.println("not a number");
             }
-            i++;
         }
         return res;
     }

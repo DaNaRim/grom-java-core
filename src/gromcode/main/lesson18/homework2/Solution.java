@@ -7,11 +7,12 @@ public class Solution {
 
         int i = 0;
         for (String string : text.split(" ")) {
-            if (checkNumber(string))
+            if (checkNumber(string)) {
                 res[i] = Integer.parseInt(string);
-            else
+                i++;
+            } else {
                 System.out.println("not a number");
-            i++;
+            }
         }
         return res;
     }

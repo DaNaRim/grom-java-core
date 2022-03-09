@@ -1,6 +1,7 @@
 package gromcode.main.lesson18.exercise1;
 
 public class Task {
+
     public static void main(String[] args) {
         FileStorage fileStorage = new FileStorage();
         String[] fileNames = {"test1", "test2"};
@@ -22,9 +23,7 @@ public class Task {
             System.err.println("5th name can not be found...");
             //System.err.println(e.getMessage());
         }
-
         //solution 2
         //HW
-
     }
 }
