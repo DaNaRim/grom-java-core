@@ -4,15 +4,14 @@ import java.util.Arrays;
 import java.util.Date;
 
 public class Demo11 {
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
         Room[] notNullRooms = new Room[8];
         notNullRooms[0] = new Room(1001, 150, 1, new Date(), "Orange", "Cherkassy");
         notNullRooms[1] = new Room(1002, 150, 2, new Date(), "Orange", "Cherkassy");
         notNullRooms[2] = new Room(1003, 150, 3, new Date(), "Orange", "Cherkassy");
         notNullRooms[3] = new Room(1004, 150, 0, new Date(), "Orange", "Cherkassy");
         notNullRooms[4] = new Room(1005, 1000, 8, new Date(), "Orange", "Cherkassy");
-
         notNullRooms[5] = new Room(1031, 100, 6, new Date(), "Orange", "Cherkassy");
         notNullRooms[6] = new Room(1032, 150, 6, new Date(), "Orange", "Cherkassy");
         notNullRooms[7] = new Room(1033, 250, 6, new Date(), "Orange", "Cherkassy");
@@ -37,42 +36,49 @@ public class Demo11 {
         //когда rooms = null +
 
         TripAdvisorAPI tripAdvisorAPI = new TripAdvisorAPI(notNullRooms);
-        for (Room room : tripAdvisorAPI.findRooms(1000, 8, "Cherkassy", "Orange"))
+        for (Room room : tripAdvisorAPI.findRooms(1000, 8, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
-        for (Room room : tripAdvisorAPI.findRooms(150, 2, "Cherkassy", "Orange"))
+        for (Room room : tripAdvisorAPI.findRooms(150, 2, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
-        for (Room room : tripAdvisorAPI.findRooms(555, 3, "Cherkassy", "Orange"))
+        for (Room room : tripAdvisorAPI.findRooms(555, 3, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
-        for (Room room : tripAdvisorAPI.findRooms(100, 9, "Cherkassy", "Orange"))
+        for (Room room : tripAdvisorAPI.findRooms(100, 9, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
-        for (Room room : tripAdvisorAPI.findRooms(150, 2, "TestCity", "Orange"))
+        for (Room room : tripAdvisorAPI.findRooms(150, 2, "TestCity", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
-        for (Room room : tripAdvisorAPI.findRooms(150, 3, "Cherkassy", "TestName"))
+        for (Room room : tripAdvisorAPI.findRooms(150, 3, "Cherkassy", "TestName")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
         tripAdvisorAPI = new TripAdvisorAPI(rooms);
-        for (Room room : tripAdvisorAPI.findRooms(250, 3, "Cherkassy", "Orange"))
+        for (Room room : tripAdvisorAPI.findRooms(250, 3, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
         tripAdvisorAPI = new TripAdvisorAPI(nullRooms);
-        for (Room room : tripAdvisorAPI.findRooms(150, 3, "Cherkassy", "Orange"))
+        for (Room room : tripAdvisorAPI.findRooms(150, 3, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
         //test "findRooms" BookingComAPI class
-
         //точний поиск комнат +
         //поиск комнат с ценой в диапазоне +-100 +
         //когда нет подходящих комнат по стоимости +
@@ -83,42 +89,49 @@ public class Demo11 {
         //когда rooms = null +
 
         BookingComAPI bookingComAPI = new BookingComAPI(notNullRooms);
-        for (Room room : bookingComAPI.findRooms(1000, 8, "Cherkassy", "Orange"))
+        for (Room room : bookingComAPI.findRooms(1000, 8, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
-        for (Room room : bookingComAPI.findRooms(150, 6, "Cherkassy", "Orange"))
+        for (Room room : bookingComAPI.findRooms(150, 6, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
-        for (Room room : bookingComAPI.findRooms(555, 3, "Cherkassy", "Orange"))
+        for (Room room : bookingComAPI.findRooms(555, 3, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
-        for (Room room : bookingComAPI.findRooms(100, 9, "Cherkassy", "Orange"))
+        for (Room room : bookingComAPI.findRooms(100, 9, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
-        for (Room room : bookingComAPI.findRooms(150, 2, "TestCity", "Orange"))
+        for (Room room : bookingComAPI.findRooms(150, 2, "TestCity", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
-        for (Room room : bookingComAPI.findRooms(150, 3, "Cherkassy", "TestName"))
+        for (Room room : bookingComAPI.findRooms(150, 3, "Cherkassy", "TestName")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
         bookingComAPI = new BookingComAPI(rooms);
-        for (Room room : bookingComAPI.findRooms(250, 3, "Cherkassy", "Orange"))
+        for (Room room : bookingComAPI.findRooms(250, 3, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
         bookingComAPI = new BookingComAPI(nullRooms);
-        for (Room room : bookingComAPI.findRooms(150, 3, "Cherkassy", "Orange"))
+        for (Room room : bookingComAPI.findRooms(150, 3, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
         //test "findRooms" GoogleAPI class
-
         //точний поиск комнат +
         //когда нет подходящих комнат по стоимости +
         //когда нет подходящих комнат по количеству человек +
@@ -128,42 +141,49 @@ public class Demo11 {
         //когда rooms = null +
 
         GoogleAPI googleAPI = new GoogleAPI(notNullRooms);
-        for (Room room : googleAPI.findRooms(1000, 8, "Cherkassy", "Orange"))
+        for (Room room : googleAPI.findRooms(1000, 8, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
-        for (Room room : googleAPI.findRooms(150, 2, "Cherkassy", "Orange"))
+        for (Room room : googleAPI.findRooms(150, 2, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
-        for (Room room : googleAPI.findRooms(555, 3, "Cherkassy", "Orange"))
+        for (Room room : googleAPI.findRooms(555, 3, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
-        for (Room room : googleAPI.findRooms(100, 9, "Cherkassy", "Orange"))
+        for (Room room : googleAPI.findRooms(100, 9, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
-        for (Room room : googleAPI.findRooms(150, 2, "TestCity", "Orange"))
+        for (Room room : googleAPI.findRooms(150, 2, "TestCity", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
-        for (Room room : googleAPI.findRooms(150, 3, "Cherkassy", "TestName"))
+        for (Room room : googleAPI.findRooms(150, 3, "Cherkassy", "TestName")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
         googleAPI = new GoogleAPI(rooms);
-        for (Room room : googleAPI.findRooms(250, 3, "Cherkassy", "Orange"))
+        for (Room room : googleAPI.findRooms(250, 3, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
         googleAPI = new GoogleAPI(nullRooms);
-        for (Room room : googleAPI.findRooms(150, 3, "Cherkassy", "Orange"))
+        for (Room room : googleAPI.findRooms(150, 3, "Cherkassy", "Orange")) {
             System.out.println(room.getId());
+        }
         System.out.println("////");
 
         //test "requestRooms" Controller class
-
         //находит комнаты по заданным параметрам по всем АПИ
         //когда API null
         //когда room налл
@@ -190,7 +210,6 @@ public class Demo11 {
         System.out.println("//////////////");
 
         //test "check" Controller class
-
         //находит общие комнаты
         //когда API null
         //когда room налл
@@ -216,7 +235,6 @@ public class Demo11 {
         System.out.println(Arrays.toString(controller2.check(googleAPI, bookingComAPI)));
 
         //test "cheapestRoom" Controller class
-
         //Находит самую дешевую комнаты
         //когда API null
         //когда room налл
@@ -240,6 +258,5 @@ public class Demo11 {
         controller3 = new Controller(api3);
 
         System.out.println(controller3.cheapestRoom());
-
     }
 }

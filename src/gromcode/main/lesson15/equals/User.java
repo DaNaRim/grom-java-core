@@ -1,6 +1,7 @@
 package gromcode.main.lesson15.equals;
 
 public class User {
+
     private long id;
 
     public User(long id) {

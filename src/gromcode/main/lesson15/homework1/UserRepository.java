@@ -1,10 +1,15 @@
 package gromcode.main.lesson15.homework1;
 
 public class UserRepository {
+
     private User[] users;
 
     public UserRepository(User[] users) {
-        this.users = users;
+        if (users == null) {
+            this.users = new User[10];
+        } else {
+            this.users = users;
+        }
     }
 
     public User[] getUsers() {
@@ -12,12 +17,13 @@ public class UserRepository {
     }
 
     public User save(User user) {
-        if (user == null || findUser(user) != null || countUsers() == users.length) return null;
+        if (user == null
+                || findUser(user) != null
+                || !hasNullSell()) return null;
 
-        int index = 0;
-        for (User us : users) {
-            if (us == null) return users[index] = user;
-            index++;
+        for (int i = 0; i < users.length; i++) {
+            if (users[i] != null) continue;
+            return users[i] = user;
         }
         return null;
     }
@@ -26,24 +32,18 @@ public class UserRepository {
     public User update(User user) {
         if (user == null || findById(user.getId()) == null) return null;
 
-        int index = 0;
-        for (User us : users) {
-            if (us != null && us.getId() == user.getId() && !us.equals(user)) return users[index] = user;
-            index++;
+        for (int i = 0; i < users.length; i++) {
+            if (users[i] == null || !users[i].equals(user)) continue;
+            return users[i] = user;
         }
         return null;
     }
 
     public void delete(long id) {
-        if (findById(id) == null) return;
-
-        int index = 0;
-        for (User us : users) {
-            if (us != null && us.getId() == id) {
-                users[index] = null;
-                break;
-            }
-            index++;
+        for (int i = 0; i < users.length; i++) {
+            if (users[i] == null || users[i].getId() != id) continue;
+            users[i] = null;
+            break;
         }
     }
 
@@ -63,11 +63,10 @@ public class UserRepository {
         return null;
     }
 
-    private int countUsers() {
-        int countUsers = 0;
+    private boolean hasNullSell() {
         for (User user : users) {
-            if (user != null) countUsers++;
+            if (user == null) return true;
         }
-        return countUsers;
+        return false;
     }
 }

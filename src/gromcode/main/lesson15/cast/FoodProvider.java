@@ -1,5 +1,5 @@
 package gromcode.main.lesson15.cast;
 
-public class FoodProvider extends Provider{
+public class FoodProvider extends Provider {
 
 }

@@ -1,6 +1,7 @@
 package gromcode.main.lesson15.cast;
 
 public class InstanceOfDemo {
+
     public static void main(String[] args) {
         Provider provider = new Provider();
         InternetProvider internetProvider = new InternetProvider();
@@ -13,14 +14,12 @@ public class InstanceOfDemo {
 
         if (test() instanceof InternetProvider) {
             System.out.println(test());
-            //
         } else if (test() instanceof FoodProvider) {
-            //
             System.out.println(test());
         }
     }
 
-    private static Provider test(){
+    private static Provider test() {
         //logic
 
         return new InternetProvider();

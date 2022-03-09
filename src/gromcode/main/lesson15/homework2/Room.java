@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Room {
+
     private long id;
     private int price;
     private int persons;
