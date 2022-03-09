@@ -2,7 +2,6 @@ package gromcode.main.lesson17.homework.CountWords;
 
 public class Solution {
 
-
     public static int countWords(String input) {
         if (input == null) return 0;
 

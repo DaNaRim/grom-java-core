@@ -7,7 +7,9 @@ public class Solution {
 
         String resultWord = "";
         for (String str : input.trim().split(" ")) {
-            if (!str.equals("") && checkWord(str) && resultWord.length() < str.length()) resultWord = str;
+            if (!str.equals("") && checkWord(str) && resultWord.length() < str.length()) {
+                resultWord = str;
+            }
         }
         return resultWord.isEmpty() ? null : resultWord;
     }

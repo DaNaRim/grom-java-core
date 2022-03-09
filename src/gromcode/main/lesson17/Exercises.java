@@ -3,6 +3,7 @@ package gromcode.main.lesson17;
 import java.util.Arrays;
 
 public class Exercises {
+
     public static void main(String[] args) {
         String test = "There is Test something new or jot sdt sdf sdf word Test op or";
 
