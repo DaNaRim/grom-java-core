@@ -30,6 +30,7 @@ public class Controller {
         Room[] result = new Room[countRooms(api1, api2)];
 
         int index = 0;
+        outer:
         for (Room room : api1.getAll()) {
             if (room == null) continue;
 
@@ -37,6 +38,7 @@ public class Controller {
                 if (room.equals(room2)) {
                     result[index] = room;
                     index++;
+                    continue outer;
                 }
             }
         }
@@ -44,15 +46,14 @@ public class Controller {
     }
 
     public Room cheapestRoom() {
-        Room cheapRoom = apis[0].getAll()[0];
+        Room cheapRoom = getFirstNotNull();
+        if (cheapRoom == null) return null;
 
         for (API api : apis) {
             if (api == null) continue;
 
             for (Room room : api.getAll()) {
-                if (room != null && cheapRoom.getPrice() > room.getPrice()) {
-                    cheapRoom = room;
-                }
+                if (room != null && room.getPrice() < cheapRoom.getPrice()) cheapRoom = room;
             }
         }
         return cheapRoom;
@@ -79,5 +80,16 @@ public class Controller {
             }
         }
         return numberOfRooms;
+    }
+
+    private Room getFirstNotNull() {
+        for (API api : apis) {
+            if (api == null) continue;
+
+            for (Room room : api.getAll()) {
+                if (room != null) return room;
+            }
+        }
+        return null;
     }
 }
