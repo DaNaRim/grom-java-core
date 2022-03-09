@@ -3,6 +3,7 @@ package gromcode.main.lesson16;
 import java.util.Arrays;
 
 public class StringCompare {
+
     public static void main(String[] args) {
         System.out.println(new String("abc") == new String("abc"));
         System.out.println(new String("abc").equals(new String("abc")));
@@ -15,11 +16,8 @@ public class StringCompare {
 
         System.out.println(s1 == s2);
 
-
 //      User user1 = new User();
 //      User user2 = new User();
-
-
 
         //using intern
         String s3 = new String("pppp");
@@ -30,7 +28,6 @@ public class StringCompare {
         s3 = s3.intern();
 
         System.out.println(s3 == s4);
-
 
         //bytes of string
 

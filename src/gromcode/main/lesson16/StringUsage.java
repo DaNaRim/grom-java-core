@@ -1,6 +1,7 @@
 package gromcode.main.lesson16;
 
 public class StringUsage {
+
     public static void main(String[] args) {
         String test = "someString";
         String result = test + "_end";

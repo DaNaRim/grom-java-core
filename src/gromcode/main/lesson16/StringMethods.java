@@ -3,16 +3,14 @@ package gromcode.main.lesson16;
 import java.util.Arrays;
 
 public class StringMethods {
+
     public static void main(String[] args) {
 
         String test = "someStringExample";
 
         System.out.println(test.isEmpty());
-
         System.out.println("".isEmpty());
-
         System.out.println(test.length());
-
         System.out.println(test.charAt(2));
 
         String res = test.replace("me", "T");
