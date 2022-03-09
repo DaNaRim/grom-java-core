@@ -15,15 +15,7 @@ public class UserRepository {
 
         for (int i = 0; i < users.length; i++) {
             if (users[i] != null) continue;
-            users[i] = user;
-            break;
-        }
-        return user;
-    }
-
-    public User findById(long id) {
-        for (User user : users) {
-            if (user != null && user.getId() == id) return user;
+            return users[i] = user;
         }
         return null;
     }
@@ -33,10 +25,9 @@ public class UserRepository {
 
         for (int i = 0; i < users.length; i++) {
             if (users[i] == null || users[i].getId() != user.getId()) continue;
-            users[i] = user;
-            break;
+            return users[i] = user;
         }
-        return user;
+        return null;
     }
 
     public void delete(long id) {
@@ -45,6 +36,13 @@ public class UserRepository {
             users[i] = null;
             break;
         }
+    }
+
+    private User findById(long id) {
+        for (User user : users) {
+            if (user != null && user.getId() == id) return user;
+        }
+        return null;
     }
 
     private boolean hasNullSell() {
