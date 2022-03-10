@@ -1,6 +1,7 @@
 package gromcode.main.lesson21;
 
 public class Company {
+
     private int numberOfEmployees;
     private String name;
     private static String licence;
@@ -10,7 +11,6 @@ public class Company {
         System.out.println("Code block s called");
         init();
     }
-
 
     public Company(int numberOfEmployees, String name) throws Exception {
         if (numberOfEmployees > maxNumberOfEmployees) {
@@ -44,9 +44,11 @@ public class Company {
     public static String getLicence() {
         return licence;
     }
+
 //    private static class Test {
 //
 //
 //
 //    }
+
 }
