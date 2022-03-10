@@ -5,53 +5,53 @@ import gromcode.main.lesson20.task1.exception.InternalServerException;
 import gromcode.main.lesson20.task1.exception.UserNotFoundException;
 
 public class UserRepository {
+
     private User[] users;
 
     public UserRepository(User[] users) throws Exception {
-        this.users = users;
+        if (users == null) {
+            this.users = new User[10];
+        } else {
+            this.users = users;
+        }
     }
 
     public User save(User user) throws Exception {
         if (user == null) throw new BadRequestException("Can`t save null user");
 
-        try {
-            findById(user.getId());
+        if (isExists(user.getId())) {
             throw new BadRequestException("User with id: " + user.getId() + " already exist");
-        } catch (UserNotFoundException e) {
-            System.out.println("User with id: " + user.getId() + " not found. Will be saved");
+        }
+        if (isStorageFull()) {
+            throw new InternalServerException("Not enough space to save user with id: " + user.getId());
         }
 
-        int index = 0;
-        for (User us : users) {
-            if (us == null) return users[index] = user;
-            index++;
+        for (int i = 0; i < users.length; i++) {
+            if (users[i] != null) continue;
+            users[i] = user;
         }
-        throw new InternalServerException("Not enough space to save user with id: " + user.getId());
+        return user;
     }
 
 
     public User update(User user) throws Exception {
         if (user == null) throw new BadRequestException("Can`t update null user");
-        findById(user.getId());
+        if (!isExists(user.getId())) throw new BadRequestException("Can`t find user with id " + user.getId());
 
-        int index = 0;
-        for (User us : users) {
-            if (us != null && us.getId() == user.getId() && !us.equals(user)) return users[index] = user;
-            index++;
+        for (int i = 0; i < users.length; i++) {
+            if (users[i] == null || !users[i].equals(user)) continue;
+            users[i] = user;
         }
-        throw new InternalServerException("Unexpected error");
+        return user;
     }
 
     public void delete(long id) throws Exception {
-        findById(id);
+        if (!isExists(id)) throw new BadRequestException("Can`t find user with id " + id);
 
-        int index = 0;
-        for (User us : users) {
-            if (us != null && us.getId() == id) {
-                users[index] = null;
-                break;
-            }
-            index++;
+        for (int i = 0; i < users.length; i++) {
+            if (users[i] == null || users[i].getId() != id) continue;
+            users[i] = null;
+            break;
         }
     }
 
@@ -60,5 +60,19 @@ public class UserRepository {
             if (user != null && user.getId() == id) return user;
         }
         throw new UserNotFoundException("User with id: " + id + " not found");
+    }
+
+    private boolean isExists(long id) {
+        for (User user : users) {
+            if (user != null && user.getId() == id) return true;
+        }
+        return false;
+    }
+
+    private boolean isStorageFull() {
+        for (User user : users) {
+            if (user == null) return false;
+        }
+        return true;
     }
 }

@@ -2,12 +2,13 @@ package gromcode.main.lesson20.task2;
 
 import gromcode.main.lesson20.task2.exception.BadRequestException;
 import gromcode.main.lesson20.task2.exception.InternalServerException;
-import gromcode.main.lesson20.task2.exception.LimitExceeded;
+import gromcode.main.lesson20.task2.exception.LimitExceededException;
 
 import java.util.Calendar;
 import java.util.Date;
 
 public class TransactionDAO {
+
     private Transaction[] transactions = new Transaction[10];
     private Utils utils = new Utils();
 
@@ -24,7 +25,7 @@ public class TransactionDAO {
 
     private void validate(Transaction transaction) throws Exception {
         if (transaction.getAmount() > utils.getLimitSimpleTransactionAmount()) {
-            throw new LimitExceeded("Transaction limit exceed " + transaction.getId() + ". Can`t be saved");
+            throw new LimitExceededException("Transaction limit exceed " + transaction.getId() + ". Can`t be saved");
         }
 
         int sum = transaction.getAmount();
@@ -35,10 +36,12 @@ public class TransactionDAO {
         }
 
         if (sum > utils.getLimitTransactionsPerDayAmount()) {
-            throw new LimitExceeded("Transaction limit per day amount exceed " + transaction.getId() + ". Can`t be saved");
+            throw new LimitExceededException(
+                    "Transaction limit per day amount exceed " + transaction.getId() + ". Can`t be saved");
         }
         if (count > utils.getLimitTransactionsPerDayCount()) {
-            throw new LimitExceeded("Transaction limit per day count exceed " + transaction.getId() + ". Can`t be saved");
+            throw new LimitExceededException(
+                    "Transaction limit per day count exceed " + transaction.getId() + ". Can`t be saved");
         }
         if (!checkCity(transaction)) {
             throw new BadRequestException("Forbidden City " + transaction.getId() + ". Can`t be saved ");
@@ -58,7 +61,7 @@ public class TransactionDAO {
         }
     }
 
-    Transaction[] transactionList() {
+    public Transaction[] transactionList() {
         int countTransaction = 0;
         for (Transaction tr : transactions) {
             if (tr != null) countTransaction++;
