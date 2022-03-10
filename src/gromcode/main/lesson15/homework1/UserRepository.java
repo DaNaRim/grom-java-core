@@ -18,14 +18,14 @@ public class UserRepository {
 
     public User save(User user) {
         if (user == null
-                || findUser(user) != null
-                || !hasNullSell()) return null;
+                || findById(user.getId()) != null
+                || isStorageFull()) return null;
 
         for (int i = 0; i < users.length; i++) {
             if (users[i] != null) continue;
-            return users[i] = user;
+            users[i] = user;
         }
-        return null;
+        return user;
     }
 
 
@@ -34,9 +34,9 @@ public class UserRepository {
 
         for (int i = 0; i < users.length; i++) {
             if (users[i] == null || !users[i].equals(user)) continue;
-            return users[i] = user;
+            users[i] = user;
         }
-        return null;
+        return user;
     }
 
     public void delete(long id) {
@@ -63,10 +63,10 @@ public class UserRepository {
         return null;
     }
 
-    private boolean hasNullSell() {
+    private boolean isStorageFull() {
         for (User user : users) {
-            if (user == null) return true;
+            if (user == null) return false;
         }
-        return false;
+        return true;
     }
 }
