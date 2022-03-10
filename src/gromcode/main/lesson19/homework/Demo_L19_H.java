@@ -3,7 +3,9 @@ package gromcode.main.lesson19.homework;
 import java.util.Arrays;
 
 public class Demo_L19_H {
+
     public static void main(String[] args) {
+        Controller controller = new Controller();
         try {
             File file1 = new File(1234567, "TestName1", "png", 454);
             File file2 = new File(2345671, "TestName2", "mp3", 6664);
@@ -38,110 +40,110 @@ public class Demo_L19_H {
             //test put
 
             try {
-                Controller.put(storage1, file4);
+                controller.put(storage1, file4);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
             System.out.println(Arrays.toString(files1));
 
             try {
-                Controller.put(storage1, file5);
+                controller.put(storage1, file5);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
 
             try {
-                Controller.put(storage1, file6);
+                controller.put(storage1, file6);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
 
             try {
-                Controller.put(storage1, file1);
+                controller.put(storage1, file1);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
 
             //test delete
 
             try {
-                Controller.delete(storage1, file1);
+                controller.delete(storage1, file1);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
             System.out.println(Arrays.toString(files1));
 
             try {
-                Controller.delete(storage1, file6);
+                controller.delete(storage1, file6);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
             System.out.println();
 
             //test transferAll
 
             try {
-                Controller.transferAll(storage1, storage2);
+                controller.transferAll(storage1, storage2);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
             System.out.println(Arrays.toString(files1));
             System.out.println(Arrays.toString(files2));
 
             try {
-                Controller.transferAll(storage1, storage3);
+                controller.transferAll(storage1, storage3);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
             try {
-                Controller.transferAll(storage1, storage4);
+                controller.transferAll(storage1, storage4);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
 
             try {
-                Controller.transferAll(storage1, storage5);
+                controller.transferAll(storage1, storage5);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
             System.out.println();
 
             //test transferFile
 
             try {
-                Controller.transferFile(storage1, storage5, 2345671);
+                controller.transferFile(storage1, storage5, 2345671);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
 
             try {
-                Controller.transferFile(storage1, storage2, 4567123);
+                controller.transferFile(storage1, storage2, 4567123);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
             System.out.println(Arrays.toString(files1));
             System.out.println(Arrays.toString(files2));
 
             try {
-                Controller.transferFile(storage1, storage3, 3456712);
+                controller.transferFile(storage1, storage3, 3456712);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
 
             try {
-                Controller.transferFile(storage4, storage1, 3456712);
+                controller.transferFile(storage4, storage1, 3456712);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
 
             try {
-                Controller.transferFile(storage1, storage2, 1777767);
+                controller.transferFile(storage1, storage2, 1777767);
             } catch (Exception e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 }

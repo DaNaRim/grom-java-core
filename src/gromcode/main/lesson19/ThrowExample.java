@@ -1,6 +1,7 @@
 package gromcode.main.lesson19;
 
 public class ThrowExample {
+
     private static String[] array = {"test", "test1", "tesqwd", null, "adsasf", "sdfsd1"};
 
     public static void main(String[] args) {

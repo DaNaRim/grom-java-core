@@ -1,6 +1,7 @@
 package gromcode.main.lesson19.homework;
 
 public class Storage {
+
     private long id;
     private File[] files;
     private String[] formatsSupported;
