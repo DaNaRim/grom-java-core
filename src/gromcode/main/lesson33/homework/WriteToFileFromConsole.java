@@ -7,7 +7,7 @@ import java.io.*;
 public class WriteToFileFromConsole {
 
     public static void writeToFileFromConsole(String path) {
-        BufferedWriter bw = null;
+        BufferedWriter bw;
 
         try {
             bw = new BufferedWriter(new FileWriter(path, true));

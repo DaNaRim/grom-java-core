@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class ReadFromKeyboard {
+
     public static void main(String[] args) {
         readKeyboardWithIOStream1();
     }
