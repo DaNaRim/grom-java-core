@@ -1,6 +1,7 @@
 package gromcode.main.lesson24.exercise;
 
 public class GeneralDAO<T> {
+
     @SuppressWarnings("unchecked")
     private T[] array = (T[]) new Object[5];
 

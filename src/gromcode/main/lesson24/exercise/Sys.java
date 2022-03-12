@@ -1,6 +1,7 @@
 package gromcode.main.lesson24.exercise;
 
 public class Sys {
+
     private int fileCount;
     private String location;
 

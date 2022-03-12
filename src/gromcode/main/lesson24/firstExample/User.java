@@ -1,6 +1,7 @@
 package gromcode.main.lesson24.firstExample;
 
 public class User {
+
     private int age;
 
     public User(int age) {

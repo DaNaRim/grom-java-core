@@ -1,6 +1,7 @@
 package gromcode.main.lesson24.exercise;
 
 public class Tool {
+
     private String name;
     private String description;
 

@@ -1,6 +1,7 @@
 package gromcode.main.lesson24.firstExample;
 
 public class Solution {
+
     private String name;
 
     public Solution(String name) {
