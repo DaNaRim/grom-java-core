@@ -1,6 +1,7 @@
 package gromcode.main.lesson31;
 
 public class Building {
+
     private String address;
     private int floors;
 

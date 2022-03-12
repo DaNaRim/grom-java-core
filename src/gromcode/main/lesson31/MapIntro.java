@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MapIntro {
+
     public static void main(String[] args) {
         Map<String, Building> map = new HashMap<>();
 

@@ -1,6 +1,7 @@
 package gromcode.main.lesson31.homework;
 
 public class Demo {
+
     public static void main(String[] args) {
         System.out.println(Solution.countSymbols("fudshviosdnvlsdnmcoabsdfibalsefb"));
         System.out.println(Solution.countSymbols("ggggsajhakhajjjjalsd"));
