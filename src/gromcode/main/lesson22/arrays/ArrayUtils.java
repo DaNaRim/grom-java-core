@@ -5,7 +5,7 @@ public class ArrayUtils {
     public static int maxElement(int[] array) {
         int max = array[0];
         for (int el : array) {
-            max = el > max ? el : max;
+            max = Math.max(el, max);
         }
         return max;
     }
@@ -21,19 +21,14 @@ public class ArrayUtils {
     public static int[] sortAscending(int[] array) {
         if (array == null) return null;
 
-        int per;
-        int a = 1;
-        while (a > 0) {
-            a = 0;
-
-            for (int i = 1; i < array.length; i++) {
-                if (array[i] < array[i - 1]) {
-                    per = array[i];
-                    array[i] = array[i - 1];
-                    array[i - 1] = per;
-                    a++;
-                }
+        for (int i = 1; i < array.length; i++) {
+            int current = array[i];
+            int j = i - 1;
+            while (j >= 0 && current < array[j]) {
+                array[j + 1] = array[j];
+                j--;
             }
+            array[j + 1] = current;
         }
         return array;
     }
@@ -41,19 +36,14 @@ public class ArrayUtils {
     public static int[] sortDescending(int[] array) {
         if (array == null) return null;
 
-        int per;
-        int a = 1;
-
-        while (a > 0) {
-            a = 0;
-            for (int i = 1; i < array.length; i++) {
-                if (array[i] > array[i - 1]) {
-                    per = array[i];
-                    array[i] = array[i - 1];
-                    array[i - 1] = per;
-                    a++;
-                }
+        for (int i = 1; i < array.length; i++) {
+            int current = array[i];
+            int j = i - 1;
+            while (j >= 0 && current > array[j]) {
+                array[j + 1] = array[j];
+                j--;
             }
+            array[j + 1] = current;
         }
         return array;
     }

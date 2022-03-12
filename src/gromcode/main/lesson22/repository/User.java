@@ -1,6 +1,7 @@
 package gromcode.main.lesson22.repository;
 
 public class User {
+
     private long id;
     private String name;
     private String sessionId;

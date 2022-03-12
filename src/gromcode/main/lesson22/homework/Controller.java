@@ -1,6 +1,7 @@
 package gromcode.main.lesson22.homework;
 
 public class Controller {
+
     private static TransactionDAO transactionDAO = new TransactionDAO();
 
     public static Transaction save(Transaction transaction) throws Exception {

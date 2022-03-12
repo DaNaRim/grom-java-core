@@ -1,6 +1,7 @@
 package gromcode.main.lesson22.homework;
 
 public class Utils {
+
     private static int limitTransactionsPerDayCount = 10;
     private static int limitTransactionsPerDayAmount = 100;
     private static int limitSimpleTransactionAmount = 40;

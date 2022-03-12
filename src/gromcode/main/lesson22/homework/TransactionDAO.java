@@ -8,8 +8,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class TransactionDAO {
+
     private static Transaction[] transactions = new Transaction[10];
-    private static Utils utils = new Utils();
 
     public static Transaction save(Transaction transaction) throws Exception {
         validate(transaction);
@@ -23,7 +23,7 @@ public class TransactionDAO {
     }
 
     private static void validate(Transaction transaction) throws Exception {
-        if (transaction.getAmount() > utils.getLimitSimpleTransactionAmount()) {
+        if (transaction.getAmount() > Utils.getLimitSimpleTransactionAmount()) {
             throw new LimitExceeded("Transaction limit exceed " + transaction.getId() + ". Can`t be saved");
         }
 
@@ -34,10 +34,10 @@ public class TransactionDAO {
             count++;
         }
 
-        if (sum > utils.getLimitTransactionsPerDayAmount()) {
+        if (sum > Utils.getLimitTransactionsPerDayAmount()) {
             throw new LimitExceeded("Transaction limit per day amount exceed " + transaction.getId() + ". Can`t be saved");
         }
-        if (count > utils.getLimitTransactionsPerDayCount()) {
+        if (count > Utils.getLimitTransactionsPerDayCount()) {
             throw new LimitExceeded("Transaction limit per day count exceed " + transaction.getId() + ". Can`t be saved");
         }
         if (!checkCity(transaction)) {
@@ -69,10 +69,9 @@ public class TransactionDAO {
 
         int index = 0;
         for (Transaction tr : transactions) {
-            if (tr != null) {
-                result[index] = tr;
-                index++;
-            }
+            if (tr == null) continue;
+            result[index] = tr;
+            index++;
         }
         return result;
     }
@@ -114,7 +113,7 @@ public class TransactionDAO {
     }
 
     private static boolean checkCity(Transaction transaction) {
-        for (String str : utils.getCities()) {
+        for (String str : Utils.getCities()) {
             if (transaction.getCity().equals(str)) return true;
         }
         return false;
