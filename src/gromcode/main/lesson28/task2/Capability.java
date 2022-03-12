@@ -6,14 +6,14 @@ public class Capability implements Comparable<Capability> {
     //id: 1001, 1005, 900
     //id: 900, 1001, 1005
     private long id;
-    private String chanelName;
+    private String channelName;
     private String fingerPrint;
     private boolean isActive;
     private Date dateCreated;
 
-    public Capability(long id, String chanelName, String fingerPrint, boolean isActive, Date dateCreated) {
+    public Capability(long id, String channelName, String fingerPrint, boolean isActive, Date dateCreated) {
         this.id = id;
-        this.chanelName = chanelName;
+        this.channelName = channelName;
         this.fingerPrint = fingerPrint;
         this.isActive = isActive;
         this.dateCreated = dateCreated;
@@ -23,8 +23,8 @@ public class Capability implements Comparable<Capability> {
         return id;
     }
 
-    public String getChanelName() {
-        return chanelName;
+    public String getChannelName() {
+        return channelName;
     }
 
     public String getFingerPrint() {
@@ -60,7 +60,7 @@ public class Capability implements Comparable<Capability> {
     public String toString() {
         return "Capability{" +
                 "id=" + id +
-                ", chanelName='" + chanelName + '\'' +
+                ", channelName='" + channelName + '\'' +
                 ", fingerPrint='" + fingerPrint + '\'' +
                 ", isActive=" + isActive +
                 ", dateCreated=" + dateCreated +

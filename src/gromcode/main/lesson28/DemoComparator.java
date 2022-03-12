@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.Date;
 
 public class DemoComparator {
+
     public static void main(String[] args) {
         Capability capability2 = new Capability(1005, "test", "rrr", false, new Date());
         Capability capability4 = new Capability(900, "test", "rrr", false, new Date());
@@ -19,11 +20,9 @@ public class DemoComparator {
         capabilities.add(capability2);
         capabilities.add(capability3);
         capabilities.add(capability4);
-
         System.out.println(capabilities);
 
         capabilities.sort(new IsActiveComparator());
-
         System.out.println(capabilities);
 
         Comparator<Capability> comparator = new Comparator<Capability>() {
@@ -37,14 +36,15 @@ public class DemoComparator {
                 //если dateCreated не равно - сравниваю по нему
                 //если равно - объекты равны
 
-                if (!capability.getChanelName().equals(t1.getChanelName()))
-                    return capability.getChanelName().compareTo(t1.getChanelName());
-
-                if (!capability.getFingerPrint().equals(t1.getFingerPrint()))
+                if (!capability.getChannelName().equals(t1.getChannelName())) {
+                    return capability.getChannelName().compareTo(t1.getChannelName());
+                }
+                if (!capability.getFingerPrint().equals(t1.getFingerPrint())) {
                     return capability.getFingerPrint().compareTo(t1.getFingerPrint());
-
-                if (!capability.getDateCreated().equals(t1.getDateCreated()))
+                }
+                if (!capability.getDateCreated().equals(t1.getDateCreated())) {
                     return capability.getDateCreated().compareTo(t1.getDateCreated());
+                }
                 return 0;
             }
         };
