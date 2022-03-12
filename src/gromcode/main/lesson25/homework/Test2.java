@@ -1,6 +1,7 @@
 package gromcode.main.lesson25.homework;
 
 public class Test2 {
+
     private final String testString = "test";
     private int testInt = 0;
 

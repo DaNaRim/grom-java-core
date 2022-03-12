@@ -1,6 +1,7 @@
 package gromcode.main.lesson25;
 
 public class Demo {
+
     public static void main(String[] args) throws Exception {
         GeneralDAO generalDAO = new GeneralDAO();
 

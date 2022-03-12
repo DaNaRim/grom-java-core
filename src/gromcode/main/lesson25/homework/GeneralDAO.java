@@ -1,17 +1,19 @@
 package gromcode.main.lesson25.homework;
 
 public class GeneralDAO<T> {
+
     @SuppressWarnings("unchecked")
-    private T[] database = (T[]) new Object[10];
+    private final T[] database = (T[]) new Object[10];
 
     public T save(T t) throws Exception {
         validate(t);
-        int index = 0;
-        for (T el : database) {
-            if (el == null) return database[index] = t;
-            index++;
+
+        for (int i = 0; i < database.length; i++) {
+            if (database[i] != null) continue;
+            database[i] = t;
+            break;
         }
-        return null;
+        return t;
     }
 
     public T[] getAll() {
@@ -25,10 +27,13 @@ public class GeneralDAO<T> {
             if (t.equals(el)) throw new Exception("The object is already in the database");
         }
 
-        int count = 0;
+        boolean isFull = true;
         for (T el : database) {
-            if (el != null) count++;
+            if (el == null) {
+                isFull = false;
+                break;
+            }
         }
-        if (count == database.length) throw new Exception("There is no space for the object");
+        if (isFull) throw new Exception("There is no space for the object");
     }
 }

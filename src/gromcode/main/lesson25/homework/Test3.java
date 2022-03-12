@@ -1,6 +1,7 @@
 package gromcode.main.lesson25.homework;
 
 public class Test3 {
+
     private long testLong;
     private short testShort;
     private String testString;

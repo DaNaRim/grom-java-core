@@ -1,6 +1,7 @@
 package gromcode.main.lesson25;
 
-public class Order extends IdEntity{
+public class Order extends IdEntity {
+
     private long id;
 
     public Order(long id) {
