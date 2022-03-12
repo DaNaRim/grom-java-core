@@ -3,6 +3,7 @@ package gromcode.main.lesson26;
 import java.util.ArrayList;
 
 public class ArrayListExample {
+
     public static void main(String[] args) {
 
         int[] test = new int[5];

@@ -17,7 +17,6 @@ public class ArrayListTest {
         testArrayList.add(0, order2);
 
         testArrayList.remove(0);
-
         testArrayList.remove(order1);
 
         testArrayList.addAll(testArrayList2);
