@@ -13,7 +13,8 @@ public class Solution {
     }
 
     public static void copyFileContentApacheIO(String fileFromPath, String fileToPath) {
-        try (BufferedReader br = new BufferedReader(new FileReader(fileFromPath)); BufferedWriter bw = new BufferedWriter(new FileWriter(fileFromPath))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(fileFromPath));
+             BufferedWriter bw = new BufferedWriter(new FileWriter(fileFromPath))) {
             IOUtils.copy(br, bw);
         } catch (IOException e) {
             System.err.println("Writing to file " + fileToPath + " failed");
@@ -58,20 +59,17 @@ public class Solution {
         File fileFrom = new File(fileFromPath);
         File fileTo = new File(fileToPath);
 
-        checkFile(fileFrom);
-        checkFile(fileTo);
-
+        if (!fileFrom.exists()) {
+            throw new FileNotFoundException("File " + fileFrom + " does not exist");
+        }
+        if (!fileTo.exists()) {
+            throw new FileNotFoundException("File " + fileTo + " does not exist");
+        }
         if (!fileFrom.canRead()) {
             throw new Exception("File " + fileFrom + " does not have permissions to read");
         }
         if (!fileFrom.canWrite()) {
             throw new Exception("File " + fileFrom + " does not have permissions to written");
-        }
-    }
-
-    private static void checkFile(File file) throws FileNotFoundException {
-        if (!file.exists()) {
-            throw new FileNotFoundException("File " + file + " does not exist");
         }
     }
 }

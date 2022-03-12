@@ -46,26 +46,20 @@ public class Solution {
         File fileFrom = new File(fileFromPath);
         File fileTo = new File(fileToPath);
 
-        checkFile(fileFrom);
-        checkFile(fileTo);
-
+        if (!fileFrom.exists()) {
+            throw new FileNotFoundException("File " + fileFrom + " does not exist");
+        }
+        if (!fileTo.exists()) {
+            throw new FileNotFoundException("File " + fileTo + " does not exist");
+        }
         if (!fileFrom.canRead()) {
             throw new Exception("File " + fileFrom + " does not have permissions to read");
         }
-
-        checkToWrite(fileFrom);
-        checkToWrite(fileTo);
-    }
-
-    private static void checkFile(File file) throws FileNotFoundException {
-        if (!file.exists()) {
-            throw new FileNotFoundException("File " + file + " does not exist");
+        if (!fileFrom.canWrite()) {
+            throw new Exception("File " + fileFrom + " does not have permissions to written");
         }
-    }
-
-    private static void checkToWrite(File file) throws Exception {
-        if (!file.canWrite()) {
-            throw new Exception("File " + file + " does not have permissions to written");
+        if (!fileTo.canWrite()) {
+            throw new Exception("File " + fileTo + " does not have permissions to written");
         }
     }
 }

@@ -41,7 +41,7 @@ public class Solution {
 
     private static StringBuffer newFileToContent(StringBuffer firstReader, String word) {
         StringBuffer res = new StringBuffer();
-        for (String str : firstReader.toString().split(".")) {
+        for (String str : firstReader.toString().split("\\.")) {
             if (str.length() > 10 && str.contains(word)) {
                 res.append(str);
                 res.append(".");
@@ -52,7 +52,7 @@ public class Solution {
 
     private static StringBuffer newFileFromContent(StringBuffer firstReader, String word) {
         StringBuffer res = new StringBuffer();
-        for (String str : firstReader.toString().split(".")) {
+        for (String str : firstReader.toString().split("\\.")) {
             if (str.length() > 10 && !str.contains(word)) {
                 res.append(str);
                 res.append(".");
@@ -73,20 +73,17 @@ public class Solution {
         File fileFrom = new File(fileFromPath);
         File fileTo = new File(fileToPath);
 
-        checkFile(fileFrom);
-        checkFile(fileTo);
-
+        if (!fileFrom.exists()) {
+            throw new FileNotFoundException("File " + fileFrom + " does not exist");
+        }
+        if (!fileTo.exists()) {
+            throw new FileNotFoundException("File " + fileTo + " does not exist");
+        }
         if (!fileFrom.canRead()) {
             throw new Exception("File " + fileFrom + " does not have permissions to read");
         }
         if (!fileFrom.canWrite()) {
             throw new Exception("File " + fileFrom + " does not have permissions to written");
-        }
-    }
-
-    private static void checkFile(File file) throws FileNotFoundException {
-        if (!file.exists()) {
-            throw new FileNotFoundException("File " + file + " does not exist");
         }
     }
 }

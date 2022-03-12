@@ -3,6 +3,7 @@ package gromcode.main.lesson34.classwork;
 import java.io.*;
 
 public class ReadWriteFile {
+
     public static void main(String[] args) {
         readFile("");
         writeFile("");
