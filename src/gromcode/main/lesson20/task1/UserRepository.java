@@ -29,6 +29,7 @@ public class UserRepository {
         for (int i = 0; i < users.length; i++) {
             if (users[i] != null) continue;
             users[i] = user;
+            break;
         }
         return user;
     }
