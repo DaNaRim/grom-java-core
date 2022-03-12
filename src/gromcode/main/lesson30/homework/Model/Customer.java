@@ -1,6 +1,7 @@
 package gromcode.main.lesson30.homework.Model;
 
 public class Customer {
+
     private String name;
     private String country;
     private int monthlyPay;

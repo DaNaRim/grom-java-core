@@ -1,6 +1,7 @@
 package gromcode.main.lesson30.task1;
 
 public abstract class Bank {
+
     private long id;
     private String bankCountry;
     private Currency currency;
@@ -9,7 +10,13 @@ public abstract class Bank {
     private long rating;
     private long totalCapital;
 
-    public Bank(long id, String bankCountry, Currency currency, int numberOfEmployees, double avrSalaryOfEmployee, long rating, long totalCapital) {
+    public Bank(long id,
+                String bankCountry,
+                Currency currency,
+                int numberOfEmployees,
+                double avrSalaryOfEmployee,
+                long rating,
+                long totalCapital) {
         this.id = id;
         this.bankCountry = bankCountry;
         this.currency = currency;

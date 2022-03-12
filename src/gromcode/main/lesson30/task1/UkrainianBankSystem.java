@@ -7,7 +7,7 @@ import java.util.TreeSet;
 
 public class UkrainianBankSystem implements BankSystem {
 
-    private Set<Transaction> transactions = new TreeSet<>();
+    private static final Set<Transaction> transactions = new TreeSet<>();
 
     @Override
     public void withdraw(User user, int amount) {
@@ -27,8 +27,11 @@ public class UkrainianBankSystem implements BankSystem {
 
     @Override
     public void transferMoney(User fromUser, User toUser, int amount) {
-        if (fromUser == null || toUser == null || !checkWithdraw(fromUser, amount) || !checkFund(toUser, amount) ||
-                fromUser.getBank().getCurrency() != toUser.getBank().getCurrency()) return;
+        if (fromUser == null
+                || toUser == null
+                || !checkWithdraw(fromUser, amount)
+                || !checkFund(toUser, amount)
+                || fromUser.getBank().getCurrency() != toUser.getBank().getCurrency()) return;
 
         withdraw(fromUser, amount);
         fund(toUser, amount);
@@ -46,8 +49,8 @@ public class UkrainianBankSystem implements BankSystem {
     }
 
     private boolean checkWithdraw(User user, int amount) {
-        return checkWithdrawLimits(user, amount, user.getBank().getLimitOfWithdrawal()) &&
-                checkWithdrawLimits(user, amount, user.getBalance());
+        return checkWithdrawLimits(user, amount, user.getBank().getLimitOfWithdrawal())
+                && checkWithdrawLimits(user, amount, user.getBalance());
     }
 
     private boolean checkFund(User user, int amount) {

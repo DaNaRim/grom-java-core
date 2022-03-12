@@ -1,6 +1,7 @@
 package gromcode.main.lesson30.homework.Model;
 
 public class Project {
+
     private String name;
     private Customer customer;
 

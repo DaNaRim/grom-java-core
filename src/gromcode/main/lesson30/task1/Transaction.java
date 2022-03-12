@@ -3,6 +3,7 @@ package gromcode.main.lesson30.task1;
 import java.util.Date;
 
 public class Transaction implements Comparable<Transaction> {
+
     private long id;
     private Date dateCreated;
     private Date dateConfirmed;
@@ -10,7 +11,12 @@ public class Transaction implements Comparable<Transaction> {
     private int amount;
     private String description;
 
-    public Transaction(long id, Date dateCreated, Date dateConfirmed, TransactionType type, int amount, String description) {
+    public Transaction(long id,
+                       Date dateCreated,
+                       Date dateConfirmed,
+                       TransactionType type,
+                       int amount,
+                       String description) {
         this.id = id;
         this.dateCreated = dateCreated;
         this.dateConfirmed = dateConfirmed;

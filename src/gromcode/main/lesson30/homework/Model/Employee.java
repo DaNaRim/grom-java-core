@@ -5,6 +5,7 @@ import gromcode.main.lesson30.homework.DAO.ProjectDAO;
 import java.util.Date;
 
 public class Employee {
+
     private String firstName;
     private String lastName;
     private Date dateHired;
@@ -12,7 +13,12 @@ public class Employee {
     private Department department;
     private ProjectDAO projects;
 
-    public Employee(String firstName, String lastName, Date dateHired, Position position, Department department, ProjectDAO projects) {
+    public Employee(String firstName,
+                    String lastName,
+                    Date dateHired,
+                    Position position,
+                    Department department,
+                    ProjectDAO projects) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateHired = dateHired;

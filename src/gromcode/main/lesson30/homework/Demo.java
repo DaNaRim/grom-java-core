@@ -1,6 +1,7 @@
 package gromcode.main.lesson30.homework;
 
 public class Demo {
+
     public static void main(String[] args) {
 //        Customer customer1 = new Customer("1name", "test", 12412);
 //        Customer customer2 = new Customer("2name", "test", 12412);
@@ -35,7 +36,5 @@ public class Demo {
 //        Controller.projectsByCustomer();
 //
 //        Controller.employeesByCustomerProjects();
-
-
     }
 }

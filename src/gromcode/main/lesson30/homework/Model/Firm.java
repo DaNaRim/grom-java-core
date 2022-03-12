@@ -6,6 +6,7 @@ import gromcode.main.lesson30.homework.DAO.DepartmentDAO;
 import java.util.Date;
 
 public class Firm {
+
     private Date dateFounded;
     private DepartmentDAO departments;
     private CustomerDAO customers;

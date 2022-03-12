@@ -1,6 +1,6 @@
 package gromcode.main.lesson30.homework.Model;
 
-public enum  DepartmentType {
+public enum DepartmentType {
     DEVELOPMENT,
     FINANCE,
     ANALYTICS,

@@ -1,6 +1,7 @@
 package gromcode.main.lesson30.task1;
 
 public class Main {
+
     public static void main(String[] args) {
         Bank euBank1 = new EUBank(0001, "Sweden", Currency.EUR, 100, 1400, 4, 444343434);
         Bank euBank2 = new EUBank(0002, "Poland", Currency.USD, 101, 1000, 5, 45743578);

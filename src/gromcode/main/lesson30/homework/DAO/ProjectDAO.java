@@ -8,6 +8,7 @@ import gromcode.main.lesson30.homework.Model.Project;
 import java.util.HashSet;
 
 public class ProjectDAO {
+
     private static HashSet<Project> projects;
 
     public static HashSet<Project> getProjects() {
@@ -28,8 +29,9 @@ public class ProjectDAO {
 
         for (Project project : employee.getProjects().getProjects()) {
             for (Employee empl : EmployeeDAO.employeesByProject(project.getName())) {
-                if (empl.getPosition().equals(Position.TEAM_LEAD))
+                if (empl.getPosition().equals(Position.TEAM_LEAD)) {
                     employees.add(empl);
+                }
             }
         }
         return employees;
@@ -39,10 +41,10 @@ public class ProjectDAO {
         HashSet<Project> projects = new HashSet<>();
 
         for (Project project : getProjects()) {
-            if (project.getCustomer().equals(customer))
+            if (project.getCustomer().equals(customer)) {
                 projects.add(project);
+            }
         }
         return projects;
     }
-
 }
