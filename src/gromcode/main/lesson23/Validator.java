@@ -1,6 +1,7 @@
 package gromcode.main.lesson23;
 
 public final class Validator {
+
     private String name;
     private final static int checkCount = 7;
 
