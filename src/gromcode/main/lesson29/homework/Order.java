@@ -1,6 +1,7 @@
 package gromcode.main.lesson29.homework;
 
 public class Order {
+
     private long id;
     private int price;
     private String currency;

@@ -3,6 +3,7 @@ package gromcode.main.lesson29;
 import java.util.Objects;
 
 public class File implements Comparable<File> {
+
     private String fileName;
     private long sizeInBytes;
 
@@ -22,11 +23,9 @@ public class File implements Comparable<File> {
     @Override
     public int compareTo(File file) {
         int res = 0;
-
         if (file.getSizeInBytes() > this.sizeInBytes) {
             res = -1;
-        }
-        else if (file.getSizeInBytes() < this.sizeInBytes) {
+        } else if (file.getSizeInBytes() < this.sizeInBytes) {
             res = 1;
         }
         return res;
