@@ -3,6 +3,7 @@ package gromcode.main.lesson27.homework2;
 import java.util.Objects;
 
 public class User {
+
     private long id;
     private String name;
     private String sessionId;
@@ -30,14 +31,12 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(sessionId, user.sessionId);
+        return id == user.id;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, sessionId);
+        return Objects.hash(id);
     }
 
     @Override
