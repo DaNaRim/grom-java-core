@@ -9,7 +9,8 @@ import java.util.TreeSet;
 import java.util.UUID;
 
 public abstract class DAO<T extends BaseModel> {
-    private String path;
+
+    private final String path;
 
     public DAO(String path) {
         this.path = path;
@@ -62,7 +63,8 @@ public abstract class DAO<T extends BaseModel> {
         try {
             TreeSet<T> objects = new TreeSet<>();
             for (T object : getObjectsFromDAO()) {
-                if (!object.getId().equals(deletableObject.getId())) objects.add(object);
+                if (object.getId().equals(deletableObject.getId())) continue;
+                objects.add(object);
             }
 
             deleteDAOContent();
@@ -114,4 +116,5 @@ public abstract class DAO<T extends BaseModel> {
             throw new InternalServerException("delete from file: " + path + " failed");
         }
     }
+
 }
