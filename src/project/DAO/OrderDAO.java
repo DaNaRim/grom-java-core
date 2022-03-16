@@ -8,7 +8,7 @@ import project.model.Room;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class OrderDAO extends DAOTools<Order> {
+public class OrderDAO extends DAO<Order> {
     private static UserDAO userDAO = new UserDAO();
     private static RoomDAO roomDAO = new RoomDAO();
 

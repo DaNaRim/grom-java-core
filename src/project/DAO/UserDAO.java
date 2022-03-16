@@ -5,7 +5,7 @@ import project.exception.InternalServerException;
 import project.model.User;
 import project.model.UserType;
 
-public class UserDAO extends DAOTools<User> {
+public class UserDAO extends DAO<User> {
 
     public UserDAO() {
         super("E:/Project/UserDb.txt");

@@ -8,7 +8,7 @@ import project.model.Room;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 
-public class RoomDAO extends DAOTools<Room> {
+public class RoomDAO extends DAO<Room> {
     private static HotelDAO hotelDAO = new HotelDAO();
 
     public RoomDAO() {

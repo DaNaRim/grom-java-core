@@ -8,10 +8,10 @@ import java.io.*;
 import java.util.TreeSet;
 import java.util.UUID;
 
-public abstract class DAOTools<T extends BaseModel> {
+public abstract class DAO<T extends BaseModel> {
     private String path;
 
-    public DAOTools(String path) {
+    public DAO(String path) {
         this.path = path;
     }
 
