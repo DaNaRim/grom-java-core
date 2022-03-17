@@ -8,12 +8,12 @@ import java.util.Date;
 public class Room extends BaseModel implements Comparable<Room> {
 
     private Long id;
-    private Integer numberOfGuests;
-    private Double price;
-    private Boolean breakfastIncluded;
-    private Boolean petsAllowed;
+    private final Integer numberOfGuests;
+    private final Double price;
+    private final Boolean breakfastIncluded;
+    private final Boolean petsAllowed;
     private Date dateAvailableFrom;
-    private Hotel hotel;
+    private final Hotel hotel;
 
     public Room(Integer numberOfGuests,
                 Double price,
@@ -98,4 +98,5 @@ public class Room extends BaseModel implements Comparable<Room> {
     public int compareTo(Room room) {
         return this.dateAvailableFrom.after(room.getDateAvailableFrom()) ? 1 : -1;
     }
+
 }

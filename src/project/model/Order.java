@@ -8,11 +8,11 @@ import java.util.Date;
 public class Order extends BaseModel implements Comparable<Order> {
 
     private Long id;
-    private User user;
-    private Room room;
-    private Date dateFrom;
-    private Date dateTo;
-    private Double moneyPaid;
+    private final User user;
+    private final Room room;
+    private final Date dateFrom;
+    private final Date dateTo;
+    private final Double moneyPaid;
 
     public Order(User user, Room room, Date dateFrom, Date dateTo, Double moneyPaid) {
         this.user = user;
@@ -73,4 +73,5 @@ public class Order extends BaseModel implements Comparable<Order> {
     public int compareTo(Order order) {
         return this.dateFrom.before(order.getDateFrom()) ? 1 : -1;
     }
+
 }

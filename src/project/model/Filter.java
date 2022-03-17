@@ -4,13 +4,13 @@ import java.util.Date;
 
 public class Filter {
 
-    private Integer numberOfGuests;
-    private Double price;
-    private Boolean breakfastIncluded;
-    private Boolean petsAllowed;
-    private Date dateAvailableFrom;
-    private String country;
-    private String city;
+    private final Integer numberOfGuests;
+    private final Double price;
+    private final Boolean breakfastIncluded;
+    private final Boolean petsAllowed;
+    private final Date dateAvailableFrom;
+    private final String country;
+    private final String city;
 
     public Filter(Integer numberOfGuests,
                   Double price,
@@ -55,4 +55,5 @@ public class Filter {
     public String getCity() {
         return city;
     }
+
 }
