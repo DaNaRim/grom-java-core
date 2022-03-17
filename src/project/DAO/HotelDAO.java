@@ -12,7 +12,7 @@ public class HotelDAO extends DAO<Hotel> {
         super("E:/Project/HotelDb.txt");
     }
 
-    //TODO: remove bad reqest exceptions
+    //TODO: remove bad request exceptions
 
     @Override
     public Hotel map(String line) {
