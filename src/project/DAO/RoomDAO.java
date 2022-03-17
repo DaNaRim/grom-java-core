@@ -9,15 +9,21 @@ import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 
 public class RoomDAO extends DAO<Room> {
-    private static HotelDAO hotelDAO = new HotelDAO();
+
+    private static final HotelDAO hotelDAO = new HotelDAO();
 
     public RoomDAO() {
         super("E:/Project/RoomDb.txt");
     }
 
+    //TODO: remove bad request exceptions
+
     public LinkedList<Room> findRooms(Filter filter) throws InternalServerException, BadRequestException {
         LinkedList<Room> rooms = findRoomsByFilter(filter);
-        checkResultSize(rooms);
+
+        if (rooms.size() == 0) {
+            throw new BadRequestException("checkResultSize failed: there is no room with this filter parameters");
+        }
         return rooms;
     }
 
@@ -35,22 +41,19 @@ public class RoomDAO extends DAO<Room> {
                     new SimpleDateFormat("dd.MM.yyyy kk:00").parse(fields[5]),
                     hotelDAO.findById(Long.parseLong(fields[6])));
         } catch (Exception e) {
-            System.err.println("Something went wrong");
+            //unreachable if all is okay
+            System.err.println("map failed: " + e.getMessage());
         }
         return null;
     }
 
     public void checkHotelRooms(long hotelId) throws InternalServerException, BadRequestException {
         for (Room room : getObjectsFromDAO()) {
-            if (room.getHotel().getId().equals(hotelId))
+            if (room.getHotel().getId().equals(hotelId)) {
                 throw new BadRequestException("checkHotelRooms failed: This hotel has a room that is in use: " +
                         room.getId());
+            }
         }
-    }
-
-    private void checkResultSize(LinkedList<Room> rooms) throws BadRequestException {
-        if (rooms.size() == 0)
-            throw new BadRequestException("checkResultSize failed: there is no room with this filter parameters");
     }
 
     private LinkedList<Room> findRoomsByFilter(Filter filter) throws InternalServerException {
@@ -62,14 +65,15 @@ public class RoomDAO extends DAO<Room> {
     }
 
     private boolean checkRoomByFilter(Room room, Filter filter) {
-        return ((filter.getNumberOfGuests() == 0 || filter.getNumberOfGuests().equals(room.getNumberOfGuests())) &&
-                (filter.getPrice() == 0.0 || filter.getPrice().equals(room.getPrice())) &&
-                (filter.getBreakfastIncluded() == null ||
-                        filter.getBreakfastIncluded() == room.getBreakfastIncluded()) &&
-                (filter.getPetsAllowed() == null || filter.getPetsAllowed() == room.getPetsAllowed()) &&
-                (filter.getDateAvailableFrom() == null ||
-                        filter.getDateAvailableFrom().after(room.getDateAvailableFrom())) &&
-                (filter.getCountry() == null || filter.getCountry().equals(room.getHotel().getCountry())) &&
-                (filter.getCity() == null || filter.getCity().equals(room.getHotel().getCity())));
+        return (filter.getNumberOfGuests() == 0 || filter.getNumberOfGuests().equals(room.getNumberOfGuests()))
+                && (filter.getPrice() == 0.0 || filter.getPrice().equals(room.getPrice()))
+                && (filter.getBreakfastIncluded() == null
+                        || filter.getBreakfastIncluded() == room.getBreakfastIncluded())
+                && (filter.getPetsAllowed() == null || filter.getPetsAllowed() == room.getPetsAllowed())
+                && (filter.getDateAvailableFrom() == null
+                        || filter.getDateAvailableFrom().after(room.getDateAvailableFrom()))
+                && (filter.getCountry() == null || filter.getCountry().equals(room.getHotel().getCountry()))
+                && (filter.getCity() == null || filter.getCity().equals(room.getHotel().getCity()));
     }
+
 }
