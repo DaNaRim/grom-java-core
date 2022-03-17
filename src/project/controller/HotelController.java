@@ -3,6 +3,7 @@ package project.controller;
 import project.exception.BadRequestException;
 import project.exception.InternalServerException;
 import project.exception.NoAccessException;
+import project.exception.NotLogInException;
 import project.model.Hotel;
 import project.service.HotelService;
 
@@ -19,11 +20,13 @@ public class HotelController {
         return hotelService.findHotelByCity(city);
     }
 
-    public Hotel addHotel(Hotel hotel) throws InternalServerException, NoAccessException, BadRequestException {
+    public Hotel addHotel(Hotel hotel)
+            throws InternalServerException, NoAccessException, BadRequestException, NotLogInException {
         return hotelService.addHotel(hotel);
     }
 
-    public void deleteHotel(long hotelId) throws InternalServerException, NoAccessException, BadRequestException {
+    public void deleteHotel(long hotelId)
+            throws InternalServerException, NoAccessException, BadRequestException, NotLogInException {
         hotelService.deleteHotel(hotelId);
     }
 }

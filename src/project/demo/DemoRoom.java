@@ -5,6 +5,7 @@ import project.controller.UserController;
 import project.exception.BadRequestException;
 import project.exception.InternalServerException;
 import project.exception.NoAccessException;
+import project.exception.NotLogInException;
 import project.model.Filter;
 import project.model.Hotel;
 import project.model.Room;
@@ -19,7 +20,7 @@ public class DemoRoom {
 
 
     public static void main(String[] args)
-            throws BadRequestException, NoAccessException, InternalServerException, ParseException {
+            throws BadRequestException, NoAccessException, InternalServerException, ParseException, NotLogInException {
 
         userController.login("Oleg", "wf45a4w44f");
 

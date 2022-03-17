@@ -3,6 +3,7 @@ package project.controller;
 import project.exception.BadRequestException;
 import project.exception.InternalServerException;
 import project.exception.NoAccessException;
+import project.exception.NotLogInException;
 import project.model.Filter;
 import project.model.Room;
 import project.service.RoomService;
@@ -16,11 +17,13 @@ public class RoomController {
         return roomService.findRooms(filter);
     }
 
-    public Room addRoom(Room room) throws NoAccessException, InternalServerException, BadRequestException {
+    public Room addRoom(Room room)
+            throws NoAccessException, InternalServerException, BadRequestException, NotLogInException {
         return roomService.addRoom(room);
     }
 
-    public void deleteRoom(long roomId) throws NoAccessException, InternalServerException, BadRequestException {
+    public void deleteRoom(long roomId)
+            throws NoAccessException, InternalServerException, BadRequestException, NotLogInException {
         roomService.deleteRoom(roomId);
     }
 }

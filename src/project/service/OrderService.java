@@ -6,6 +6,7 @@ import project.DAO.UserDAO;
 import project.exception.BadRequestException;
 import project.exception.InternalServerException;
 import project.exception.NoAccessException;
+import project.exception.NotLogInException;
 import project.model.Order;
 
 import java.util.Date;
@@ -17,7 +18,7 @@ public class OrderService {
     private static UserService userService = new UserService();
 
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo)
-            throws InternalServerException, NoAccessException, BadRequestException {
+            throws InternalServerException, NoAccessException, BadRequestException, NotLogInException {
         validateRoomAndUser(roomId, userId);
         userService.checkUserForOperation(userId);
         validateOrder(roomId, dateFrom, dateTo);
@@ -27,7 +28,7 @@ public class OrderService {
     }
 
     public void cancelReservation(long roomId, long userId)
-            throws InternalServerException, NoAccessException, BadRequestException {
+            throws InternalServerException, NoAccessException, BadRequestException, NotLogInException {
         validateRoomAndUser(roomId, userId);
         userService.checkUserForOperation(userId);
         validateCancellation(roomId, userId);

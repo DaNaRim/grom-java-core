@@ -5,6 +5,7 @@ import project.DAO.RoomDAO;
 import project.exception.BadRequestException;
 import project.exception.InternalServerException;
 import project.exception.NoAccessException;
+import project.exception.NotLogInException;
 import project.model.Filter;
 import project.model.Room;
 
@@ -20,13 +21,15 @@ public class RoomService {
         return roomDAO.findRooms(filter);
     }
 
-    public Room addRoom(Room room) throws InternalServerException, BadRequestException, NoAccessException {
+    public Room addRoom(Room room)
+            throws InternalServerException, BadRequestException, NoAccessException, NotLogInException {
         userService.checkAccess();
         validateRoom(room);
         return roomDAO.addObjectToDAO(room);
     }
 
-    public void deleteRoom(long roomId) throws InternalServerException, NoAccessException, BadRequestException {
+    public void deleteRoom(long roomId)
+            throws InternalServerException, NoAccessException, BadRequestException, NotLogInException {
         userService.checkAccess();
         Room room = roomDAO.findById(roomId);
         roomDAO.deleteObjectFromDAO(room);
