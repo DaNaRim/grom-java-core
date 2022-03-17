@@ -14,7 +14,7 @@ public class OrderDAO extends DAO<Order> {
     private static final RoomDAO roomDAO = new RoomDAO();
 
     public OrderDAO() {
-        super("E:/Project/OrderDb.txt");
+        super(DaoUtil.ORDER_DAO_PATH);
     }
 
     //TODO: remove bad request exceptions
@@ -25,7 +25,7 @@ public class OrderDAO extends DAO<Order> {
         try {
             String[] fields = line.split(", ");
 
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy kk:00");
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DaoUtil.DATE_FORMAT);
             return new Order(
                     Long.parseLong(fields[0]),
                     userDAO.findById(Long.parseLong(fields[1])),

@@ -9,7 +9,7 @@ import java.util.LinkedList;
 public class HotelDAO extends DAO<Hotel> {
 
     public HotelDAO() {
-        super("E:/Project/HotelDb.txt");
+        super(DaoUtil.HOTEL_DAO_PATH);
     }
 
     //TODO: remove bad request exceptions

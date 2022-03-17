@@ -1,5 +1,7 @@
 package project.model;
 
+import project.DAO.DaoUtil;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -88,7 +90,7 @@ public class Room extends BaseModel implements Comparable<Room> {
                 price + ", " +
                 breakfastIncluded + ", " +
                 petsAllowed + ", " +
-                new SimpleDateFormat("dd.MM.yyyy kk:00").format(dateAvailableFrom) + ", " +
+                new SimpleDateFormat(DaoUtil.DATE_FORMAT).format(dateAvailableFrom) + ", " +
                 hotel.getId();
     }
 

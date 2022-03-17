@@ -8,7 +8,7 @@ import project.model.UserType;
 public class UserDAO extends DAO<User> {
 
     public UserDAO() {
-        super("E:/Project/UserDb.txt");
+        super(DaoUtil.USER_DAO_PATH);
     }
 
     //TODO: remove bad request exceptions

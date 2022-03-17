@@ -13,7 +13,7 @@ public class RoomDAO extends DAO<Room> {
     private static final HotelDAO hotelDAO = new HotelDAO();
 
     public RoomDAO() {
-        super("E:/Project/RoomDb.txt");
+        super(DaoUtil.ROOM_DAO_PATH);
     }
 
     //TODO: remove bad request exceptions
@@ -38,7 +38,7 @@ public class RoomDAO extends DAO<Room> {
                     Double.parseDouble(fields[2]),
                     Boolean.parseBoolean(fields[3]),
                     Boolean.parseBoolean(fields[4]),
-                    new SimpleDateFormat("dd.MM.yyyy kk:00").parse(fields[5]),
+                    new SimpleDateFormat(DaoUtil.DATE_FORMAT).parse(fields[5]),
                     hotelDAO.findById(Long.parseLong(fields[6])));
         } catch (Exception e) {
             //unreachable if all is okay

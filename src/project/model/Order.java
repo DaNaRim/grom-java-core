@@ -1,5 +1,7 @@
 package project.model;
 
+import project.DAO.DaoUtil;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -57,7 +59,7 @@ public class Order extends BaseModel implements Comparable<Order> {
 
     @Override
     public String toString() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy kk:00");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DaoUtil.DATE_FORMAT);
 
         return id + ", " +
                 user.getId() + ", " +
