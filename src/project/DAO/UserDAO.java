@@ -11,6 +11,8 @@ public class UserDAO extends DAO<User> {
         super("E:/Project/UserDb.txt");
     }
 
+    //TODO: remove bad request exceptions
+
     @Override
     public User map(String line) {
         String[] fields = line.split(", ");
@@ -18,6 +20,7 @@ public class UserDAO extends DAO<User> {
         return new User(Long.parseLong(fields[0]), fields[1], fields[2], fields[3], UserType.valueOf(fields[4]));
     }
 
+    //TODO move to Service
     public User logIn(String userName, String password) throws InternalServerException, BadRequestException {
         for (User user : getObjectsFromDAO()) {
             if (user.getUserName().equals(userName)) {
@@ -29,14 +32,16 @@ public class UserDAO extends DAO<User> {
 
     public void usernameCheckForUniqueness(String userName) throws InternalServerException, BadRequestException {
         for (User user1 : getObjectsFromDAO()) {
-            if (user1.getUserName().equals(userName))
+            if (user1.getUserName().equals(userName)) {
                 throw new BadRequestException("usernameCheckForUniqueness failed: username is already taken");
+            }
         }
     }
 
+    //TODO move to Service
     private User checkPassword(User user, String password) throws BadRequestException {
-        if (user.getPassword().equals(password))
-            return user;
+        if (user.getPassword().equals(password)) return user;
         throw new BadRequestException("checkPassword failed: wrong password");
     }
+
 }
