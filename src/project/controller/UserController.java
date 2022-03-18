@@ -12,7 +12,8 @@ public class UserController {
         return userService.registerUser(user);
     }
 
-    public void login(String userName, String password) throws BadRequestException, InternalServerException {
+    public void login(String userName, String password)
+            throws BadRequestException, InternalServerException {
         userService.login(userName, password);
     }
 
@@ -20,7 +21,7 @@ public class UserController {
         userService.logout();
     }
 
-    public void setUserType(Long id, UserType userType)
+    public void setUserType(long id, UserType userType)
             throws InternalServerException, NoAccessException, BadRequestException, NotLogInException,
             NotFoundException {
         userService.setUserType(id, userType);

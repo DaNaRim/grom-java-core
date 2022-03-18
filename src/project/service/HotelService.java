@@ -33,7 +33,7 @@ public class HotelService {
 
     public Hotel addHotel(Hotel hotel)
             throws NoAccessException, BadRequestException, InternalServerException, NotLogInException {
-        userService.checkAccess();
+        userService.checkForAdminPermissions();
         validateHotel(hotel);
 
         return hotelDAO.save(hotel);
@@ -41,7 +41,7 @@ public class HotelService {
 
     public void deleteHotel(long hotelId)
             throws NoAccessException, BadRequestException, InternalServerException, NotLogInException, NotFoundException {
-        userService.checkAccess();
+        userService.checkForAdminPermissions();
 
         if (!hotelDAO.isExists(hotelId)) {
             throw new BadRequestException("deleteHotel failed: missing hotel with id: " + hotelId);

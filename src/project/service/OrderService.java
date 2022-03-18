@@ -22,7 +22,7 @@ public class OrderService {
             NotFoundException {
 
         validateRoomAndUser(roomId, userId);
-        userService.checkUserForOperation(userId);
+        userService.isLoggedUser(userId);
         validateBookRoom(roomId, dateFrom, dateTo);
 
         orderDAO.save(new Order(
@@ -38,7 +38,7 @@ public class OrderService {
             NotFoundException {
 
         validateRoomAndUser(roomId, userId);
-        userService.checkUserForOperation(userId);
+        userService.isLoggedUser(userId);
         validateCancellation(roomId, userId);
 
         Order order = orderDAO.findOrderByRoomAndUser(roomId, userId);

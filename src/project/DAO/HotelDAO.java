@@ -12,9 +12,6 @@ public class HotelDAO extends DAO<Hotel> {
         super(DaoUtil.HOTEL_DAO_PATH);
     }
 
-    //TODO: remove bad request exceptions
-    //TODO: add notFoundException
-
     public LinkedList<Hotel> findHotelByName(String name) throws InternalServerException, NotFoundException {
         LinkedList<Hotel> resultHotels = new LinkedList<>();
 

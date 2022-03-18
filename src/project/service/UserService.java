@@ -6,7 +6,8 @@ import project.model.User;
 import project.model.UserType;
 
 public class UserService {
-    private static UserDAO userDAO = new UserDAO();
+
+    private static final UserDAO userDAO = new UserDAO();
     private static User loggedUser = null;
 
     public User registerUser(User user) throws InternalServerException, BadRequestException {
@@ -14,89 +15,105 @@ public class UserService {
         return userDAO.save(user);
     }
 
-    public void login(String userName, String password) throws InternalServerException, BadRequestException {
-        validateLogin(userName);
-        loggedUser = userDAO.logIn(userName, password);
+    public void login(String username, String password) throws InternalServerException, BadRequestException {
+        validateLoggedUser(username);
+        loggedUser = validateLoginAndGetUser(username, password);
     }
 
     public void logout() throws NotLogInException {
-        checkLogIn();
+        isSomeUserLogged();
         loggedUser = null;
     }
 
-    public void setUserType(Long id, UserType userType)
+    public void setUserType(long id, UserType userType)
             throws NoAccessException, BadRequestException, InternalServerException, NotLogInException,
             NotFoundException {
-        checkAccess();
+
+        checkForAdminPermissions();
         User user = userDAO.findById(id);
 
-        validateUserType(user, userType);
-        try {
-            user.setUserType(userType);
-            userDAO.update(user);
-        } catch (InternalServerException e) {
-            throw new InternalServerException("setUserType failed: " + e.getMessage());
+        if (user.getUserType() == userType) {
+            throw new BadRequestException("setUserType failed: user already has this type");
         }
+        user.setUserType(userType);
+        userDAO.update(user);
     }
 
-    public void checkLogIn() throws NotLogInException {
-        if (loggedUser == null) throw new NotLogInException("checkLogIn failed: user is not log in");
-    }
-
-    public void checkAccess() throws NoAccessException, NotLogInException {
-        checkLogIn();
+    public void checkForAdminPermissions() throws NoAccessException, NotLogInException {
+        isSomeUserLogged();
         if (loggedUser.getUserType() != UserType.ADMIN) {
-            throw new NoAccessException("checkAccess failed: user don`t have enough rights");
+            throw new NoAccessException("checkForAdminPermissions failed: user don`t have enough rights");
         }
     }
 
-    public void checkUserForOperation(Long id) throws NoAccessException, NotLogInException {
-        checkLogIn();
+    public void isLoggedUser(Long id) throws NoAccessException, NotLogInException {
+        isSomeUserLogged();
         if (!loggedUser.getId().equals(id)) {
-            throw new NoAccessException("checkUserForOperation failed: user cannot do this operation in the name of " +
-                    "another user");
+            throw new NoAccessException(
+                    "isLoggedUser failed: user cannot do this operation in the name of another user");
         }
     }
 
-    private void validateLogin(String userName) throws BadRequestException {
-        if (loggedUser != null) {
-            if (loggedUser.getUserName().equals(userName)) {
-                throw new BadRequestException("validateLogin failed: user already log in");
-            }
-            throw new BadRequestException("validateLogin failed: another user is logged in now");
+    private void isSomeUserLogged() throws NotLogInException {
+        if (loggedUser == null) throw new NotLogInException("isSomeUserLogged failed: user is not log in");
+    }
+
+    private void validateLoggedUser(String userName) throws BadRequestException {
+        if (loggedUser == null) return;
+
+        if (loggedUser.getUserName().equals(userName)) {
+            throw new BadRequestException("validateLogin failed: user already log in");
         }
+        throw new BadRequestException("validateLogin failed: another user is logged in now");
+    }
+
+    private User validateLoginAndGetUser(String username, String password)
+            throws BadRequestException, InternalServerException {
+
+        if (username == null || password == null) {
+            throw new BadRequestException("validateLoginAndGetUser failed: not all fields are filed");
+        }
+
+        User user;
+        try {
+            user = userDAO.getUserByUsername(username);
+        } catch (NotFoundException e) {
+            throw new BadRequestException("validateAndGetUser failed: wrong username");
+        }
+        if (!user.getPassword().equals(password)) {
+            throw new BadRequestException("validateAndGetUser failed: wrong password");
+        }
+        return user;
     }
 
     private void validateUser(User user) throws BadRequestException, InternalServerException {
         if (user == null) {
             throw new BadRequestException("validateUser failed: impossible to process null user");
         }
-        if (user.getUserName() == null || user.getPassword() == null || user.getCountry() == null ||
-                user.getUserName().equals("") || user.getPassword().equals("") || user.getCountry().equals("")) {
+        if (user.getUserName() == null
+                || user.getPassword() == null
+                || user.getCountry() == null
+                || user.getUserName().isEmpty()
+                || user.getPassword().isEmpty()
+                || user.getCountry().isEmpty()) {
             throw new BadRequestException("validateUser failed: not all fields are filled");
         }
-
-        userDAO.usernameCheckForUniqueness(user.getUserName());
-
+        if (user.getUserName().isBlank()
+                || user.getPassword().isBlank()
+                || user.getCountry().isBlank()) {
+            throw new BadRequestException("validateUser failed: fields must not contain spaces");
+        }
+        if (user.getUserName().contains(", ")
+                || user.getPassword().contains(", ")
+                || user.getCountry().contains(", ")) {
+            throw new BadRequestException("validateUser failed: fields must not have ', '");
+        }
         if (user.getPassword().length() < 8) {
             throw new BadRequestException("validateUser failed: password must be at least 8 characters");
         }
-        if (user.getUserName().length() > 25) {
-            throw new BadRequestException("validateUser failed: username must be no more than 25 characters");
-        }
-        if (!user.getUserName().equals(user.getUserName().trim()) ||
-                !user.getPassword().equals(user.getPassword().trim()) ||
-                !user.getCountry().equals(user.getCountry().trim())) {
-            throw new BadRequestException("validateUser failed: fields must not begin and end with spaces");
-        }
-        if (user.getUserName().contains(", ") || user.getPassword().contains(", ") || user.getCountry().contains(", ")) {
-            throw new BadRequestException("validateUser failed: fields must not have ', '");
+        if (!userDAO.isUsernameUnique(user.getUserName())) {
+            throw new BadRequestException("validateUser failed: username is already taken");
         }
     }
 
-    private void validateUserType(User user, UserType userType) throws BadRequestException {
-        if (user.getUserType() == userType) {
-            throw new BadRequestException("validateUserType failed: user already has this type");
-        }
-    }
 }

@@ -22,7 +22,7 @@ public class RoomService {
 
     public Room addRoom(Room room)
             throws InternalServerException, BadRequestException, NoAccessException, NotLogInException {
-        userService.checkAccess();
+        userService.checkForAdminPermissions();
         validateRoom(room);
         return roomDAO.save(room);
     }
@@ -30,7 +30,7 @@ public class RoomService {
     public void deleteRoom(long roomId)
             throws InternalServerException, NoAccessException, BadRequestException, NotLogInException,
             NotFoundException {
-        userService.checkAccess();
+        userService.checkForAdminPermissions();
 
         if (!roomDAO.isExists(roomId)) {
             throw new BadRequestException("deleteRoom failed: missing room with id: " + roomId);
