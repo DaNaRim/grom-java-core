@@ -3,9 +3,9 @@ package project.model;
 public class User extends BaseModel implements Comparable<User> {
 
     private Long id;
-    private final String userName;
-    private final String password;
-    private final String country;
+    private String userName;
+    private String password;
+    private String country;
     private UserType userType = UserType.USER;
 
     public User(String userName, String password, String country) {

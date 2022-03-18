@@ -5,10 +5,10 @@ import java.util.Objects;
 public class Hotel extends BaseModel implements Comparable<Hotel> {
 
     private Long id;
-    private final String name;
-    private final String country;
-    private final String city;
-    private final String street;
+    private String name;
+    private String country;
+    private String city;
+    private String street;
 
     public Hotel(String name, String country, String city, String street) {
         this.name = name;

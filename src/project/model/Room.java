@@ -8,12 +8,12 @@ import java.util.Date;
 public class Room extends BaseModel implements Comparable<Room> {
 
     private Long id;
-    private final Integer numberOfGuests;
-    private final Double price;
-    private final Boolean breakfastIncluded;
-    private final Boolean petsAllowed;
+    private Integer numberOfGuests;
+    private Double price;
+    private Boolean breakfastIncluded;
+    private Boolean petsAllowed;
     private Date dateAvailableFrom;
-    private final Hotel hotel;
+    private Hotel hotel;
 
     public Room(Integer numberOfGuests,
                 Double price,
