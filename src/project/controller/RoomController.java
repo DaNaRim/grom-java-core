@@ -1,9 +1,6 @@
 package project.controller;
 
-import project.exception.BadRequestException;
-import project.exception.InternalServerException;
-import project.exception.NoAccessException;
-import project.exception.NotLogInException;
+import project.exception.*;
 import project.model.Filter;
 import project.model.Room;
 import project.service.RoomService;
@@ -13,7 +10,8 @@ import java.util.LinkedList;
 public class RoomController {
     private static RoomService roomService = new RoomService();
 
-    public LinkedList<Room> findRooms(Filter filter) throws BadRequestException, InternalServerException {
+    public LinkedList<Room> findRooms(Filter filter)
+            throws BadRequestException, InternalServerException, NotFoundException {
         return roomService.findRooms(filter);
     }
 

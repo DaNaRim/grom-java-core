@@ -2,10 +2,7 @@ package project.service;
 
 import project.DAO.HotelDAO;
 import project.DAO.RoomDAO;
-import project.exception.BadRequestException;
-import project.exception.InternalServerException;
-import project.exception.NoAccessException;
-import project.exception.NotLogInException;
+import project.exception.*;
 import project.model.Filter;
 import project.model.Room;
 
@@ -16,7 +13,8 @@ public class RoomService {
     private static UserService userService = new UserService();
     private static HotelDAO hotelDAO = new HotelDAO();
 
-    public LinkedList<Room> findRooms(Filter filter) throws InternalServerException, BadRequestException {
+    public LinkedList<Room> findRooms(Filter filter)
+            throws InternalServerException, BadRequestException, NotFoundException {
         validateFilter(filter);
         return roomDAO.findRooms(filter);
     }

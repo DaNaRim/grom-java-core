@@ -2,10 +2,7 @@ package project.demo;
 
 import project.controller.RoomController;
 import project.controller.UserController;
-import project.exception.BadRequestException;
-import project.exception.InternalServerException;
-import project.exception.NoAccessException;
-import project.exception.NotLogInException;
+import project.exception.*;
 import project.model.Filter;
 import project.model.Hotel;
 import project.model.Room;
@@ -20,7 +17,7 @@ public class DemoRoom {
 
 
     public static void main(String[] args)
-            throws BadRequestException, NoAccessException, InternalServerException, ParseException, NotLogInException {
+            throws BadRequestException, NoAccessException, InternalServerException, ParseException, NotLogInException, NotFoundException {
 
         userController.login("Oleg", "wf45a4w44f");
 
