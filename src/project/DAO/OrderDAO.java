@@ -20,26 +20,6 @@ public class OrderDAO extends DAO<Order> {
     //TODO: remove bad request exceptions
     //TODO: add notFoundException
 
-    @Override
-    public Order map(String line) {
-        try {
-            String[] fields = line.split(", ");
-
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DaoUtil.DATE_FORMAT);
-            return new Order(
-                    Long.parseLong(fields[0]),
-                    userDAO.findById(Long.parseLong(fields[1])),
-                    roomDAO.findById(Long.parseLong(fields[2])),
-                    simpleDateFormat.parse(fields[3]),
-                    simpleDateFormat.parse(fields[4]),
-                    Double.parseDouble(fields[5]));
-        } catch (Exception e) {
-            //unreachable if all is okay
-            System.err.println("map failed: " + e.getMessage());
-        }
-        return null;
-    }
-
     public Order findOrderByRoomAndUser(long roomId, long userId) throws InternalServerException, BadRequestException {
         for (Order order : getObjectsFromDAO()) {
             if (order.getRoom().getId() == roomId && order.getUser().getId() == userId) return order;
@@ -81,6 +61,26 @@ public class OrderDAO extends DAO<Order> {
                 dateFrom,
                 dateTo,
                 roomDAO.findById(roomId).getPrice());
+    }
+
+    @Override
+    protected Order map(String line) {
+        try {
+            String[] fields = line.split(", ");
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DaoUtil.DATE_FORMAT);
+            return new Order(
+                    Long.parseLong(fields[0]),
+                    userDAO.findById(Long.parseLong(fields[1])),
+                    roomDAO.findById(Long.parseLong(fields[2])),
+                    simpleDateFormat.parse(fields[3]),
+                    simpleDateFormat.parse(fields[4]),
+                    Double.parseDouble(fields[5]));
+        } catch (Exception e) {
+            //unreachable if all is okay
+            System.err.println("map failed: " + e.getMessage());
+        }
+        return null;
     }
 
     private Room updateRoomDateAvailFrom(Long id) throws InternalServerException, BadRequestException {

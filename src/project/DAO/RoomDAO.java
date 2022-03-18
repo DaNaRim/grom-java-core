@@ -27,8 +27,15 @@ public class RoomDAO extends DAO<Room> {
         return rooms;
     }
 
+    public boolean hasRooms(long hotelId) throws InternalServerException {
+        for (Room room : getObjectsFromDAO()) {
+            if (room.getHotel().getId() == hotelId) return true;
+        }
+        return false;
+    }
+
     @Override
-    public Room map(String line) {
+    protected Room map(String line) {
         try {
             String[] fields = line.split(", ");
 
@@ -45,13 +52,6 @@ public class RoomDAO extends DAO<Room> {
             System.err.println("map failed: " + e.getMessage());
         }
         return null;
-    }
-
-    public boolean hasRooms(long hotelId) throws InternalServerException {
-        for (Room room : getObjectsFromDAO()) {
-            if (room.getHotel().getId() == hotelId) return true;
-        }
-        return false;
     }
 
     private boolean checkRoom(Room room, Filter filter) {

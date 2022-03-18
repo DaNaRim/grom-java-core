@@ -16,7 +16,7 @@ public abstract class DAO<T extends BaseModel> {
         this.path = path;
     }
 
-    public abstract T map(String line);
+    protected abstract T map(String line);
 
     public final T findById(long id) throws InternalServerException, BadRequestException {
         for (T object : getObjectsFromDAO()) {

@@ -15,13 +15,6 @@ public class HotelDAO extends DAO<Hotel> {
     //TODO: remove bad request exceptions
     //TODO: add notFoundException
 
-    @Override
-    public Hotel map(String line) {
-        String[] fields = line.split(", ");
-
-        return new Hotel(Long.parseLong(fields[0]), fields[1], fields[2], fields[3], fields[4]);
-    }
-
     public LinkedList<Hotel> findHotelByName(String name) throws InternalServerException, NotFoundException {
         LinkedList<Hotel> resultHotels = new LinkedList<>();
 
@@ -53,6 +46,13 @@ public class HotelDAO extends DAO<Hotel> {
             if (hotel1.equals(hotel)) return true;
         }
         return false;
+    }
+
+    @Override
+    protected Hotel map(String line) {
+        String[] fields = line.split(", ");
+
+        return new Hotel(Long.parseLong(fields[0]), fields[1], fields[2], fields[3], fields[4]);
     }
 
 }

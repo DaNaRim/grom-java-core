@@ -13,13 +13,6 @@ public class UserDAO extends DAO<User> {
 
     //TODO: remove bad request exceptions
 
-    @Override
-    public User map(String line) {
-        String[] fields = line.split(", ");
-
-        return new User(Long.parseLong(fields[0]), fields[1], fields[2], fields[3], UserType.valueOf(fields[4]));
-    }
-
     //TODO move to Service
     public User logIn(String userName, String password) throws InternalServerException, BadRequestException {
         for (User user : getObjectsFromDAO()) {
@@ -36,6 +29,13 @@ public class UserDAO extends DAO<User> {
                 throw new BadRequestException("usernameCheckForUniqueness failed: username is already taken");
             }
         }
+    }
+
+    @Override
+    protected User map(String line) {
+        String[] fields = line.split(", ");
+
+        return new User(Long.parseLong(fields[0]), fields[1], fields[2], fields[3], UserType.valueOf(fields[4]));
     }
 
     //TODO move to Service
