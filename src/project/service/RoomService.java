@@ -9,9 +9,10 @@ import project.model.Room;
 import java.util.LinkedList;
 
 public class RoomService {
-    private static RoomDAO roomDAO = new RoomDAO();
-    private static UserService userService = new UserService();
-    private static HotelDAO hotelDAO = new HotelDAO();
+
+    private static final RoomDAO roomDAO = new RoomDAO();
+    private static final UserService userService = new UserService();
+    private static final HotelDAO hotelDAO = new HotelDAO();
 
     public LinkedList<Room> findRooms(Filter filter)
             throws InternalServerException, BadRequestException, NotFoundException {
@@ -29,16 +30,23 @@ public class RoomService {
     public void deleteRoom(long roomId)
             throws InternalServerException, NoAccessException, BadRequestException, NotLogInException {
         userService.checkAccess();
-        Room room = roomDAO.findById(roomId);
-        roomDAO.delete(room);
+
+        if (!roomDAO.isExists(roomId)) {
+            throw new BadRequestException("deleteRoom failed: missing room with id: " + roomId);
+        }
+        roomDAO.delete(roomId);
     }
 
+    //TODO test wrappers
     private void validateFilter(Filter filter) throws BadRequestException {
-        if (filter == null ||
-                (filter.getNumberOfGuests() == 0 && filter.getPrice() == 0 &&
-                        filter.getBreakfastIncluded() == null && filter.getPetsAllowed() == null &&
-                        filter.getDateAvailableFrom() == null && filter.getCountry() == null &&
-                        filter.getCity() == null)) {
+        if (filter == null
+                || (filter.getNumberOfGuests() == null
+                && filter.getPrice() == null
+                && filter.getBreakfastIncluded() == null
+                && filter.getPetsAllowed() == null
+                && filter.getDateAvailableFrom() == null
+                && filter.getCountry() == null
+                && filter.getCity() == null)) {
             throw new BadRequestException("validateFilter failed: you have not selected any options for filtering");
         }
         if (filter.getNumberOfGuests() < 0 && filter.getPrice() < 0) {
@@ -46,14 +54,22 @@ public class RoomService {
         }
     }
 
+    //TODO test wrappers
     private void validateRoom(Room room) throws InternalServerException, BadRequestException {
         if (room == null) {
             throw new BadRequestException("validateRoom failed: impossible to process null room");
         }
-        if (room.getNumberOfGuests() <= 0 || room.getPrice() <= 0.0 || room.getBreakfastIncluded() == null ||
-                room.getPetsAllowed() == null || room.getDateAvailableFrom() == null || room.getHotel() == null) {
+        if (room.getNumberOfGuests() < 1
+                || room.getPrice() <= 0.0
+                || room.getBreakfastIncluded() == null
+                || room.getPetsAllowed() == null
+                || room.getDateAvailableFrom() == null
+                || room.getHotel() == null) {
             throw new BadRequestException("validateRoom failed: not all fields are filled correctly");
         }
-        hotelDAO.findById(room.getHotel().getId());
+        if (hotelDAO.isExists(room.getHotel().getId())) {
+            throw new BadRequestException("validateRoom failed: missing hotel with id: " + room.getHotel().getId());
+        }
     }
+
 }
