@@ -2,10 +2,7 @@ package project.service;
 
 import project.DAO.HotelDAO;
 import project.DAO.RoomDAO;
-import project.exception.BadRequestException;
-import project.exception.InternalServerException;
-import project.exception.NoAccessException;
-import project.exception.NotLogInException;
+import project.exception.*;
 import project.model.Hotel;
 
 import java.util.LinkedList;
@@ -16,14 +13,18 @@ public class HotelService {
     private static final HotelDAO hotelDAO = new HotelDAO();
     private static final RoomDAO roomDAO = new RoomDAO();
 
-    public LinkedList<Hotel> findHotelByName(String name) throws BadRequestException, InternalServerException {
+    public LinkedList<Hotel> findHotelByName(String name)
+            throws BadRequestException, InternalServerException, NotFoundException {
+
         if (name == null || name.isEmpty() || name.isBlank()) {
             throw new BadRequestException("findHotelByName failed: the field is not filled correctly");
         }
         return hotelDAO.findHotelByName(name);
     }
 
-    public LinkedList<Hotel> findHotelByCity(String city) throws BadRequestException, InternalServerException {
+    public LinkedList<Hotel> findHotelByCity(String city)
+            throws BadRequestException, InternalServerException, NotFoundException {
+
         if (city == null || city.isEmpty() || city.isBlank()) {
             throw new BadRequestException("findHotelByCity failed: the field is not filled correctly");
         }

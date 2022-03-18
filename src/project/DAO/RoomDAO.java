@@ -1,7 +1,7 @@
 package project.DAO;
 
-import project.exception.BadRequestException;
 import project.exception.InternalServerException;
+import project.exception.NotFoundException;
 import project.model.Filter;
 import project.model.Room;
 
@@ -16,14 +16,11 @@ public class RoomDAO extends DAO<Room> {
         super(DaoUtil.ROOM_DAO_PATH);
     }
 
-    //TODO: remove bad request exceptions
-    //TODO: add notFoundException
-
-    public LinkedList<Room> findRooms(Filter filter) throws InternalServerException, BadRequestException {
+    public LinkedList<Room> findRooms(Filter filter) throws InternalServerException, NotFoundException {
         LinkedList<Room> rooms = findRoomsByFilter(filter);
 
-        if (rooms.size() == 0) {
-            throw new BadRequestException("checkResultSize failed: there is no room with this filter parameters");
+        if (rooms.isEmpty()) {
+            throw new NotFoundException("checkResultSize failed: there is no room with this filter parameters");
         }
         return rooms;
     }

@@ -2,10 +2,7 @@ package project.demo;
 
 import project.controller.HotelController;
 import project.controller.UserController;
-import project.exception.BadRequestException;
-import project.exception.InternalServerException;
-import project.exception.NoAccessException;
-import project.exception.NotLogInException;
+import project.exception.*;
 import project.model.Hotel;
 
 public class DemoHotel {
@@ -13,7 +10,11 @@ public class DemoHotel {
     private static UserController userController = new UserController();
 
     public static void main(String[] args)
-            throws BadRequestException, NoAccessException, InternalServerException, NotLogInException {
+            throws BadRequestException,
+            NoAccessException,
+            InternalServerException,
+            NotLogInException,
+            NotFoundException {
 
         userController.login("Oleg", "wf45a4w44f");
 

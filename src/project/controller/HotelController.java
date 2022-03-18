@@ -1,9 +1,6 @@
 package project.controller;
 
-import project.exception.BadRequestException;
-import project.exception.InternalServerException;
-import project.exception.NoAccessException;
-import project.exception.NotLogInException;
+import project.exception.*;
 import project.model.Hotel;
 import project.service.HotelService;
 
@@ -12,11 +9,13 @@ import java.util.LinkedList;
 public class HotelController {
     private static HotelService hotelService = new HotelService();
 
-    public LinkedList<Hotel> findHotelByName(String name) throws BadRequestException, InternalServerException {
+    public LinkedList<Hotel> findHotelByName(String name)
+            throws BadRequestException, InternalServerException, NotFoundException {
         return hotelService.findHotelByName(name);
     }
 
-    public LinkedList<Hotel> findHotelByCity(String city) throws BadRequestException, InternalServerException {
+    public LinkedList<Hotel> findHotelByCity(String city)
+            throws BadRequestException, InternalServerException, NotFoundException {
         return hotelService.findHotelByCity(city);
     }
 
