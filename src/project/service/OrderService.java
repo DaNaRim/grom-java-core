@@ -41,8 +41,7 @@ public class OrderService {
         userService.isLoggedUser(userId);
         validateCancellation(roomId, userId);
 
-        Order order = orderDAO.findOrderByRoomAndUser(roomId, userId);
-        orderDAO.delete(order);
+        orderDAO.delete(orderDAO.findOrderByRoomAndUser(roomId, userId));
     }
 
     private void validateRoomAndUser(long roomId, long userId) throws InternalServerException, BadRequestException {
