@@ -25,6 +25,13 @@ public abstract class DAO<T extends BaseModel> {
         throw new BadRequestException("findById failed: missing object with id: " + id);
     }
 
+    public final boolean isExists(long id) throws InternalServerException {
+        for (T object : getObjectsFromDAO()) {
+            if (object.getId() == id) return true;
+        }
+        return false;
+    }
+
     public final TreeSet<T> getObjectsFromDAO() throws InternalServerException {
         validateDAO(path);
 
@@ -72,6 +79,10 @@ public abstract class DAO<T extends BaseModel> {
         } catch (InternalServerException e) {
             throw new InternalServerException("deleteObjectFromDAO failed: " + e.getMessage());
         }
+    }
+
+    public final void deleteObjectFromDAO(long id) throws InternalServerException, BadRequestException {
+        deleteObjectFromDAO(findById(id));
     }
 
     public final T updateObjectInDAO(T updatableObject) throws InternalServerException {

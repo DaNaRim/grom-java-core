@@ -17,6 +17,7 @@ public class RoomDAO extends DAO<Room> {
     }
 
     //TODO: remove bad request exceptions
+    //TODO: add notFoundException
 
     public LinkedList<Room> findRooms(Filter filter) throws InternalServerException, BadRequestException {
         LinkedList<Room> rooms = findRoomsByFilter(filter);
@@ -47,13 +48,11 @@ public class RoomDAO extends DAO<Room> {
         return null;
     }
 
-    public void checkHotelRooms(long hotelId) throws InternalServerException, BadRequestException {
+    public boolean hasRooms(long hotelId) throws InternalServerException {
         for (Room room : getObjectsFromDAO()) {
-            if (room.getHotel().getId().equals(hotelId)) {
-                throw new BadRequestException("checkHotelRooms failed: This hotel has a room that is in use: " +
-                        room.getId());
-            }
+            if (room.getHotel().getId() == hotelId) return true;
         }
+        return false;
     }
 
     private LinkedList<Room> findRoomsByFilter(Filter filter) throws InternalServerException {

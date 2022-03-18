@@ -13,6 +13,7 @@ public class HotelDAO extends DAO<Hotel> {
     }
 
     //TODO: remove bad request exceptions
+    //TODO: add notFoundException
 
     @Override
     public Hotel map(String line) {
@@ -47,12 +48,11 @@ public class HotelDAO extends DAO<Hotel> {
         return resultHotels;
     }
 
-    public void isHotelExist(Hotel hotel) throws InternalServerException, BadRequestException {
+    public boolean isHotelExist(Hotel hotel) throws InternalServerException {
         for (Hotel hotel1 : getObjectsFromDAO()) {
-            if (hotel1.equals(hotel)) {
-                throw new BadRequestException("isHotelExist failed: the hotel is already exist: " + hotel1.getId());
-            }
+            if (hotel1.equals(hotel)) return true;
         }
+        return false;
     }
 
 }

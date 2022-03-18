@@ -11,17 +11,22 @@ import project.model.Hotel;
 import java.util.LinkedList;
 
 public class HotelService {
-    private static HotelDAO hotelDAO = new HotelDAO();
-    private static UserService userService = new UserService();
-    private static RoomDAO roomDAO = new RoomDAO();
+
+    private static final UserService userService = new UserService();
+    private static final HotelDAO hotelDAO = new HotelDAO();
+    private static final RoomDAO roomDAO = new RoomDAO();
 
     public LinkedList<Hotel> findHotelByName(String name) throws BadRequestException, InternalServerException {
-        validateName(name);
+        if (name == null || name.isEmpty() || name.isBlank()) {
+            throw new BadRequestException("findHotelByName failed: the field is not filled correctly");
+        }
         return hotelDAO.findHotelByName(name);
     }
 
     public LinkedList<Hotel> findHotelByCity(String city) throws BadRequestException, InternalServerException {
-        validateCity(city);
+        if (city == null || city.isEmpty() || city.isBlank()) {
+            throw new BadRequestException("findHotelByCity failed: the field is not filled correctly");
+        }
         return hotelDAO.findHotelByCity(city);
     }
 
@@ -36,44 +41,45 @@ public class HotelService {
     public void deleteHotel(long hotelId)
             throws NoAccessException, BadRequestException, InternalServerException, NotLogInException {
         userService.checkAccess();
-        Hotel hotel = hotelDAO.findById(hotelId);
-        roomDAO.checkHotelRooms(hotelId);
 
-        hotelDAO.deleteObjectFromDAO(hotel);
-    }
-
-    private void validateName(String name) throws BadRequestException {
-        if (name == null || name.equals("") || !name.equals(name.trim())) {
-            throw new BadRequestException("validateName failed: the field is not filled correctly");
+        if (!hotelDAO.isExists(hotelId)) {
+            throw new BadRequestException("deleteHotel failed: missing hotel with id: " + hotelId);
         }
-    }
-
-    private void validateCity(String city) throws BadRequestException {
-        if (city == null || city.equals("") || !city.equals(city.trim())) {
-            throw new BadRequestException("validateCity failed: the field is not filled correctly");
+        if (roomDAO.hasRooms(hotelId)) {
+            throw new BadRequestException("deleteHotel failed: hotel " + hotelId + " has rooms. First delete it");
         }
+        hotelDAO.deleteObjectFromDAO(hotelId);
     }
 
     private void validateHotel(Hotel hotel) throws BadRequestException, InternalServerException {
         if (hotel == null) {
             throw new BadRequestException("validateHotel failed: impossible to process null hotel");
         }
-        if (hotel.getName() == null || hotel.getCity() == null ||
-                hotel.getCountry() == null || hotel.getStreet() == null ||
-                hotel.getName().equals("") || hotel.getCity().equals("") ||
-                hotel.getCountry().equals("") || hotel.getStreet().equals("")) {
+        if (hotel.getName() == null
+                || hotel.getCity() == null
+                || hotel.getCountry() == null
+                || hotel.getStreet() == null
+                || hotel.getName().isEmpty()
+                || hotel.getCity().isEmpty()
+                || hotel.getCountry().isEmpty()
+                || hotel.getStreet().isEmpty()) {
             throw new BadRequestException("validateHotel failed: not all fields are filled");
         }
-        if (!hotel.getName().equals(hotel.getName().trim()) ||
-                !hotel.getCountry().equals(hotel.getCountry().trim()) ||
-                !hotel.getCity().equals(hotel.getCity().trim()) ||
-                !hotel.getStreet().equals(hotel.getStreet().trim())) {
-            throw new BadRequestException("validateHotel failed: fields must not begin and end with spaces");
+        if (hotel.getName().isBlank()
+                || hotel.getCountry().isBlank()
+                || hotel.getCity().isBlank()
+                || hotel.getStreet().isBlank()) {
+            throw new BadRequestException("validateHotel failed: fields must not contain spaces");
         }
-        if (hotel.getName().contains(", ") || hotel.getCountry().contains(", ") ||
-                hotel.getCity().contains(", ") || hotel.getStreet().contains(", ")) {
-            throw new BadRequestException("validateHotel failed: fields must not have ', '");
+        if (hotel.getName().contains(", ")
+                || hotel.getCountry().contains(", ")
+                || hotel.getCity().contains(", ")
+                || hotel.getStreet().contains(", ")) {
+            throw new BadRequestException("validateHotel failed: fields must not contain ', '");
         }
-        hotelDAO.isHotelExist(hotel);
+        if (hotelDAO.isHotelExist(hotel)) {
+            throw new BadRequestException("validateHotel failed: the hotel with this parameters already exist");
+        }
     }
+
 }
