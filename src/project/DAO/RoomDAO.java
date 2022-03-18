@@ -17,8 +17,10 @@ public class RoomDAO extends DAO<Room> {
     }
 
     public LinkedList<Room> findRooms(Filter filter) throws InternalServerException, NotFoundException {
-        LinkedList<Room> rooms = findRoomsByFilter(filter);
-
+        LinkedList<Room> rooms = new LinkedList<>();
+        for (Room room : getObjectsFromDAO()) {
+            if (checkRoom(room, filter)) rooms.add(room);
+        }
         if (rooms.isEmpty()) {
             throw new NotFoundException("checkResultSize failed: there is no room with this filter parameters");
         }
@@ -52,15 +54,7 @@ public class RoomDAO extends DAO<Room> {
         return false;
     }
 
-    private LinkedList<Room> findRoomsByFilter(Filter filter) throws InternalServerException {
-        LinkedList<Room> rooms = new LinkedList<>();
-        for (Room room : getObjectsFromDAO()) {
-            if (checkRoomByFilter(room, filter)) rooms.add(room);
-        }
-        return rooms;
-    }
-
-    private boolean checkRoomByFilter(Room room, Filter filter) {
+    private boolean checkRoom(Room room, Filter filter) {
         return (filter.getNumberOfGuests() == 0 || filter.getNumberOfGuests().equals(room.getNumberOfGuests()))
                 && (filter.getPrice() == 0.0 || filter.getPrice().equals(room.getPrice()))
                 && (filter.getBreakfastIncluded() == null
