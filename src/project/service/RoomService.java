@@ -23,14 +23,14 @@ public class RoomService {
             throws InternalServerException, BadRequestException, NoAccessException, NotLogInException {
         userService.checkAccess();
         validateRoom(room);
-        return roomDAO.addObjectToDAO(room);
+        return roomDAO.save(room);
     }
 
     public void deleteRoom(long roomId)
             throws InternalServerException, NoAccessException, BadRequestException, NotLogInException {
         userService.checkAccess();
         Room room = roomDAO.findById(roomId);
-        roomDAO.deleteObjectFromDAO(room);
+        roomDAO.delete(room);
     }
 
     private void validateFilter(Filter filter) throws BadRequestException {

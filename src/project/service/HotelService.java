@@ -36,7 +36,7 @@ public class HotelService {
         userService.checkAccess();
         validateHotel(hotel);
 
-        return hotelDAO.addObjectToDAO(hotel);
+        return hotelDAO.save(hotel);
     }
 
     public void deleteHotel(long hotelId)
@@ -49,7 +49,7 @@ public class HotelService {
         if (roomDAO.hasRooms(hotelId)) {
             throw new BadRequestException("deleteHotel failed: hotel " + hotelId + " has rooms. First delete it");
         }
-        hotelDAO.deleteObjectFromDAO(hotelId);
+        hotelDAO.delete(hotelId);
     }
 
     private void validateHotel(Hotel hotel) throws BadRequestException, InternalServerException {

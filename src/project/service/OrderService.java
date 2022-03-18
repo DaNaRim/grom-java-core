@@ -24,7 +24,7 @@ public class OrderService {
         validateOrder(roomId, dateFrom, dateTo);
 
         Order order = orderDAO.createOrder(roomId, userId, dateFrom, dateTo);
-        orderDAO.addObjectToDAO(order);
+        orderDAO.save(order);
     }
 
     public void cancelReservation(long roomId, long userId)
@@ -34,7 +34,7 @@ public class OrderService {
         validateCancellation(roomId, userId);
 
         Order order = orderDAO.findOrderByRoomAndUser(roomId, userId);
-        orderDAO.deleteObjectFromDAO(order);
+        orderDAO.delete(order);
     }
 
     private void validateCancellation(long roomId, long userId)

@@ -21,7 +21,7 @@ public class OrderDAO extends DAO<Order> {
     //TODO: add notFoundException
 
     public Order findOrderByRoomAndUser(long roomId, long userId) throws InternalServerException, BadRequestException {
-        for (Order order : getObjectsFromDAO()) {
+        for (Order order : getAll()) {
             if (order.getRoom().getId() == roomId && order.getUser().getId() == userId) return order;
         }
         throw new BadRequestException("findOrderByRoomAndUser failed: Missing order");
@@ -36,7 +36,7 @@ public class OrderDAO extends DAO<Order> {
             throw new BadRequestException("checkRoomForBusy failed: the room is busy until " + dateAvailableFrom);
         }
 
-        for (Order order : getObjectsFromDAO()) {
+        for (Order order : getAll()) {
             Date busyTimeFrom = order.getDateFrom();
             Date busyTimeTo = order.getDateTo();
 
@@ -87,14 +87,14 @@ public class OrderDAO extends DAO<Order> {
         Room room = roomDAO.findById(id);
 
         Date dateAvailableFrom = room.getDateAvailableFrom();
-        for (Order order : getObjectsFromDAO()) {
+        for (Order order : getAll()) {
 
             if (order.getDateTo().after(dateAvailableFrom)
                     && order.getDateFrom().before(dateAvailableFrom)) {
                 room.setDateAvailableFrom(order.getDateTo());
             }
         }
-        return roomDAO.updateObjectInDAO(room);
+        return roomDAO.update(room);
     }
 
 }

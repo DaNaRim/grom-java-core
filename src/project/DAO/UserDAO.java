@@ -15,7 +15,7 @@ public class UserDAO extends DAO<User> {
 
     //TODO move to Service
     public User logIn(String userName, String password) throws InternalServerException, BadRequestException {
-        for (User user : getObjectsFromDAO()) {
+        for (User user : getAll()) {
             if (user.getUserName().equals(userName)) {
                 return checkPassword(user, password);
             }
@@ -24,7 +24,7 @@ public class UserDAO extends DAO<User> {
     }
 
     public void usernameCheckForUniqueness(String userName) throws InternalServerException, BadRequestException {
-        for (User user1 : getObjectsFromDAO()) {
+        for (User user1 : getAll()) {
             if (user1.getUserName().equals(userName)) {
                 throw new BadRequestException("usernameCheckForUniqueness failed: username is already taken");
             }

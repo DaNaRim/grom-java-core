@@ -14,7 +14,7 @@ public class UserService {
 
     public User registerUser(User user) throws InternalServerException, BadRequestException {
         validateUser(user);
-        return userDAO.addObjectToDAO(user);
+        return userDAO.save(user);
     }
 
     public void login(String userName, String password) throws InternalServerException, BadRequestException {
@@ -35,7 +35,7 @@ public class UserService {
         validateUserType(user, userType);
         try {
             user.setUserType(userType);
-            userDAO.updateObjectInDAO(user);
+            userDAO.update(user);
         } catch (InternalServerException e) {
             throw new InternalServerException("setUserType failed: " + e.getMessage());
         }

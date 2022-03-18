@@ -18,7 +18,7 @@ public class HotelDAO extends DAO<Hotel> {
     public LinkedList<Hotel> findHotelByName(String name) throws InternalServerException, NotFoundException {
         LinkedList<Hotel> resultHotels = new LinkedList<>();
 
-        for (Hotel hotel : getObjectsFromDAO()) {
+        for (Hotel hotel : getAll()) {
             if (hotel.getName().equals(name)) resultHotels.add(hotel);
         }
 
@@ -31,7 +31,7 @@ public class HotelDAO extends DAO<Hotel> {
     public LinkedList<Hotel> findHotelByCity(String city) throws InternalServerException, NotFoundException {
         LinkedList<Hotel> resultHotels = new LinkedList<>();
 
-        for (Hotel hotel : getObjectsFromDAO()) {
+        for (Hotel hotel : getAll()) {
             if (hotel.getCity().equals(city)) resultHotels.add(hotel);
         }
 
@@ -42,7 +42,7 @@ public class HotelDAO extends DAO<Hotel> {
     }
 
     public boolean isHotelExist(Hotel hotel) throws InternalServerException {
-        for (Hotel hotel1 : getObjectsFromDAO()) {
+        for (Hotel hotel1 : getAll()) {
             if (hotel1.equals(hotel)) return true;
         }
         return false;

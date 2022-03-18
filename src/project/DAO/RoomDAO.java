@@ -18,7 +18,7 @@ public class RoomDAO extends DAO<Room> {
 
     public LinkedList<Room> findRooms(Filter filter) throws InternalServerException, NotFoundException {
         LinkedList<Room> rooms = new LinkedList<>();
-        for (Room room : getObjectsFromDAO()) {
+        for (Room room : getAll()) {
             if (checkRoom(room, filter)) rooms.add(room);
         }
         if (rooms.isEmpty()) {
@@ -28,7 +28,7 @@ public class RoomDAO extends DAO<Room> {
     }
 
     public boolean hasRooms(long hotelId) throws InternalServerException {
-        for (Room room : getObjectsFromDAO()) {
+        for (Room room : getAll()) {
             if (room.getHotel().getId() == hotelId) return true;
         }
         return false;

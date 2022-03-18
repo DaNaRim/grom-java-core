@@ -16,23 +16,21 @@ public abstract class DAO<T extends BaseModel> {
         this.path = path;
     }
 
-    protected abstract T map(String line);
-
     public final T findById(long id) throws InternalServerException, BadRequestException {
-        for (T object : getObjectsFromDAO()) {
+        for (T object : getAll()) {
             if (object.getId() == id) return object;
         }
         throw new BadRequestException("findById failed: missing object with id: " + id);
     }
 
     public final boolean isExists(long id) throws InternalServerException {
-        for (T object : getObjectsFromDAO()) {
+        for (T object : getAll()) {
             if (object.getId() == id) return true;
         }
         return false;
     }
 
-    public final TreeSet<T> getObjectsFromDAO() throws InternalServerException {
+    public final TreeSet<T> getAll() throws InternalServerException {
         validateDAO(path);
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -47,13 +45,13 @@ public abstract class DAO<T extends BaseModel> {
         }
     }
 
-    public final T addObjectToDAO(T object) throws InternalServerException {
+    public final T save(T object) throws InternalServerException {
         validateDAO(path);
 
         try {
             if (object.getId() == null) object.setId(UUID.randomUUID().getMostSignificantBits() & Long.MAX_VALUE);
 
-            TreeSet<T> objects = getObjectsFromDAO();
+            TreeSet<T> objects = getAll();
             objects.add(object);
 
             deleteDAOContent();
@@ -64,12 +62,12 @@ public abstract class DAO<T extends BaseModel> {
         }
     }
 
-    public final void deleteObjectFromDAO(T deletableObject) throws InternalServerException {
+    public final void delete(T deletableObject) throws InternalServerException {
         validateDAO(path);
 
         try {
             TreeSet<T> objects = new TreeSet<>();
-            for (T object : getObjectsFromDAO()) {
+            for (T object : getAll()) {
                 if (object.getId().equals(deletableObject.getId())) continue;
                 objects.add(object);
             }
@@ -81,19 +79,21 @@ public abstract class DAO<T extends BaseModel> {
         }
     }
 
-    public final void deleteObjectFromDAO(long id) throws InternalServerException, BadRequestException {
-        deleteObjectFromDAO(findById(id));
+    public final void delete(long id) throws InternalServerException, BadRequestException {
+        delete(findById(id));
     }
 
-    public final T updateObjectInDAO(T updatableObject) throws InternalServerException {
+    public final T update(T updatableObject) throws InternalServerException {
         try {
-            deleteObjectFromDAO(updatableObject);
-            addObjectToDAO(updatableObject);
+            delete(updatableObject);
+            save(updatableObject);
             return updatableObject;
         } catch (InternalServerException e) {
             throw new InternalServerException("updateObjectInDAO failed: " + e.getMessage());
         }
     }
+
+    protected abstract T map(String line);
 
     private void validateDAO(String path) throws InternalServerException {
         File file = new File(path);
