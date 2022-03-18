@@ -40,7 +40,7 @@ public class OrderDAO extends DAO<Order> {
     }
 
     @Override
-    protected Order map(String line) {
+    protected Order map(String line) throws InternalServerException {
         try {
             String[] fields = line.split(", ");
 
@@ -54,9 +54,8 @@ public class OrderDAO extends DAO<Order> {
                     Double.parseDouble(fields[5]));
         } catch (Exception e) {
             //unreachable if all is okay
-            System.err.println("map failed: " + e.getMessage());
+            throw new InternalServerException("OrderDAO map failed: " + e.getMessage());
         }
-        return null;
     }
 
 }

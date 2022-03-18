@@ -93,7 +93,7 @@ public abstract class DAO<T extends BaseModel> {
         }
     }
 
-    protected abstract T map(String line);
+    protected abstract T map(String line) throws InternalServerException;
 
     private void validateDAO(String path) throws InternalServerException {
         File file = new File(path);

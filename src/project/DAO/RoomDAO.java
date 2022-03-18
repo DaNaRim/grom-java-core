@@ -35,7 +35,7 @@ public class RoomDAO extends DAO<Room> {
     }
 
     @Override
-    protected Room map(String line) {
+    protected Room map(String line) throws InternalServerException {
         try {
             String[] fields = line.split(", ");
 
@@ -49,9 +49,8 @@ public class RoomDAO extends DAO<Room> {
                     hotelDAO.findById(Long.parseLong(fields[6])));
         } catch (Exception e) {
             //unreachable if all is okay
-            System.err.println("map failed: " + e.getMessage());
+            throw new InternalServerException("RoomDAO map failed: " + e.getMessage());
         }
-        return null;
     }
 
     private boolean checkRoom(Room room, Filter filter) {
