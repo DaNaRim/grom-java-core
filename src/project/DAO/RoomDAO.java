@@ -6,7 +6,7 @@ import project.model.Filter;
 import project.model.Room;
 
 import java.text.SimpleDateFormat;
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class RoomDAO extends DAO<Room> {
 
@@ -16,8 +16,8 @@ public class RoomDAO extends DAO<Room> {
         super(DaoUtil.ROOM_DAO_PATH);
     }
 
-    public LinkedList<Room> findRooms(Filter filter) throws InternalServerException, NotFoundException {
-        LinkedList<Room> rooms = new LinkedList<>();
+    public ArrayList<Room> findRooms(Filter filter) throws InternalServerException, NotFoundException {
+        ArrayList<Room> rooms = new ArrayList<>();
         for (Room room : getAll()) {
             if (checkRoom(room, filter)) rooms.add(room);
         }
@@ -57,10 +57,10 @@ public class RoomDAO extends DAO<Room> {
         return (filter.getNumberOfGuests() == 0 || filter.getNumberOfGuests().equals(room.getNumberOfGuests()))
                 && (filter.getPrice() == 0.0 || filter.getPrice().equals(room.getPrice()))
                 && (filter.getBreakfastIncluded() == null
-                        || filter.getBreakfastIncluded() == room.getBreakfastIncluded())
+                || filter.getBreakfastIncluded() == room.getBreakfastIncluded())
                 && (filter.getPetsAllowed() == null || filter.getPetsAllowed() == room.getPetsAllowed())
                 && (filter.getDateAvailableFrom() == null
-                        || filter.getDateAvailableFrom().after(room.getDateAvailableFrom()))
+                || filter.getDateAvailableFrom().after(room.getDateAvailableFrom()))
                 && (filter.getCountry() == null || filter.getCountry().equals(room.getHotel().getCountry()))
                 && (filter.getCity() == null || filter.getCity().equals(room.getHotel().getCity()));
     }

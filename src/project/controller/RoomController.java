@@ -5,12 +5,14 @@ import project.model.Filter;
 import project.model.Room;
 import project.service.RoomService;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class RoomController {
-    private static RoomService roomService = new RoomService();
 
-    public LinkedList<Room> findRooms(Filter filter)
+    private static final RoomService roomService = new RoomService();
+
+    public ArrayList<Room> findRooms(Filter filter)
             throws BadRequestException, InternalServerException, NotFoundException {
         return roomService.findRooms(filter);
     }

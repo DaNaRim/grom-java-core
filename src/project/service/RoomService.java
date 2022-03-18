@@ -6,6 +6,7 @@ import project.exception.*;
 import project.model.Filter;
 import project.model.Room;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class RoomService {
@@ -14,7 +15,7 @@ public class RoomService {
     private static final UserService userService = new UserService();
     private static final HotelDAO hotelDAO = new HotelDAO();
 
-    public LinkedList<Room> findRooms(Filter filter)
+    public ArrayList<Room> findRooms(Filter filter)
             throws InternalServerException, BadRequestException, NotFoundException {
         validateFilter(filter);
         return roomDAO.findRooms(filter);
