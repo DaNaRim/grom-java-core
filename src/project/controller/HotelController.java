@@ -4,17 +4,19 @@ import project.exception.*;
 import project.model.Hotel;
 import project.service.HotelService;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class HotelController {
-    private static HotelService hotelService = new HotelService();
 
-    public LinkedList<Hotel> findHotelByName(String name)
+    private static final HotelService hotelService = new HotelService();
+
+    public ArrayList<Hotel> findHotelByName(String name)
             throws BadRequestException, InternalServerException, NotFoundException {
         return hotelService.findHotelByName(name);
     }
 
-    public LinkedList<Hotel> findHotelByCity(String city)
+    public ArrayList<Hotel> findHotelByCity(String city)
             throws BadRequestException, InternalServerException, NotFoundException {
         return hotelService.findHotelByCity(city);
     }

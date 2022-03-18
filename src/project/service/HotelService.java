@@ -5,6 +5,7 @@ import project.DAO.RoomDAO;
 import project.exception.*;
 import project.model.Hotel;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class HotelService {
@@ -13,7 +14,7 @@ public class HotelService {
     private static final HotelDAO hotelDAO = new HotelDAO();
     private static final RoomDAO roomDAO = new RoomDAO();
 
-    public LinkedList<Hotel> findHotelByName(String name)
+    public ArrayList<Hotel> findHotelByName(String name)
             throws BadRequestException, InternalServerException, NotFoundException {
 
         if (name == null || name.isEmpty() || name.isBlank()) {
@@ -22,7 +23,7 @@ public class HotelService {
         return hotelDAO.findHotelByName(name);
     }
 
-    public LinkedList<Hotel> findHotelByCity(String city)
+    public ArrayList<Hotel> findHotelByCity(String city)
             throws BadRequestException, InternalServerException, NotFoundException {
 
         if (city == null || city.isEmpty() || city.isBlank()) {
