@@ -1,10 +1,7 @@
 package project.service;
 
 import project.DAO.UserDAO;
-import project.exception.BadRequestException;
-import project.exception.InternalServerException;
-import project.exception.NoAccessException;
-import project.exception.NotLogInException;
+import project.exception.*;
 import project.model.User;
 import project.model.UserType;
 
@@ -28,7 +25,8 @@ public class UserService {
     }
 
     public void setUserType(Long id, UserType userType)
-            throws NoAccessException, BadRequestException, InternalServerException, NotLogInException {
+            throws NoAccessException, BadRequestException, InternalServerException, NotLogInException,
+            NotFoundException {
         checkAccess();
         User user = userDAO.findById(id);
 

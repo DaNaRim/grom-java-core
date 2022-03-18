@@ -1,9 +1,6 @@
 package project.controller;
 
-import project.exception.BadRequestException;
-import project.exception.InternalServerException;
-import project.exception.NoAccessException;
-import project.exception.NotLogInException;
+import project.exception.*;
 import project.model.User;
 import project.model.UserType;
 import project.service.UserService;
@@ -24,7 +21,8 @@ public class UserController {
     }
 
     public void setUserType(Long id, UserType userType)
-            throws InternalServerException, NoAccessException, BadRequestException, NotLogInException {
+            throws InternalServerException, NoAccessException, BadRequestException, NotLogInException,
+            NotFoundException {
         userService.setUserType(id, userType);
     }
 }

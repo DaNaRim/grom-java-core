@@ -1,10 +1,7 @@
 package project.demo;
 
 import project.controller.UserController;
-import project.exception.BadRequestException;
-import project.exception.InternalServerException;
-import project.exception.NoAccessException;
-import project.exception.NotLogInException;
+import project.exception.*;
 import project.model.User;
 import project.model.UserType;
 
@@ -12,7 +9,7 @@ public class DemoUser {
     private static UserController userController = new UserController();
 
     public static void main(String[] args)
-            throws InternalServerException, NoAccessException, BadRequestException, NotLogInException {
+            throws InternalServerException, NoAccessException, BadRequestException, NotLogInException, NotFoundException {
 
         User user1 = new User("h h, h", "SuperPassword", "Sweden");
 

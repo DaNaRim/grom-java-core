@@ -40,7 +40,7 @@ public class HotelService {
     }
 
     public void deleteHotel(long hotelId)
-            throws NoAccessException, BadRequestException, InternalServerException, NotLogInException {
+            throws NoAccessException, BadRequestException, InternalServerException, NotLogInException, NotFoundException {
         userService.checkAccess();
 
         if (!hotelDAO.isExists(hotelId)) {

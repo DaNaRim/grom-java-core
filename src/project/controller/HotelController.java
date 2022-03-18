@@ -25,7 +25,8 @@ public class HotelController {
     }
 
     public void deleteHotel(long hotelId)
-            throws InternalServerException, NoAccessException, BadRequestException, NotLogInException {
+            throws InternalServerException, NoAccessException, BadRequestException, NotLogInException,
+            NotFoundException {
         hotelService.deleteHotel(hotelId);
     }
 }

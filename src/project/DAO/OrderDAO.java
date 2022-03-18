@@ -1,7 +1,7 @@
 package project.DAO;
 
-import project.exception.BadRequestException;
 import project.exception.InternalServerException;
+import project.exception.NotFoundException;
 import project.model.Order;
 import project.model.Room;
 
@@ -17,50 +17,26 @@ public class OrderDAO extends DAO<Order> {
         super(DaoUtil.ORDER_DAO_PATH);
     }
 
-    //TODO: remove bad request exceptions
-    //TODO: add notFoundException
-
-    public Order findOrderByRoomAndUser(long roomId, long userId) throws InternalServerException, BadRequestException {
+    public Order findOrderByRoomAndUser(long roomId, long userId) throws InternalServerException, NotFoundException {
         for (Order order : getAll()) {
             if (order.getRoom().getId() == roomId && order.getUser().getId() == userId) return order;
         }
-        throw new BadRequestException("findOrderByRoomAndUser failed: Missing order");
+        throw new NotFoundException("findOrderByRoomAndUser failed: Missing order");
     }
 
-    public void checkRoomForBusy(long roomId, Date dateFrom, Date dateTo)
-            throws InternalServerException, BadRequestException {
+    public Room updateRoomDateAvailFrom(Long id) throws InternalServerException, NotFoundException {
+        Room room = roomDAO.findById(id);
 
-        Date dateAvailableFrom = updateRoomDateAvailFrom(roomId).getDateAvailableFrom();
-
-        if (dateAvailableFrom.after(dateFrom)) {
-            throw new BadRequestException("checkRoomForBusy failed: the room is busy until " + dateAvailableFrom);
-        }
-
+        Date dateAvailableFrom = room.getDateAvailableFrom();
         for (Order order : getAll()) {
-            Date busyTimeFrom = order.getDateFrom();
-            Date busyTimeTo = order.getDateTo();
 
-            boolean isOrderActual = order.getDateTo().after(new Date());
-            boolean isDatesCrossOrderRange = !(busyTimeTo.before(dateFrom) || busyTimeFrom.after(dateTo));
-
-            if (isOrderActual && isDatesCrossOrderRange) {
-                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy kk:00");
-
-                throw new BadRequestException(String.format(
-                        "checkRoomForBusy failed: the room is busy from %s to %s",
-                        sdf.format(busyTimeFrom), sdf.format(busyTimeTo)));
+            if (order.getDateTo().after(dateAvailableFrom)
+                    && order.getDateFrom().before(dateAvailableFrom)) {
+                room.setDateAvailableFrom(order.getDateTo());
+                break;
             }
         }
-    }
-
-    public Order createOrder(long roomId, long userId, Date dateFrom, Date dateTo)
-            throws InternalServerException, BadRequestException {
-        return new Order(
-                userDAO.findById(userId),
-                roomDAO.findById(roomId),
-                dateFrom,
-                dateTo,
-                roomDAO.findById(roomId).getPrice());
+        return roomDAO.update(room);
     }
 
     @Override
@@ -81,20 +57,6 @@ public class OrderDAO extends DAO<Order> {
             System.err.println("map failed: " + e.getMessage());
         }
         return null;
-    }
-
-    private Room updateRoomDateAvailFrom(Long id) throws InternalServerException, BadRequestException {
-        Room room = roomDAO.findById(id);
-
-        Date dateAvailableFrom = room.getDateAvailableFrom();
-        for (Order order : getAll()) {
-
-            if (order.getDateTo().after(dateAvailableFrom)
-                    && order.getDateFrom().before(dateAvailableFrom)) {
-                room.setDateAvailableFrom(order.getDateTo());
-            }
-        }
-        return roomDAO.update(room);
     }
 
 }

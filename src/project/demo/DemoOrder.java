@@ -12,7 +12,7 @@ public class DemoOrder {
     private static UserController userController = new UserController();
 
     public static void main(String[] args)
-            throws NoAccessException, InternalServerException, BadRequestException, ParseException, NotLogInException {
+            throws NoAccessException, InternalServerException, BadRequestException, ParseException, NotLogInException, NotFoundException {
 
         userController.login("Oleg", "wf45a4w44f");
 

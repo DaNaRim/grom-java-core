@@ -28,7 +28,8 @@ public class RoomService {
     }
 
     public void deleteRoom(long roomId)
-            throws InternalServerException, NoAccessException, BadRequestException, NotLogInException {
+            throws InternalServerException, NoAccessException, BadRequestException, NotLogInException,
+            NotFoundException {
         userService.checkAccess();
 
         if (!roomDAO.isExists(roomId)) {

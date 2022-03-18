@@ -1,7 +1,7 @@
 package project.DAO;
 
-import project.exception.BadRequestException;
 import project.exception.InternalServerException;
+import project.exception.NotFoundException;
 import project.model.BaseModel;
 
 import java.io.*;
@@ -16,11 +16,11 @@ public abstract class DAO<T extends BaseModel> {
         this.path = path;
     }
 
-    public final T findById(long id) throws InternalServerException, BadRequestException {
+    public final T findById(long id) throws InternalServerException, NotFoundException {
         for (T object : getAll()) {
             if (object.getId() == id) return object;
         }
-        throw new BadRequestException("findById failed: missing object with id: " + id);
+        throw new NotFoundException("findById failed: missing object with id: " + id);
     }
 
     public final boolean isExists(long id) throws InternalServerException {
@@ -79,7 +79,7 @@ public abstract class DAO<T extends BaseModel> {
         }
     }
 
-    public final void delete(long id) throws InternalServerException, BadRequestException {
+    public final void delete(long id) throws InternalServerException, NotFoundException {
         delete(findById(id));
     }
 

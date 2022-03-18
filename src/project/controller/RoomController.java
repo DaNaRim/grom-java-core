@@ -21,7 +21,8 @@ public class RoomController {
     }
 
     public void deleteRoom(long roomId)
-            throws NoAccessException, InternalServerException, BadRequestException, NotLogInException {
+            throws NoAccessException, InternalServerException, BadRequestException, NotLogInException,
+            NotFoundException {
         roomService.deleteRoom(roomId);
     }
 }
