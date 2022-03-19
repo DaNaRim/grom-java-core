@@ -5,7 +5,7 @@ import project.DAO.DaoUtil;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Room extends BaseModel implements Comparable<Room> {
+public class Room extends BaseModel {
 
     private Long id;
     private Integer numberOfGuests;
@@ -95,7 +95,8 @@ public class Room extends BaseModel implements Comparable<Room> {
     }
 
     @Override
-    public int compareTo(Room room) {
+    public int compareTo(BaseModel o) {
+        Room room = (Room) o;
         return this.dateAvailableFrom.after(room.getDateAvailableFrom()) ? 1 : -1;
     }
 

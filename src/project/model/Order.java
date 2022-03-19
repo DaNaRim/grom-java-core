@@ -5,7 +5,7 @@ import project.DAO.DaoUtil;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Order extends BaseModel implements Comparable<Order> {
+public class Order extends BaseModel {
 
     private Long id;
     private final User user;
@@ -70,7 +70,8 @@ public class Order extends BaseModel implements Comparable<Order> {
     }
 
     @Override
-    public int compareTo(Order order) {
+    public int compareTo(BaseModel o) {
+        Order order = (Order) o;
         return this.dateFrom.before(order.getDateFrom()) ? 1 : -1;
     }
 

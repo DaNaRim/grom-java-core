@@ -2,7 +2,7 @@ package project.model;
 
 import java.util.Objects;
 
-public class Hotel extends BaseModel implements Comparable<Hotel> {
+public class Hotel extends BaseModel {
 
     private Long id;
     private String name;
@@ -77,7 +77,9 @@ public class Hotel extends BaseModel implements Comparable<Hotel> {
     }
 
     @Override
-    public int compareTo(Hotel hotel) {
+    public int compareTo(BaseModel o) {
+        Hotel hotel = (Hotel) o;
+
         if (this.country.compareTo(hotel.getCountry()) != 0) {
             return this.country.compareTo(hotel.getCountry());
         }

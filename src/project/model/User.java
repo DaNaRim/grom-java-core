@@ -1,6 +1,6 @@
 package project.model;
 
-public class User extends BaseModel implements Comparable<User> {
+public class User extends BaseModel {
 
     private Long id;
     private String userName;
@@ -58,7 +58,9 @@ public class User extends BaseModel implements Comparable<User> {
     }
 
     @Override
-    public int compareTo(User user) {
+    public int compareTo(BaseModel o) {
+        User user = (User) o;
+
         if (this.userType != user.getUserType()) {
             return user.getUserType() == UserType.ADMIN ? 1 : -1;
         }
