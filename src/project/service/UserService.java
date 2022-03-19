@@ -16,6 +16,10 @@ public class UserService {
     }
 
     public void login(String username, String password) throws InternalServerException, BadRequestException {
+
+        if (username == null || password == null) {
+            throw new BadRequestException("login failed: not all fields are filed");
+        }
         validateLoggedUser(username);
         loggedUser = validateLoginAndGetUser(username, password);
     }
@@ -69,10 +73,6 @@ public class UserService {
 
     private User validateLoginAndGetUser(String username, String password)
             throws BadRequestException, InternalServerException {
-
-        if (username == null || password == null) {
-            throw new BadRequestException("validateLoginAndGetUser failed: not all fields are filed");
-        }
 
         User user;
         try {
