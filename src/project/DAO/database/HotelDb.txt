@@ -1,0 +1,2 @@
+5156100120976113778, TestHotel2, USA, SeaCity, TestStreet2
+5654076824577593269, TestHotel, Ukraine, TestCity, TestStreet2

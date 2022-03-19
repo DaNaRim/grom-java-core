@@ -20,7 +20,7 @@ public class HotelDAO extends DAO<Hotel> {
         }
 
         if (resultHotels.isEmpty()) {
-            throw new NotFoundException("findHotelByName failed: there is no hotels with this parameters");
+            throw new NotFoundException("findHotelByName failed: there is no hotels with this name");
         }
         return resultHotels;
     }
@@ -33,7 +33,7 @@ public class HotelDAO extends DAO<Hotel> {
         }
 
         if (resultHotels.isEmpty()) {
-            throw new NotFoundException("findHotelByCity failed: there is no hotels with this parameters");
+            throw new NotFoundException("findHotelByCity failed: there is no hotels in this city");
         }
         return resultHotels;
     }

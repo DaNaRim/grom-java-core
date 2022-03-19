@@ -2,7 +2,7 @@ package project.DAO;
 
 public class DaoUtil {
 
-    public static final String BASIC_PATH = "E:/Project/";
+    public static final String BASIC_PATH = "src/project/DAO/database/";
 
     public static final String USER_DAO_PATH = BASIC_PATH + "UserDb.txt";
     public static final String HOTEL_DAO_PATH = BASIC_PATH + "HotelDb.txt";

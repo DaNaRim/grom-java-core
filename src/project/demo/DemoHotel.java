@@ -2,32 +2,26 @@ package project.demo;
 
 import project.controller.HotelController;
 import project.controller.UserController;
-import project.exception.*;
 import project.model.Hotel;
 
 public class DemoHotel {
-    private static HotelController hotelController = new HotelController();
-    private static UserController userController = new UserController();
 
-    public static void main(String[] args)
-            throws BadRequestException,
-            NoAccessException,
-            InternalServerException,
-            NotLogInException,
-            NotFoundException {
+    private static final HotelController hotelController = new HotelController();
+    private static final UserController userController = new UserController();
 
-        userController.login("Oleg", "wf45a4w44f");
+    public static void main(String[] args) throws Exception {
 
-        userController.login("DaNaRim", "f5urhg%89aohfol347hgfv93");
+        userController.login("First", "SuperPassword");
 
-        Hotel hotel = new Hotel("TestHotel", "Ukraine", "TestCity", "TestStreet2");
+        userController.login("Second", "SuperPassword2");
 
+        Hotel hotel = new Hotel("HotelToDelete", "USA", "SeaCity", "TestStreet2");
         hotelController.addHotel(hotel);
 
-        System.out.println(hotelController.findHotelByCity("TestCity").toString());
-
+        System.out.println(hotelController.findHotelByCity("SeaCity").toString());
         System.out.println(hotelController.findHotelByName("TestHotel").toString());
 
-        hotelController.deleteHotel(7774759593198306259L);
+        hotelController.deleteHotel(4549416648655917001L);
     }
+
 }

@@ -1,6 +1,5 @@
 package project.service;
 
-import project.DAO.DaoUtil;
 import project.DAO.OrderDAO;
 import project.DAO.RoomDAO;
 import project.DAO.UserDAO;
@@ -45,10 +44,10 @@ public class OrderService {
     }
 
     private void validateRoomAndUser(long roomId, long userId) throws InternalServerException, BadRequestException {
-        if (roomDAO.isExists(roomId)) {
+        if (!roomDAO.isExists(roomId)) {
             throw new BadRequestException("validateRoomAndUser failed: missing room with id " + roomId);
         }
-        if (userDAO.isExists(userId)) {
+        if (!userDAO.isExists(userId)) {
             throw new BadRequestException("validateRoomAndUser failed: missing user with id " + userId);
         }
     }
@@ -81,7 +80,7 @@ public class OrderService {
             boolean isDatesCrossOrderRange = !(busyTimeTo.before(dateFrom) || busyTimeFrom.after(dateTo));
 
             if (isOrderActual && isDatesCrossOrderRange) {
-                SimpleDateFormat sdf = new SimpleDateFormat(DaoUtil.DATE_FORMAT);
+                SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy kk:00");
 
                 throw new BadRequestException(String.format(
                         "checkRoomForBusy failed: the room is busy from %s to %s",

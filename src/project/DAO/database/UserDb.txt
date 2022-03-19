@@ -1,0 +1,2 @@
+4619150847226038137, First, SuperPassword, Sweden, ADMIN
+1366144934079450406, Second, SuperPassword2, Sweden, USER

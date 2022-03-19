@@ -2,34 +2,25 @@ package project.demo;
 
 import project.controller.OrderController;
 import project.controller.UserController;
-import project.exception.*;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class DemoOrder {
-    private static OrderController orderController = new OrderController();
-    private static UserController userController = new UserController();
 
-    public static void main(String[] args)
-            throws NoAccessException, InternalServerException, BadRequestException, ParseException, NotLogInException, NotFoundException {
+    private static final OrderController orderController = new OrderController();
+    private static final UserController userController = new UserController();
 
-        userController.login("Oleg", "wf45a4w44f");
+    public static void main(String[] args) throws Exception {
 
-        userController.login("DaNaRim", "f5urhg%89aohfol347hgfv93");
+        userController.login("First", "SuperPassword");
 
-        orderController.bookRoom(5946096940029333433L, 4209196781363284626L,
-                new SimpleDateFormat("dd.MM.yyyy kk:00").parse("26.04.2020 12:00"),
-                new SimpleDateFormat("dd.MM.yyyy kk:00").parse("27.04.2020 12:00"));
+        userController.login("Second", "SuperPassword2");
 
-        userController.logout();
+        orderController.bookRoom(4561491620832756959L, 4619150847226038137L,
+                new SimpleDateFormat("dd.MM.yyyy kk:00").parse("27.04.2022 11:00"),
+                new SimpleDateFormat("dd.MM.yyyy kk:00").parse("28.04.2022 12:00"));
 
-        userController.login("Oleg2", "wf47777w44f");
-
-        orderController.bookRoom(5946096940029333433L, 3916769799713539086L,
-                new SimpleDateFormat("dd.MM.yyyy").parse("26.04.2020"),
-                new SimpleDateFormat("dd.MM.yyyy").parse("28.04.2020"));
-
-        orderController.cancelReservation(5946096940029333433L, 4209196781363284626L);
+        orderController.cancelReservation(4561491620832756959L, 4619150847226038137L);
     }
+
 }

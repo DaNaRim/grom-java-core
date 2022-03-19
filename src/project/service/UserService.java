@@ -36,6 +36,9 @@ public class UserService {
         checkForAdminPermissions();
         User user = userDAO.findById(id);
 
+        if (userType == null) {
+            throw new BadRequestException("setUserType: can`t set null type");
+        }
         if (user.getUserType() == userType) {
             throw new BadRequestException("setUserType failed: user already has this type");
         }
@@ -93,14 +96,14 @@ public class UserService {
         if (user.getUserName() == null
                 || user.getPassword() == null
                 || user.getCountry() == null
-                || user.getUserName().isEmpty()
-                || user.getPassword().isEmpty()
-                || user.getCountry().isEmpty()) {
-            throw new BadRequestException("validateUser failed: not all fields are filled");
-        }
-        if (user.getUserName().isBlank()
+                || user.getUserName().isBlank()
                 || user.getPassword().isBlank()
                 || user.getCountry().isBlank()) {
+            throw new BadRequestException("validateUser failed: not all fields are filled");
+        }
+        if (user.getUserName().contains(" ")
+                || user.getPassword().contains(" ")
+                || user.getCountry().contains(" ")) {
             throw new BadRequestException("validateUser failed: fields must not contain spaces");
         }
         if (user.getUserName().contains(", ")
