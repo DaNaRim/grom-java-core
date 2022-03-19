@@ -7,7 +7,6 @@ import project.model.Filter;
 import project.model.Room;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class RoomService {
 
@@ -39,37 +38,40 @@ public class RoomService {
         roomDAO.delete(roomId);
     }
 
-    //TODO test wrappers
     private void validateFilter(Filter filter) throws BadRequestException {
         if (filter == null
                 || (filter.getNumberOfGuests() == null
-                && filter.getPrice() == null
-                && filter.getBreakfastIncluded() == null
-                && filter.getPetsAllowed() == null
-                && filter.getDateAvailableFrom() == null
-                && filter.getCountry() == null
-                && filter.getCity() == null)) {
+                    && filter.getPrice() == null
+                    && filter.getBreakfastIncluded() == null
+                    && filter.getPetsAllowed() == null
+                    && filter.getDateAvailableFrom() == null
+                    && filter.getCountry() == null
+                    && filter.getCity() == null)) {
             throw new BadRequestException("validateFilter failed: you have not selected any options for filtering");
         }
-        if (filter.getNumberOfGuests() < 0 && filter.getPrice() < 0) {
+        if (filter.getNumberOfGuests() != null
+                    && filter.getNumberOfGuests() < 0
+                || filter.getPrice() != null
+                    && filter.getPrice() < 0) {
             throw new BadRequestException("validateFilter failed: you have not selected correct options for filtering");
         }
     }
 
-    //TODO test wrappers
     private void validateRoom(Room room) throws InternalServerException, BadRequestException {
         if (room == null) {
             throw new BadRequestException("validateRoom failed: impossible to process null room");
         }
-        if (room.getNumberOfGuests() < 1
-                || room.getPrice() <= 0.0
+        if (room.getNumberOfGuests() == null
+                || room.getPrice()  == null
                 || room.getBreakfastIncluded() == null
                 || room.getPetsAllowed() == null
                 || room.getDateAvailableFrom() == null
-                || room.getHotel() == null) {
+                || room.getHotel() == null
+                || room.getNumberOfGuests() < 1
+                || room.getPrice() <= 0.0) {
             throw new BadRequestException("validateRoom failed: not all fields are filled correctly");
         }
-        if (hotelDAO.isExists(room.getHotel().getId())) {
+        if (!hotelDAO.isExists(room.getHotel().getId())) {
             throw new BadRequestException("validateRoom failed: missing hotel with id: " + room.getHotel().getId());
         }
     }

@@ -17,8 +17,8 @@ public class HotelService {
     public ArrayList<Hotel> findHotelByName(String name)
             throws BadRequestException, InternalServerException, NotFoundException {
 
-        if (name == null || name.isEmpty() || name.isBlank()) {
-            throw new BadRequestException("findHotelByName failed: the field is not filled correctly");
+        if (name == null) {
+            throw new BadRequestException("findHotelByName failed: name is not filled");
         }
         return hotelDAO.findHotelByName(name);
     }
@@ -26,8 +26,8 @@ public class HotelService {
     public ArrayList<Hotel> findHotelByCity(String city)
             throws BadRequestException, InternalServerException, NotFoundException {
 
-        if (city == null || city.isEmpty() || city.isBlank()) {
-            throw new BadRequestException("findHotelByCity failed: the field is not filled correctly");
+        if (city == null) {
+            throw new BadRequestException("findHotelByCity failed: city is not filled");
         }
         return hotelDAO.findHotelByCity(city);
     }
@@ -61,16 +61,16 @@ public class HotelService {
                 || hotel.getCity() == null
                 || hotel.getCountry() == null
                 || hotel.getStreet() == null
-                || hotel.getName().isEmpty()
-                || hotel.getCity().isEmpty()
-                || hotel.getCountry().isEmpty()
-                || hotel.getStreet().isEmpty()) {
+                || hotel.getName().isBlank()
+                || hotel.getCity().isBlank()
+                || hotel.getCountry().isBlank()
+                || hotel.getStreet().isBlank()) {
             throw new BadRequestException("validateHotel failed: not all fields are filled");
         }
-        if (hotel.getName().isBlank()
-                || hotel.getCountry().isBlank()
-                || hotel.getCity().isBlank()
-                || hotel.getStreet().isBlank()) {
+        if (hotel.getName().contains(" ")
+                || hotel.getCountry().contains(" ")
+                || hotel.getCity().contains(" ")
+                || hotel.getStreet().contains(" ")) {
             throw new BadRequestException("validateHotel failed: fields must not contain spaces");
         }
         if (hotel.getName().contains(", ")

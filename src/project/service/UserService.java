@@ -16,6 +16,10 @@ public class UserService {
     }
 
     public void login(String username, String password) throws InternalServerException, BadRequestException {
+
+        if (username == null || password == null) {
+            throw new BadRequestException("login failed: not all fields are filed");
+        }
         validateLoggedUser(username);
         loggedUser = validateLoginAndGetUser(username, password);
     }
@@ -32,6 +36,9 @@ public class UserService {
         checkForAdminPermissions();
         User user = userDAO.findById(id);
 
+        if (userType == null) {
+            throw new BadRequestException("setUserType: can`t set null type");
+        }
         if (user.getUserType() == userType) {
             throw new BadRequestException("setUserType failed: user already has this type");
         }
@@ -70,10 +77,6 @@ public class UserService {
     private User validateLoginAndGetUser(String username, String password)
             throws BadRequestException, InternalServerException {
 
-        if (username == null || password == null) {
-            throw new BadRequestException("validateLoginAndGetUser failed: not all fields are filed");
-        }
-
         User user;
         try {
             user = userDAO.getUserByUsername(username);
@@ -93,14 +96,14 @@ public class UserService {
         if (user.getUserName() == null
                 || user.getPassword() == null
                 || user.getCountry() == null
-                || user.getUserName().isEmpty()
-                || user.getPassword().isEmpty()
-                || user.getCountry().isEmpty()) {
-            throw new BadRequestException("validateUser failed: not all fields are filled");
-        }
-        if (user.getUserName().isBlank()
+                || user.getUserName().isBlank()
                 || user.getPassword().isBlank()
                 || user.getCountry().isBlank()) {
+            throw new BadRequestException("validateUser failed: not all fields are filled");
+        }
+        if (user.getUserName().contains(" ")
+                || user.getPassword().contains(" ")
+                || user.getCountry().contains(" ")) {
             throw new BadRequestException("validateUser failed: fields must not contain spaces");
         }
         if (user.getUserName().contains(", ")
