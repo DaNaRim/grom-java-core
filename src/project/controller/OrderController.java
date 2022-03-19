@@ -6,7 +6,8 @@ import project.service.OrderService;
 import java.util.Date;
 
 public class OrderController {
-    private static OrderService orderService = new OrderService();
+
+    private static final OrderService orderService = new OrderService();
 
     public void bookRoom(long roomId, long userId, Date dateFrom, Date dateTo)
             throws NoAccessException,
@@ -25,4 +26,5 @@ public class OrderController {
             NotFoundException {
         orderService.cancelReservation(roomId, userId);
     }
+
 }

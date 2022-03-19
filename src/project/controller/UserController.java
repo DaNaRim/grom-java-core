@@ -6,7 +6,8 @@ import project.model.UserType;
 import project.service.UserService;
 
 public class UserController {
-    private static UserService userService = new UserService();
+
+    private static final UserService userService = new UserService();
 
     public User registerUser(User user) throws InternalServerException, BadRequestException {
         return userService.registerUser(user);
@@ -22,8 +23,12 @@ public class UserController {
     }
 
     public void setUserType(long id, UserType userType)
-            throws InternalServerException, NoAccessException, BadRequestException, NotLogInException,
+            throws InternalServerException,
+            NoAccessException,
+            BadRequestException,
+            NotLogInException,
             NotFoundException {
         userService.setUserType(id, userType);
     }
+
 }

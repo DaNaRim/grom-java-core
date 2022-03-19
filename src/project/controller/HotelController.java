@@ -5,7 +5,6 @@ import project.model.Hotel;
 import project.service.HotelService;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class HotelController {
 
@@ -27,8 +26,12 @@ public class HotelController {
     }
 
     public void deleteHotel(long hotelId)
-            throws InternalServerException, NoAccessException, BadRequestException, NotLogInException,
+            throws InternalServerException,
+            NoAccessException,
+            BadRequestException,
+            NotLogInException,
             NotFoundException {
         hotelService.deleteHotel(hotelId);
     }
+
 }
