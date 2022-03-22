@@ -11,13 +11,13 @@ public class UserDAO extends DAO<User> {
         super(DaoUtil.USER_DAO_PATH);
     }
 
-    public User getUserByUsername(String userName) throws InternalServerException, NotFoundException {
+    public User findByUsername(String userName) throws InternalServerException, NotFoundException {
         for (User user : getAll()) {
             if (user.getUserName().equals(userName)) {
                 return user;
             }
         }
-        throw new NotFoundException("getUserByUserName failed: can`t find user with username " + userName);
+        throw new NotFoundException("findByUsername failed: can`t find user with username " + userName);
     }
 
 

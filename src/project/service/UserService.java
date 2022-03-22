@@ -79,7 +79,7 @@ public class UserService {
 
         User user;
         try {
-            user = userDAO.getUserByUsername(username);
+            user = userDAO.findByUsername(username);
         } catch (NotFoundException e) {
             throw new BadRequestException("validateAndGetUser failed: wrong username");
         }
