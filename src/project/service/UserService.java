@@ -53,7 +53,7 @@ public class UserService {
         }
     }
 
-    public void isLoggedUser(Long id) throws NoAccessException, NotLogInException {
+    public void isLoggedUser(long id) throws NoAccessException, NotLogInException {
         isSomeUserLogged();
         if (!loggedUser.getId().equals(id)) {
             throw new NoAccessException(
